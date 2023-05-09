@@ -1,15 +1,13 @@
 package github.mrh0.createatomic.groups;
 
-import com.mrh0.createaddition.CreateAddition;
-import com.mrh0.createaddition.index.CABlocks;
 import github.mrh0.createatomic.CreateAtomic;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
+import org.jetbrains.annotations.NotNull;
 
 public class CreateAtomicGroup extends CreativeModeTab {
-	public static CreateAtomicGroup MAIN;;
+	public static CreateAtomicGroup MAIN;
 
 	public CreateAtomicGroup(String name) {
 		super(CreateAtomic.MODID+":"+name);
@@ -17,7 +15,7 @@ public class CreateAtomicGroup extends CreativeModeTab {
 	}
 
 	@Override
-	public ItemStack makeIcon() {
-		return new ItemStack(Items.ACACIA_BOAT);
+	public @NotNull ItemStack makeIcon() {
+		return new ItemStack(Items.OAK_SAPLING);
 	}
 }

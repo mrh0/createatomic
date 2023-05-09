@@ -53,12 +53,6 @@ the Create team, the Forge team, and all contributors on the CC&A discord.
     side="BOTH"
 # Here's another dependency
 [[dependencies.createatomic]]
-    modId="createaddition"
-    mandatory=true
-    versionRange="[20230508b,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.createatomic]]
     modId="create"
     mandatory=true
     versionRange="[0.5.0h,0.6.0)"
@@ -73,7 +67,7 @@ the Create team, the Forge team, and all contributors on the CC&A discord.
 [[dependencies.createatomic]]
     modId="jei"
     mandatory=false
-    versionRange="[11.4.0.274,)"
+    versionRange="[9.7.0.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.createatomic]]

@@ -1,5 +1,6 @@
 package github.mrh0.createatomic.index;
 
+import com.simibubi.create.content.AllSections;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -23,5 +24,23 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();
 
-    public static void register() {}
+    public static final BlockEntry<Block> URANIUM_ORE = REGISTRATE.block("uranium_ore",  Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.COLOR_GREEN))
+            .item(BlockItem::new)
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<Block> DEEPSLATE_URANIUM_ORE = REGISTRATE.block("deepslate_uranium_ore",  Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.COLOR_GREEN))
+            .item(BlockItem::new)
+            .transform(customItemModel())
+            .register();
+
+    public static void register() {
+        REGISTRATE.addToSection(RAW_URANIUM_BLOCK, AllSections.MATERIALS);
+        REGISTRATE.addToSection(URANIUM_ORE, AllSections.MATERIALS);
+        REGISTRATE.addToSection(DEEPSLATE_URANIUM_ORE, AllSections.MATERIALS);
+    }
 }
