@@ -1,0 +1,23 @@
+{
+	"item.createatomic.raw_uranium": "Raw Uranium",
+	"item.createatomic.uranium_nugget": "Uranium Nugget",
+	"item.createatomic.refined_uranium": "Refined Uranium",
+	"item.createatomic.control_rod": "Control Rod",
+	"item.createatomic.reactor_fuel": "Reactor Fuel",
+	"item.createatomic.depleated_reactor_fuel": "Depleated Reactor Fuel",
+
+	"block.createatomic.reactor_casing": "Reactor Casing",
+	"block.createatomic.control_rod_assembly": "Control Rod Assembly",
+	
+	"itemGroup.createatomic:main":"Create: Atomic",
+	
+	"createatomic.ponder.tag.atomic": "Atomic Age",
+	"createatomic.ponder.tag.atomic.description": "Harness the power of the Atom!",
+	
+	"createatomic.ponder.reactor_casing.header": "WIP",
+	"createatomic.ponder.reactor_casing.text_1": "WIP",
+
+	
+	"effect.createatomic.radiation_poisoning":"Radiation Poisoning",
+  	"effect.createatomic.shocking.description": "Causes severely reduced movement speed"
+}

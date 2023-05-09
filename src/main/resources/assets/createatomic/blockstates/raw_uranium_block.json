@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "createaddition:block/raw_uranium_block/block" }
+    }
+}
