@@ -38,6 +38,13 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();
 
+    public static final BlockEntry<Block> RADIOISOTOPE_HEAT_GENERATOR = REGISTRATE.block("radioisotope_heat_generator",  Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.COLOR_GREEN))
+            .item(BlockItem::new)
+            .transform(customItemModel())
+            .register();
+
     public static void register() {
         REGISTRATE.addToSection(RAW_URANIUM_BLOCK, AllSections.MATERIALS);
         REGISTRATE.addToSection(URANIUM_ORE, AllSections.MATERIALS);

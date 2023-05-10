@@ -3,6 +3,7 @@
   "values": [
     "createatomic:raw_uranium_block",
     "createatomic:deepslate_uranium_ore",
-    "createatomic:uranium_ore"
+    "createatomic:uranium_ore",
+    "createatomic:radioisotope_heat_generator"
   ]
 }
