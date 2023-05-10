@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern":
+	["UUU",
+	 "UUU",
+	 "UUU"],
+	"key":
+	{
+		"U":
+		{
+			"tag": "forge:raw_materials/uranium"
+		}
+	},
+	"result":{
+		"item": "createatomic:raw_uranium_block",
+		"count": 1
+	}
+}

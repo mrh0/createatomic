@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "createatomic:raw_uranium_block",
+    "createatomic:deepslate_uranium_ore",
+    "createatomic:uranium_ore"
+  ]
+}

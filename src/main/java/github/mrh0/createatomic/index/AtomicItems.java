@@ -22,5 +22,9 @@ public class AtomicItems {
             REGISTRATE.item("refined_uranium", Item::new)
                     .register();
 
+    public static final ItemEntry<Item> DEPLEATED_URANIUM =
+            REGISTRATE.item("depleated_uranium", Item::new)
+                    .register();
+
     public static void register() {}
 }

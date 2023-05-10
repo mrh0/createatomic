@@ -2,12 +2,12 @@
 	"item.createatomic.raw_uranium": "Raw Uranium",
 	"item.createatomic.uranium_nugget": "Uranium Nugget",
 	"item.createatomic.refined_uranium": "Refined Uranium",
+	"item.createatomic.depleated_uranium": "Depleated uranium",
 	"item.createatomic.control_rod": "Control Rod",
-	"item.createatomic.reactor_fuel": "Reactor Fuel",
-	"item.createatomic.depleated_reactor_fuel": "Depleated Reactor Fuel",
 
 	"block.createatomic.raw_uranium_block": "Raw Uranium Block",
 	"block.createatomic.uranium_ore": "Uranium Ore",
+	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
 	"block.createatomic.reactor_casing": "Reactor Casing",
 	"block.createatomic.control_rod_assembly": "Control Rod Assembly",
 	
