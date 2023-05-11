@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern":
+	["UUU",
+	 "UUU",
+	 "UUU"],
+	"key":
+	{
+		"U":
+		{
+			"tag": "forge:nuggets/uranium"
+		}
+	},
+	"result":{
+		"item": "createatomic:refined_uranium",
+		"count": 1
+	}
+}

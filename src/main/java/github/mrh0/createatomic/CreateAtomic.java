@@ -1,29 +1,18 @@
 package github.mrh0.createatomic;
 
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.content.contraptions.fluids.tank.BoilerHeaters;
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.foundation.block.BlockStressValues;
-import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import github.mrh0.createatomic.groups.CreateAtomicGroup;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import github.mrh0.createatomic.index.AtomicBlocks;
+import github.mrh0.createatomic.index.AtomicBoilerHeaters;
 import github.mrh0.createatomic.index.AtomicItems;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -57,7 +46,7 @@ public class CreateAtomic {
         new CreateAtomicGroup("main");
 
         AtomicBlocks.register();
-        //AtomicBlockEntities.register();
+        AtomicBlockEntities.register();
         AtomicItems.register();
     }
 
@@ -70,7 +59,8 @@ public class CreateAtomic {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        // BlockStressValues.registerProvider(MODID, AllConfigs.SERVER.kinetics.stressValues);
+        AtomicBoilerHeaters.register();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

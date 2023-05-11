@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "bottom=false,top=false": {
+      "model": "createatomic:block/reactor_casing/block_middle"
+    },
+    "bottom=true,top=false": {
+      "model": "createatomic:block/reactor_casing/block_bottom"
+    },
+    "bottom=false,top=true": {
+      "model": "createatomic:block/reactor_casing/block_top"
+    },
+    "bottom=true,top=true": {
+      "model": "createatomic:block/reactor_casing/block_single"
+    }
+  }
+}
