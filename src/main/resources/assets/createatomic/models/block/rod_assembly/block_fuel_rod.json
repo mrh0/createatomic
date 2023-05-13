@@ -1,0 +1,93 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "createatomic:block/rod_assembly",
+		"1": "createatomic:block/generic_uranium",
+		"particle": "createatomic:block/rod_assembly"
+	},
+	"elements": [
+		{
+			"name": "Main",
+			"from": [0, 0, 0],
+			"to": [16, 10, 16],
+			"faces": {
+				"north": {"uv": [0, 11, 8, 16], "texture": "#0"},
+				"east": {"uv": [0, 11, 8, 16], "texture": "#0"},
+				"south": {"uv": [0, 11, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 11, 8, 16], "texture": "#0"},
+				"up": {"uv": [8, 8, 16, 16], "texture": "#0"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Brim1",
+			"from": [0, 10, 0],
+			"to": [14, 12, 2],
+			"faces": {
+				"north": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"south": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"west": {"uv": [7, 10, 8, 11], "texture": "#0"},
+				"up": {"uv": [8, 8, 15, 9], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Brim2",
+			"from": [14, 10, 0],
+			"to": [16, 12, 14],
+			"faces": {
+				"north": {"uv": [7, 10, 8, 11], "texture": "#0"},
+				"east": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"west": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"up": {"uv": [8, 8, 15, 9], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Brim3",
+			"from": [2, 10, 14],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"east": {"uv": [7, 10, 8, 11], "texture": "#0"},
+				"south": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"up": {"uv": [8, 8, 15, 9], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Brim4",
+			"from": [0, 10, 2],
+			"to": [2, 12, 16],
+			"faces": {
+				"east": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"south": {"uv": [7, 10, 8, 11], "texture": "#0"},
+				"west": {"uv": [1, 10, 8, 11], "texture": "#0"},
+				"up": {"uv": [8, 8, 15, 9], "rotation": 270, "texture": "#0"}
+			}
+		},
+		{
+			"name": "ControlRod",
+			"from": [6, 9, 6],
+			"to": [10, 15, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 6], "texture": "#1"},
+				"east": {"uv": [6, 0, 10, 6], "texture": "#1"},
+				"south": {"uv": [0, 0, 4, 6], "texture": "#1"},
+				"west": {"uv": [6, 0, 10, 6], "texture": "#1"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#1"}
+			}
+		},
+		{
+			"from": [5.5, 14, 5.5],
+			"to": [10.5, 16, 10.5],
+			"faces": {
+				"north": {"uv": [0, 10, 2.5, 11], "texture": "#0"},
+				"east": {"uv": [0, 10, 2.5, 11], "texture": "#0"},
+				"south": {"uv": [0, 10, 2.5, 11], "texture": "#0"},
+				"west": {"uv": [0, 10, 2.5, 11], "texture": "#0"},
+				"up": {"uv": [5.5, 11.5, 8, 14], "texture": "#0"},
+				"down": {"uv": [5.5, 11.5, 8, 14], "texture": "#0"}
+			}
+		}
+	]
+}

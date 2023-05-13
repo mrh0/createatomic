@@ -1,0 +1,22 @@
+{
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "create:crushed_uranium_ore"
+    }
+  ],
+  "results": [
+    {
+      "item": "createatomic:uranium_nugget",
+      "count": 3
+    },
+    {
+      "item": "createatomic:depleted_uranium_nugget",
+      "chance": 0.50
+    },
+    {
+      "item": "createatomic:depleted_uranium_nugget",
+      "chance": 0.50
+    }
+  ]
+}

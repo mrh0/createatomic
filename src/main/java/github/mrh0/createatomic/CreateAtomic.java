@@ -4,10 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import github.mrh0.createatomic.groups.CreateAtomicGroup;
-import github.mrh0.createatomic.index.AtomicBlockEntities;
-import github.mrh0.createatomic.index.AtomicBlocks;
-import github.mrh0.createatomic.index.AtomicBoilerHeaters;
-import github.mrh0.createatomic.index.AtomicItems;
+import github.mrh0.createatomic.index.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
@@ -48,6 +45,7 @@ public class CreateAtomic {
         AtomicBlocks.register();
         AtomicBlockEntities.register();
         AtomicItems.register();
+        AtomicArmInteractionPointTypes.register();
     }
 
     public static CreateRegistrate registrate() {

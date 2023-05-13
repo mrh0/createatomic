@@ -1,0 +1,10 @@
+{
+	"type":"createaddition:rolling",
+	"input": {
+      	"tag": "forge:ingots/uranium"
+	},
+	"result": {
+		"item": "createatomic:refined_uranium_rod",
+		"count": 1
+	}
+}

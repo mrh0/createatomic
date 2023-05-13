@@ -6,9 +6,13 @@ import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.logistics.block.redstone.StockpileSwitchObservable;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
 import github.mrh0.createatomic.debug.IDebugDrawer;
 import github.mrh0.createatomic.index.AtomicBlocks;
+import github.mrh0.createatomic.reactor.IReactor;
+import github.mrh0.createatomic.reactor.MagmaticReactor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,13 +27,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGoggleInformation, IMultiTileReactorContainer, IDebugDrawer, StockpileSwitchObservable {
     public static final int CAPACITY = 0,
@@ -52,13 +54,15 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     private LazyOptional<IEnergyStorage> escacheDown = LazyOptional.empty();
     // protected LazyOptional<ReactorPeripheral> peripheral;
 
+    private IReactor reactor = new MagmaticReactor();
+
     public ReactorCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         updateConnectivity = false;
         height = 1;
         width = 1;
         refreshCapability();
-
+        setLazyTickRate(20);
         //if (CreateAtomic.CC_ACTIVE)
         //    this.peripheral = LazyOptional.of(() -> Peripherals.createReactorPeripheral(this));
     }
@@ -291,7 +295,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         super.invalidate();
     }
 
-    public int getTotalAccumulatorSize() {
+    public int getTotalSize() {
         return width * width * height;
     }
 
@@ -386,19 +390,51 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         return controllerTE.getFillState() * 100f;
     }
 
+    public Pair<Integer, Integer> getRodLevels() {
+        int fuelLevel = 0, controlLevel = 0;
+        int y = getHeight() + getController().getY() + 1;
+        for (int x = 0; x < getWidth(); x++) {
+            for (int z = 0; z < getWidth(); z++) {
+                BlockEntity be = level.getBlockEntity(new BlockPos(x, y, z));
+                if(!(be instanceof RodAssemblyBlockEntity rabe)) continue;
+                fuelLevel += rabe.getFuelLevel();
+                controlLevel += rabe.getControlLevel();
+            }
+        }
+        return Pair.of(fuelLevel, controlLevel);
+    }
+
+    @Override
+    public void lazyTick() {
+        super.lazyTick();
+        var rodLevels = getRodLevels();
+        reactor.reactorTick(getTotalSize(), rodLevels.getFirst(), rodLevels.getSecond(), 1f);
+    }
+
     public boolean hasReactor() {
         return true;
     }
 
     public int getHeat() {
-        return 0;
+        return reactor.getHeat();
     }
 
     public void setHeat(int heat) {
+        reactor.setHeat(heat);
+    }
+
+    public boolean isActive() {
+        return false;
+    }
+
+    public void onRodChange() {
 
     }
 
+    private boolean hasMeltdown = false;
     public void onMeltdown() {
+        if(hasMeltdown) return;
+        hasMeltdown = true;
         BlockPos con = getController();
         if(con == null || level == null) return;
         for(int x = 0; x < getWidth(); x++) {

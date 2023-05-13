@@ -1,6 +1,7 @@
 package github.mrh0.createatomic.groups;
 
 import github.mrh0.createatomic.CreateAtomic;
+import github.mrh0.createatomic.index.AtomicItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -16,6 +17,6 @@ public class CreateAtomicGroup extends CreativeModeTab {
 
 	@Override
 	public @NotNull ItemStack makeIcon() {
-		return new ItemStack(Items.OAK_SAPLING);
+		return AtomicItems.REFINED_URANIUM.asStack();
 	}
 }

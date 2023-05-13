@@ -282,7 +282,7 @@ public class AtomicConnectivityHandler {
 		int maxCapacity = 0;
 		if (be instanceof ReactorCasingBlockEntity reactor && reactor.hasReactor()) {
 			toDistribute = reactor.getHeat();
-			maxCapacity = reactor.getTotalAccumulatorSize();
+			maxCapacity = reactor.getTotalSize();
 			
 			if (!be.isRemoved())
 				reactor.setHeat(reactor.getHeat() - maxCapacity);

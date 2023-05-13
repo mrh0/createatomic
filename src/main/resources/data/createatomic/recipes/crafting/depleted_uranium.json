@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern":
+	["UUU",
+	 "UUU",
+	 "UUU"],
+	"key":
+	{
+		"U":
+		{
+			"item": "createatomic:depleted_uranium_nugget"
+		}
+	},
+	"result":{
+		"item": "createatomic:depleted_uranium",
+		"count": 1
+	}
+}

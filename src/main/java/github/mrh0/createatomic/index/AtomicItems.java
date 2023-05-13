@@ -21,11 +21,11 @@ public class AtomicItems {
             REGISTRATE.item("refined_uranium", Item::new)
                     .register();
 
-    public static final ItemEntry<Item> DEPLEATED_URANIUM =
-            REGISTRATE.item("depleated_uranium", Item::new)
+    public static final ItemEntry<Item> DEPLETED_URANIUM =
+            REGISTRATE.item("depleted_uranium", Item::new)
                     .register();
-    public static final ItemEntry<Item> DEPLEATED_URANIUM_NUGGET =
-            REGISTRATE.item("depleated_uranium_nugget", Item::new)
+    public static final ItemEntry<Item> DEPLETED_URANIUM_NUGGET =
+            REGISTRATE.item("depleted_uranium_nugget", Item::new)
                     .register();
 
     public static final ItemEntry<Item> SMALL_CONTROL_ROD =
@@ -35,11 +35,11 @@ public class AtomicItems {
             REGISTRATE.item("large_control_rod", Item::new)
                     .register();
 
-    public static final ItemEntry<Item> SMALL_FUEL_ROD =
-            REGISTRATE.item("small_fuel_rod", Item::new)
+    public static final ItemEntry<Item> FUEL_ROD =
+            REGISTRATE.item("refined_uranium_rod", Item::new)
                     .register();
-    public static final ItemEntry<Item> LARGE_FUEL_ROD =
-            REGISTRATE.item("large_fuel_rod", Item::new)
+    public static final ItemEntry<Item> DEPLETED_FUEL_ROD =
+            REGISTRATE.item("depleted_uranium_rod", Item::new)
                     .register();
 
     public static void register() {}
