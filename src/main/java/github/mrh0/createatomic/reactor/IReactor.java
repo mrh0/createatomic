@@ -10,7 +10,7 @@ public interface IReactor {
     int getCoolant();
     void setCoolant(int coolant);
     FluidStack extractFluid();
-    void insertFluid(FluidStack stack);
+    FluidStack insertFluid(FluidStack stack);
     ItemStack extractItem();
-    void insertItem(ItemStack stack);
+    ItemStack insertItem(ItemStack stack);
 }

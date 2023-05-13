@@ -1,12 +1,17 @@
 package github.mrh0.createatomic.reactor;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-public class MagmaticReactor implements IReactor{
+public class MagmaticReactor implements IReactor {
+    int reactorSize = 1;
+    int reactorHeat = 0;
+    int reactorCoolant = 0;
     @Override
     public void reactorTick(int size, int fuelRods, int controlCapacity, float controlRodInsertion) {
-
+        reactorSize = size;
     }
 
     @Override
@@ -35,8 +40,8 @@ public class MagmaticReactor implements IReactor{
     }
 
     @Override
-    public void insertFluid(FluidStack stack) {
-
+    public FluidStack insertFluid(FluidStack stack) {
+        return FluidStack.EMPTY;
     }
 
     @Override
@@ -44,8 +49,15 @@ public class MagmaticReactor implements IReactor{
         return null;
     }
 
-    @Override
-    public void insertItem(ItemStack stack) {
+    private int getMaxCoolant() {
+        return reactorSize * 8;
+    }
 
+    @Override
+    public ItemStack insertItem(ItemStack stack) {
+        if(!stack.is(ItemTags.STONE_CRAFTING_MATERIALS)) return stack;
+        int maxInsert = Math.min(stack.getCount(), getMaxCoolant()-reactorCoolant);
+        stack.shrink(maxInsert);
+        return stack;
     }
 }
