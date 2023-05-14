@@ -35,18 +35,18 @@ public class MagmaticReactor implements IReactor {
     }
 
     @Override
-    public FluidStack extractFluid() {
+    public FluidStack extractFluid(boolean simulate) {
         return null;
     }
 
     @Override
-    public FluidStack insertFluid(FluidStack stack) {
+    public FluidStack insertFluid(FluidStack stack, boolean simulate) {
         return FluidStack.EMPTY;
     }
 
     @Override
-    public ItemStack extractItem() {
-        return null;
+    public ItemStack extractItem(boolean simulate) {
+        return ItemStack.EMPTY;
     }
 
     private int getMaxCoolant() {
@@ -54,7 +54,7 @@ public class MagmaticReactor implements IReactor {
     }
 
     @Override
-    public ItemStack insertItem(ItemStack stack) {
+    public ItemStack insertItem(ItemStack stack, boolean simulate) {
         if(!stack.is(ItemTags.STONE_CRAFTING_MATERIALS)) return stack;
         int maxInsert = Math.min(stack.getCount(), getMaxCoolant()-reactorCoolant);
         stack.shrink(maxInsert);

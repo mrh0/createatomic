@@ -11,13 +11,20 @@ import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
 import github.mrh0.createatomic.debug.IDebugDrawer;
 import github.mrh0.createatomic.index.AtomicBlocks;
+import github.mrh0.createatomic.network.IObserveTileEntity;
+import github.mrh0.createatomic.network.ObservePacket;
+import github.mrh0.createatomic.network.SyncReactorPacket;
 import github.mrh0.createatomic.reactor.IReactor;
 import github.mrh0.createatomic.reactor.MagmaticReactor;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,12 +43,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGoggleInformation, IMultiTileReactorContainer, IDebugDrawer, StockpileSwitchObservable {
+public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGoggleInformation, IMultiTileReactorContainer, IDebugDrawer, StockpileSwitchObservable, IObserveTileEntity {
     public static final int CAPACITY = 0,
             MAX_IN = 0,
             MAX_OUT = 0,
             MAX_HEIGHT = 8,
             MAX_WIDTH = 5;
+
+
+    public LazyOptional<IItemHandler> invCap;
 
     protected BlockPos controller;
     protected BlockPos lastKnownPos;
@@ -58,6 +68,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     // protected LazyOptional<ReactorPeripheral> peripheral;
 
     private IReactor reactor = new MagmaticReactor();
+    private float rodInsertion = 1f;
 
     public ReactorCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -68,6 +79,8 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         setLazyTickRate(20);
         //if (CreateAtomic.CC_ACTIVE)
         //    this.peripheral = LazyOptional.of(() -> Peripherals.createReactorPeripheral(this));
+
+        invCap = LazyOptional.of(ReactorStorageHandler::new);
     }
 
     protected void updateConnectivity() {
@@ -289,6 +302,11 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         // if (CreateAtomic.CC_ACTIVE && Peripherals.isPeripheral(cap)) return this.peripheral.cast();
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null)
+            return super.getCapability(cap, side);
+        if (isItemHandlerCap(cap))
+            return controllerTE.invCap.cast();
         return super.getCapability(cap, side);
     }
 
@@ -365,11 +383,30 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        ObservePacket.send(worldPosition, 0);
+
         ReactorCasingBlockEntity controllerTE = getControllerTE();
         if (controllerTE == null)
             return false;
 
-        return true;
+        tooltip.add(new TextComponent(spacing)
+                .append(new TranslatableComponent("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
+
+        tooltip.add(new TextComponent(spacing)
+                .append(new TranslatableComponent("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(new TextComponent(spacing).append(new TextComponent(" "))
+                .append(new TextComponent(SyncReactorPacket.clientHeat+"/9999C°").withStyle(ChatFormatting.AQUA)));
+
+        tooltip.add(new TextComponent(spacing)
+                .append(new TranslatableComponent("createatomic.tooltip.reactor.coolant").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(new TextComponent(spacing).append(" ")
+                .append(SyncReactorPacket.clientCoolant+"").withStyle(ChatFormatting.AQUA));
+
+        return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+    }
+    @Override
+    public void onObserved(ServerPlayer player, ObservePacket pack) {
+        SyncReactorPacket.send(worldPosition, reactor.getHeat(), reactor.getCoolant(), rodInsertion, player);
     }
 
     public void setSize(int reactor, int blocks) {
@@ -427,7 +464,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     }
 
     public boolean isActive() {
-        return false;
+        return rodInsertion > 0f;
     }
 
     public void onRodChange() {
@@ -467,29 +504,29 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         @NotNull
         @Override
         public ItemStack getStackInSlot(int slot) {
-            return null;
+            return ItemStack.EMPTY;
         }
 
         @NotNull
         @Override
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            return null;
+            return reactor.insertItem(stack, simulate);
         }
 
         @NotNull
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return null;
+            return reactor.extractItem(simulate);
         }
 
         @Override
         public int getSlotLimit(int slot) {
-            return 0;
+            return 1;
         }
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return false;
+            return true;
         }
     }
 }

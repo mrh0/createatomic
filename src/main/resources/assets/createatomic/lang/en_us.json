@@ -25,5 +25,8 @@
 	"createatomic.tooltip.rod_assembly.large_control_rod": "Large Control Rod",
 	"createatomic.tooltip.rod_assembly.small_control_rod": "Small Control Rod",
 	"createatomic.tooltip.rod_assembly.depleted_fuel_rod": "Depleted Fuel Rod",
-	"createatomic.tooltip.rod_assembly.fuel_rod": "Fuel Rod"
+	"createatomic.tooltip.rod_assembly.fuel_rod": "Fuel Rod",
+	"createatomic.tooltip.reactor.info": "Info",
+	"createatomic.tooltip.reactor.heat": "Heat",
+	"createatomic.tooltip.reactor.coolant": "Coolant"
 }

@@ -9,8 +9,11 @@ public interface IReactor {
     void setHeat(int heat);
     int getCoolant();
     void setCoolant(int coolant);
-    FluidStack extractFluid();
-    FluidStack insertFluid(FluidStack stack);
-    ItemStack extractItem();
-    ItemStack insertItem(ItemStack stack);
+    FluidStack extractFluid(boolean simulate);
+    FluidStack insertFluid(FluidStack stack, boolean simulate);
+    ItemStack extractItem(boolean simulate);
+    ItemStack insertItem(ItemStack stack, boolean simulate);
+    default boolean isActive() {
+        return getHeat() > 0;
+    }
 }

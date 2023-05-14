@@ -5,15 +5,17 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import github.mrh0.createatomic.groups.CreateAtomicGroup;
 import github.mrh0.createatomic.index.*;
+import github.mrh0.createatomic.network.ObservePacket;
+import github.mrh0.createatomic.network.SyncReactorPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
-
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreateAtomic.MODID)
@@ -22,6 +24,13 @@ public class CreateAtomic {
     public static final String MODID = "createatomic";
 
     private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CreateAtomic.MODID);
+
+    private static final String PROTOCOL = "1";
+    public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main"))
+            .clientAcceptedVersions(PROTOCOL::equals)
+            .serverAcceptedVersions(PROTOCOL::equals)
+            .networkProtocolVersion(() -> PROTOCOL)
+            .simpleChannel();
 
     public static boolean CC_ACTIVE = false;
 
@@ -66,6 +75,10 @@ public class CreateAtomic {
     }
 
     public void postInit(FMLLoadCompleteEvent evt) {
+        int i = 0;
+        Network.registerMessage(i++, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
+        Network.registerMessage(i++, SyncReactorPacket.class, SyncReactorPacket::encode, SyncReactorPacket::decode, SyncReactorPacket::handle);
+
         System.out.println("Create: Atomic Initialized!");
     }
 }
