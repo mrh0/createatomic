@@ -14,8 +14,6 @@ import github.mrh0.createatomic.index.AtomicBlocks;
 import github.mrh0.createatomic.network.IObserveTileEntity;
 import github.mrh0.createatomic.network.ObservePacket;
 import github.mrh0.createatomic.network.SyncReactorPacket;
-import github.mrh0.createatomic.reactor.IReactor;
-import github.mrh0.createatomic.reactor.MagmaticReactor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +33,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,12 +59,10 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     private static final int SYNC_RATE = 8;
     protected int syncCooldown;
     protected boolean queuedSync;
-
-    private LazyOptional<IEnergyStorage> escacheUp = LazyOptional.empty();
-    private LazyOptional<IEnergyStorage> escacheDown = LazyOptional.empty();
     // protected LazyOptional<ReactorPeripheral> peripheral;
 
-    private IReactor reactor = new MagmaticReactor();
+    private int reactorHeat = 0;
+    private int reactorCoolant = 0;
     private float rodInsertion = 1f;
 
     public ReactorCasingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -222,6 +217,12 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     }
 
     @Override
+    public void remove() {
+        invCap.invalidate();
+        super.remove();
+    }
+
+    @Override
     public BlockPos getController() {
         return isController() ? worldPosition : controller;
     }
@@ -301,12 +302,8 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        // if (CreateAtomic.CC_ACTIVE && Peripherals.isPeripheral(cap)) return this.peripheral.cast();
-        ReactorCasingBlockEntity controllerTE = getControllerTE();
-        if (controllerTE == null)
-            return super.getCapability(cap, side);
         if (isItemHandlerCap(cap))
-            return controllerTE.invCap.cast();
+            return invCap.cast();
         return super.getCapability(cap, side);
     }
 
@@ -317,7 +314,9 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     }
 
     public int getTotalSize() {
-        return width * width * height;
+        var con = getControllerTE();
+        if(con == null) return 1;
+        return con.width * con.width * con.height;
     }
 
     public static int getMaxHeight() {
@@ -386,8 +385,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         ObservePacket.send(worldPosition, 0);
 
         ReactorCasingBlockEntity controllerTE = getControllerTE();
-        if (controllerTE == null)
-            return false;
+        if (controllerTE == null) return false;
 
         tooltip.add(new TextComponent(spacing)
                 .append(new TranslatableComponent("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
@@ -395,18 +393,22 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         tooltip.add(new TextComponent(spacing)
                 .append(new TranslatableComponent("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
         tooltip.add(new TextComponent(spacing).append(new TextComponent(" "))
-                .append(new TextComponent(SyncReactorPacket.clientHeat+"/9999C°").withStyle(ChatFormatting.AQUA)));
+                .append(new TextComponent(SyncReactorPacket.clientHeat + "/" + getMaxHeat() + "T").withStyle(ChatFormatting.AQUA)));
 
         tooltip.add(new TextComponent(spacing)
                 .append(new TranslatableComponent("createatomic.tooltip.reactor.coolant").withStyle(ChatFormatting.GRAY)));
         tooltip.add(new TextComponent(spacing).append(" ")
-                .append(SyncReactorPacket.clientCoolant+"").withStyle(ChatFormatting.AQUA));
+                .append(SyncReactorPacket.clientCoolant + "/" + getMaxCoolant() + "U").withStyle(ChatFormatting.AQUA));
 
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
+
     @Override
     public void onObserved(ServerPlayer player, ObservePacket pack) {
-        SyncReactorPacket.send(worldPosition, reactor.getHeat(), reactor.getCoolant(), rodInsertion, player);
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null) return;
+        System.out.println("Observed " + getHeat() + ":" + getCoolant());
+        SyncReactorPacket.send(worldPosition, getHeat(), getCoolant(), controllerTE.rodInsertion, player);
     }
 
     public void setSize(int reactor, int blocks) {
@@ -447,8 +449,10 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     @Override
     public void lazyTick() {
         super.lazyTick();
+        if(!isController()) return;
         var rodLevels = getRodLevels();
-        reactor.reactorTick(getTotalSize(), rodLevels.getFirst(), rodLevels.getSecond(), 1f);
+
+        // Tick
     }
 
     public boolean hasReactor() {
@@ -456,11 +460,27 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     }
 
     public int getHeat() {
-        return reactor.getHeat();
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null) return 0;
+        return controllerTE.reactorHeat;
     }
 
     public void setHeat(int heat) {
-        reactor.setHeat(heat);
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null) return;
+        controllerTE.reactorHeat = heat;
+    }
+
+    public int getCoolant() {
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null) return 0;
+        return controllerTE.reactorCoolant;
+    }
+
+    public void setCoolant(int coolant) {
+        ReactorCasingBlockEntity controllerTE = getControllerTE();
+        if (controllerTE == null) return;
+        controllerTE.reactorCoolant = coolant;
     }
 
     public boolean isActive() {
@@ -494,11 +514,19 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         }
     }
 
+    public int getMaxHeat() {
+        return getTotalSize() * 64;
+    }
+
+    public int getMaxCoolant() {
+        return getTotalSize() * 8;
+    }
+
     public class ReactorStorageHandler implements IItemHandler {
 
         @Override
         public int getSlots() {
-            return 0;
+            return 1;
         }
 
         @NotNull
@@ -507,21 +535,26 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
             return ItemStack.EMPTY;
         }
 
-        @NotNull
-        @Override
-        public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            return reactor.insertItem(stack, simulate);
-        }
 
         @NotNull
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return reactor.extractItem(simulate);
+            return ItemStack.EMPTY;
+        }
+
+        @NotNull
+        @Override
+        public ItemStack insertItem(int slot,ItemStack stack, boolean simulate) {
+            //if(!stack.is(ItemTags.STONE_CRAFTING_MATERIALS)) return stack;
+            int maxInsert = Math.min(stack.getCount(), getMaxCoolant()-getCoolant());
+            setCoolant(getCoolant() + maxInsert);
+            stack.shrink(maxInsert);
+            return stack.copy();
         }
 
         @Override
         public int getSlotLimit(int slot) {
-            return 1;
+            return 64;
         }
 
         @Override
