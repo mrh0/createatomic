@@ -18,23 +18,21 @@ public class RodAssemblyBlockEntity extends SmartTileEntity implements IHaveGogg
         super(type, pos, state);
     }
 
-    private ItemStack currentRod = ItemStack.EMPTY;
-
     @Override
     public void addBehaviours(List<TileEntityBehaviour> list) {
 
     }
 
     public ItemStack getCurrentRod() {
-        return currentRod;
+        return ItemStack.EMPTY;
     }
 
     public int getControlLevel() {
-        return RodConfiguration.fromStack(currentRod).getControlLevel();
+        return getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE).orElse(RodConfiguration.None).getControlLevel();
     }
 
     public int getFuelLevel() {
-        return RodConfiguration.fromStack(currentRod).getFuelLevel();
+        return getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE).orElse(RodConfiguration.None).getFuelLevel();
     }
 
     public void updateRod(ItemStack stack) {
@@ -42,7 +40,11 @@ public class RodAssemblyBlockEntity extends SmartTileEntity implements IHaveGogg
 
         RodConfiguration newState = RodConfiguration.fromStack(stack);
         RodAssemblyBlock.setRodState(stack, newState, getLevel(), getBlockPos());
-        currentRod = stack;
+        //currentRod = stack;
+    }
+
+    public void tickRod() {
+
     }
 
     public void notifyReactor() {

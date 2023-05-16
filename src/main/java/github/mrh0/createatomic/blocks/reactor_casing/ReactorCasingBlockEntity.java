@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -407,7 +408,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
     public void onObserved(ServerPlayer player, ObservePacket pack) {
         ReactorCasingBlockEntity controllerTE = getControllerTE();
         if (controllerTE == null) return;
-        System.out.println("Observed " + getHeat() + ":" + getCoolant());
+        //System.out.println("Observed " + getHeat() + ":" + getCoolant());
         SyncReactorPacket.send(worldPosition, getHeat(), getCoolant(), controllerTE.rodInsertion, player);
     }
 
@@ -432,27 +433,48 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         return controllerTE.getFillState() * 100f;
     }
 
-    public Pair<Integer, Integer> getRodLevels() {
+    public Pair<Integer, Integer> getRodLevels(boolean tick) {
         int fuelLevel = 0, controlLevel = 0;
-        int y = getHeight() + getController().getY() + 1;
         for (int x = 0; x < getWidth(); x++) {
             for (int z = 0; z < getWidth(); z++) {
-                BlockEntity be = level.getBlockEntity(new BlockPos(x, y, z));
+                var pos = getController().offset(x, getHeight(), z);
+                BlockEntity be = level.getBlockEntity(pos);
                 if(!(be instanceof RodAssemblyBlockEntity rabe)) continue;
                 fuelLevel += rabe.getFuelLevel();
                 controlLevel += rabe.getControlLevel();
+                if(tick) rabe.tickRod();
             }
         }
         return Pair.of(fuelLevel, controlLevel);
     }
 
+    int cachedFuelRodLevel;
+    int cachedControlRodLevel;
     @Override
     public void lazyTick() {
         super.lazyTick();
         if(!isController()) return;
-        var rodLevels = getRodLevels();
+        var rodLevels = getRodLevels(true);
+        cachedFuelRodLevel = rodLevels.getFirst();
+        cachedControlRodLevel = rodLevels.getSecond();
+        reactorTick(cachedFuelRodLevel, cachedControlRodLevel);
+    }
 
-        // Tick
+    private void reactorTick(int fuelLevel, int controlLevel) {
+        /*
+        * Fuel Rod +3 heat
+        * Control Rod -1 heat
+        * -1 * coolant where < size
+        * meltdown: heat > 25 * size
+        * */
+
+        setHeat(Math.max(getHeat() + fuelLevel*3 - controlLevel, 0));
+        if(getHeat() > 25*getTotalSize()) onMeltdown();
+
+        int usedCoolant = Math.min(Math.min(getHeat(), getCoolant()), getTotalSize());
+        setCoolant(getCoolant()-usedCoolant);
+
+        System.out.println("reactorTick " + getHeat() + "T |" + getCoolant() + "U |" + fuelLevel + "F |" + controlLevel + "C");
     }
 
     public boolean hasReactor() {
@@ -498,7 +520,7 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
         BlockPos con = getController();
         if(con == null || level == null) return;
         for(int x = 0; x < getWidth(); x++) {
-            for(int y = 0; y < getHeight(); y++) {
+            for(int y = 0; y < getHeight()+1; y++) {
                 for(int z = 0; z < getWidth(); z++) {
                     int i = (int)(Math.random()*3d);
                     switch (i) {
@@ -507,6 +529,9 @@ public class ReactorCasingBlockEntity extends SmartTileEntity implements IHaveGo
                             break;
                         case 1:
                             level.setBlock(con.offset(x, y, z), AtomicBlocks.REACTOR_DEBRIS.getDefaultState(), Block.UPDATE_ALL);
+                            break;
+                        case 2:
+                            level.setBlock(con.offset(x, y, z), Blocks.OBSIDIAN.defaultBlockState(), Block.UPDATE_ALL);
                             break;
                     }
                 }
