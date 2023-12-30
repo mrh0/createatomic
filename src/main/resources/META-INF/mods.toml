@@ -51,23 +51,22 @@ the Create team, the Forge team, and all contributors on the CC&A discord.
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
 [[dependencies.createatomic]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.0h,0.6.0)"
+    versionRange="[0.5.1.e,0.5.2)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.createatomic]]
     modId="flywheel"
     mandatory=true
-    versionRange="[0.6,0.7)"
+    versionRange="[0.6.9.a,0.7)"
     ordering="AFTER"
     side="CLIENT"
 [[dependencies.createatomic]]
     modId="jei"
     mandatory=false
-    versionRange="[9.7.0.0,)"
+    versionRange="[15.0.0.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.createatomic]]
@@ -80,6 +79,6 @@ the Create team, the Forge team, and all contributors on the CC&A discord.
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.18.2,1.19)"
+    versionRange="[1.20.1,1.21)"
     ordering="NONE"
     side="BOTH"

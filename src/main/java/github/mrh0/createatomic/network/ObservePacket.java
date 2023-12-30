@@ -26,19 +26,14 @@ public class ObservePacket {
     }
 	
 	public static ObservePacket decode(FriendlyByteBuf buf) {
-		ObservePacket scp = new ObservePacket(buf.readBlockPos(), buf.readInt());
-        return scp;
+		return new ObservePacket(buf.readBlockPos(), buf.readInt());
     }
 	
 	public static void handle(ObservePacket pkt, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			try {
 				ServerPlayer player = ctx.get().getSender();
-				
-				if (player != null) {
-					sendUpdate(pkt, player);
-				}
-			
+				if (player != null) sendUpdate(pkt, player);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -48,27 +43,23 @@ public class ObservePacket {
 	}
 	
 	private static void sendUpdate(ObservePacket pkt, ServerPlayer player) {
-		BlockEntity te = player.level.getBlockEntity(pkt.pos);
-        if (te != null) {
-        	if(te instanceof IObserveTileEntity ote) {
-	        	ote.onObserved(player, pkt);
-	            Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();
-	            if (supdatetileentitypacket != null)
-	                player.connection.send(supdatetileentitypacket);
-        	}
-        }
+		BlockEntity te = player.level().getBlockEntity(pkt.pos);
+		if(te instanceof IObserveBlockEntity ote) {
+			ote.onObserved(player, pkt);
+			Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();
+			if (supdatetileentitypacket != null)
+				player.connection.send(supdatetileentitypacket);
+		}
     }
 	
 	private static int cooldown = 0;
 	public static void tick() {
 		cooldown--;
-		if(cooldown < 0)
-			cooldown = 0;
+		if(cooldown < 0) cooldown = 0;
 	}
 	
 	public static boolean send(BlockPos pos, int node) {
-		if(cooldown > 0)
-			return false;
+		if(cooldown > 0) return false;
 		cooldown = 10;
 		CreateAtomic.Network.sendToServer(new ObservePacket(pos, node));
 		return true;

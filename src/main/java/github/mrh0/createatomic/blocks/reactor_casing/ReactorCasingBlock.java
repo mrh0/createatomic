@@ -1,12 +1,10 @@
 package github.mrh0.createatomic.blocks.reactor_casing;
 
-import com.google.common.collect.ImmutableMap;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.tileEntity.ComparatorUtil;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -31,7 +28,7 @@ import net.minecraftforge.common.util.ForgeSoundType;
 
 import java.util.function.Function;
 
-public class ReactorCasingBlock extends Block implements IWrenchable, ITE<ReactorCasingBlockEntity> {
+public class ReactorCasingBlock extends Block implements IWrenchable, IBE<ReactorCasingBlockEntity> {
 
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
@@ -58,7 +55,7 @@ public class ReactorCasingBlock extends Block implements IWrenchable, ITE<Reacto
             return;
         if (moved)
             return;
-        withTileEntityDo(world, pos, ReactorCasingBlockEntity::updateConnectivity);
+        withBlockEntityDo(world, pos, ReactorCasingBlockEntity::updateConnectivity);
     }
 
     @Override
@@ -100,12 +97,12 @@ public class ReactorCasingBlock extends Block implements IWrenchable, ITE<Reacto
     }
 
     @Override
-    public Class<ReactorCasingBlockEntity> getTileEntityClass() {
+    public Class<ReactorCasingBlockEntity> getBlockEntityClass() {
         return ReactorCasingBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends ReactorCasingBlockEntity> getTileEntityType() {
+    public BlockEntityType<? extends ReactorCasingBlockEntity> getBlockEntityType() {
         return AtomicBlockEntities.REACTOR_CASING.get();
     }
 
@@ -130,7 +127,7 @@ public class ReactorCasingBlock extends Block implements IWrenchable, ITE<Reacto
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        return getTileEntityOptional(worldIn, pos).map(ReactorCasingBlockEntity::getControllerTE)
+        return getBlockEntityOptional(worldIn, pos).map(ReactorCasingBlockEntity::getControllerBE)
                 .map(te -> ComparatorUtil.fractionToRedstoneLevel(te.getFillState()))
                 .orElse(0);
     }

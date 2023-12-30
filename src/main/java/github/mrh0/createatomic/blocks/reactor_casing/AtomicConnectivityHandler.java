@@ -1,6 +1,6 @@
 package github.mrh0.createatomic.blocks.reactor_casing;
 
-import com.simibubi.create.foundation.tileEntity.IMultiTileContainer;
+import com.simibubi.create.foundation.blockEntity.IMultiBlockEntityContainer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -16,14 +16,14 @@ import java.util.*;
 
 public class AtomicConnectivityHandler {
 
-	public static <T extends BlockEntity & IMultiTileContainer> void formMulti(T be) {
+	public static <T extends BlockEntity & IMultiBlockEntityContainer> void formMulti(T be) {
 		SearchCache<T> cache = new SearchCache<>();
 		List<T> frontier = new ArrayList<>();
 		frontier.add(be);
 		formMulti(be.getType(), be.getLevel(), cache, frontier);
 	}
 
-	private static <T extends BlockEntity & IMultiTileContainer> void formMulti(BlockEntityType<?> type,
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> void formMulti(BlockEntityType<?> type,
 		BlockGetter level, SearchCache<T> cache, List<T> frontier) {
 		PriorityQueue<Pair<Integer, T>> creationQueue = makeCreationQueue();
 		Set<BlockPos> visited = new HashSet<>();
@@ -95,7 +95,7 @@ public class AtomicConnectivityHandler {
 		}
 	}
 
-	private static <T extends BlockEntity & IMultiTileContainer> int tryToFormNewMulti(T be, SearchCache<T> cache,
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> int tryToFormNewMulti(T be, SearchCache<T> cache,
 		boolean simulate) {
 		int bestWidth = 1;
 		int bestAmount = -1;
@@ -130,7 +130,7 @@ public class AtomicConnectivityHandler {
 		return bestAmount;
 	}
 
-	private static <T extends BlockEntity & IMultiTileContainer> int tryToFormNewMultiOfWidth(T be, int width,
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> int tryToFormNewMultiOfWidth(T be, int width,
 		SearchCache<T> cache, boolean simulate) {
 		int amount = 0;
 		int height = 0;
@@ -253,18 +253,18 @@ public class AtomicConnectivityHandler {
 		return amount;
 	}
 
-	public static <T extends BlockEntity & IMultiTileContainer> void splitMulti(T be) {
+	public static <T extends BlockEntity & IMultiBlockEntityContainer> void splitMulti(T be) {
 		splitMultiAndInvalidate(be, null, false);
 	}
 
 	// tryReconnect helps whenever only a few tanks have been removed
-	private static <T extends BlockEntity & IMultiTileContainer> void splitMultiAndInvalidate(T be,
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> void splitMultiAndInvalidate(T be,
 		@Nullable SearchCache<T> cache, boolean tryReconnect) {
 		Level level = be.getLevel();
 		if (level == null)
 			return;
 
-		be = be.getControllerTE();
+		be = be.getControllerBE();
 		if (be == null)
 			return;
 
@@ -306,7 +306,7 @@ public class AtomicConnectivityHandler {
 						.equals(origin))
 						continue;
 
-					T controllerBE = partAt.getControllerTE();
+					T controllerBE = partAt.getControllerBE();
 					partAt.setExtraData((controllerBE == null ? null : controllerBE.getExtraData()));
 					partAt.removeController(true);
 
@@ -336,19 +336,19 @@ public class AtomicConnectivityHandler {
 		}
 		
 		if (be instanceof ReactorCasingBlockEntity ienergy && ienergy.hasReactor())
-			be.getCapability(CapabilityEnergy.ENERGY)
+			be.getCapability(ForgeCapabilities.ENERGY)
 				.invalidate();
 		
 		if (tryReconnect)
 			formMulti(be.getType(), level, cache == null ? new SearchCache<>() : cache, frontier);
 	}
 
-	private static <T extends BlockEntity & IMultiTileContainer> PriorityQueue<Pair<Integer, T>> makeCreationQueue() {
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> PriorityQueue<Pair<Integer, T>> makeCreationQueue() {
 		return new PriorityQueue<>((one, two) -> two.getKey() - one.getKey());
 	}
 
 	@Nullable
-	public static <T extends BlockEntity & IMultiTileContainer> T partAt(BlockEntityType<?> type, BlockGetter level,
+	public static <T extends BlockEntity & IMultiBlockEntityContainer> T partAt(BlockEntityType<?> type, BlockGetter level,
 		BlockPos pos) {
 		BlockEntity be = level.getBlockEntity(pos);
 		if (be != null && be.getType() == type && !be.isRemoved())
@@ -358,13 +358,13 @@ public class AtomicConnectivityHandler {
 
 	@Nullable
 	@SuppressWarnings("unchecked")
-	private static <T extends BlockEntity & IMultiTileContainer> T checked(BlockEntity be) {
-		if (be instanceof IMultiTileContainer)
+	private static <T extends BlockEntity & IMultiBlockEntityContainer> T checked(BlockEntity be) {
+		if (be instanceof IMultiBlockEntityContainer)
 			return (T) be;
 		return null;
 	}
 
-	private static class SearchCache<T extends BlockEntity & IMultiTileContainer> {
+	private static class SearchCache<T extends BlockEntity & IMultiBlockEntityContainer> {
 		Map<BlockPos, Optional<T>> controllerMap;
 
 		public SearchCache() {

@@ -1,6 +1,6 @@
 package github.mrh0.createatomic.blocks.reactor_casing;
 
-import com.simibubi.create.foundation.tileEntity.IMultiTileContainer;
+import com.simibubi.create.foundation.blockEntity.IMultiBlockEntityContainer;
 
-public interface IMultiTileReactorContainer extends IMultiTileContainer {
+public interface IMultiTileReactorContainer extends IMultiBlockEntityContainer {
 }

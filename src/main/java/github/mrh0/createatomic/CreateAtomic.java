@@ -2,13 +2,12 @@ package github.mrh0.createatomic;
 
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import github.mrh0.createatomic.groups.CreateAtomicGroup;
 import github.mrh0.createatomic.index.*;
 import github.mrh0.createatomic.network.ObservePacket;
 import github.mrh0.createatomic.network.SyncReactorPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
@@ -20,10 +19,9 @@ import org.slf4j.Logger;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreateAtomic.MODID)
 public class CreateAtomic {
-
     public static final String MODID = "createatomic";
 
-    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CreateAtomic.MODID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CreateAtomic.MODID);
 
     private static final String PROTOCOL = "1";
     public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main"))
@@ -45,20 +43,17 @@ public class CreateAtomic {
         //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         // Register ourselves for server and other game events we are interested in
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
 
         CC_ACTIVE = ModList.get().isLoaded("computercraft");
 
-        new CreateAtomicGroup("main");
-
+        AtomicCreativeModeTabs.register(eventBus);
+        REGISTRATE.registerEventListeners(eventBus);
         AtomicBlocks.register();
         AtomicBlockEntities.register();
         AtomicItems.register();
         AtomicArmInteractionPointTypes.register();
-    }
-
-    public static CreateRegistrate registrate() {
-        return registrate.get();
     }
 
     public static ResourceLocation asResource(String path) {
@@ -66,18 +61,15 @@ public class CreateAtomic {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // BlockStressValues.registerProvider(MODID, AllConfigs.SERVER.kinetics.stressValues);
+        //BlockStressValues.registerProvider(MODID, AllConfigs.SERVER.kinetics.stressValues);
         AtomicBoilerHeaters.register();
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-
-    }
+    private void doClientStuff(final FMLClientSetupEvent event) {}
 
     public void postInit(FMLLoadCompleteEvent evt) {
-        int i = 0;
-        Network.registerMessage(i++, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
-        Network.registerMessage(i++, SyncReactorPacket.class, SyncReactorPacket::encode, SyncReactorPacket::decode, SyncReactorPacket::handle);
+        Network.registerMessage(0, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
+        Network.registerMessage(1, SyncReactorPacket.class, SyncReactorPacket::encode, SyncReactorPacket::decode, SyncReactorPacket::handle);
 
         System.out.println("Create: Atomic Initialized!");
     }

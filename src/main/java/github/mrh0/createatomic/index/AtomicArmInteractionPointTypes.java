@@ -1,15 +1,14 @@
 package github.mrh0.createatomic.index;
 
-import com.simibubi.create.content.logistics.block.mechanicalArm.AllArmInteractionPointTypes;
-import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
-import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPointType;
+import com.simibubi.create.content.kinetics.mechanicalArm.AllArmInteractionPointTypes;
+import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
+import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import github.mrh0.createatomic.CreateAtomic;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
 import github.mrh0.createatomic.blocks.rod_assembly.RodConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,7 +38,6 @@ public class AtomicArmInteractionPointTypes {
         @Override
         public ArmInteractionPoint createPoint(Level level, BlockPos pos, BlockState state) {
             return new RodAssemblyPoint(this, level, pos, state);
-
         }
     }
 

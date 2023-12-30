@@ -1,6 +1,6 @@
 package github.mrh0.createatomic.index;
 
-import com.simibubi.create.content.contraptions.fluids.tank.BoilerHeaters;
+import com.simibubi.create.content.fluids.tank.BoilerHeaters;
 
 public class AtomicBoilerHeaters {
     public static void register() {

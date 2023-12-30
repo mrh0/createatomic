@@ -67,7 +67,7 @@ public class ReactorCasingBlockItem extends BlockItem {
 		ReactorCasingBlockEntity accumulatorAt = AtomicConnectivityHandler.partAt(AtomicBlockEntities.REACTOR_CASING.get(), world, placedOnPos);
 		if (accumulatorAt == null)
 			return;
-		ReactorCasingBlockEntity controllerTE = accumulatorAt.getControllerTE();
+		ReactorCasingBlockEntity controllerTE = accumulatorAt.getControllerBE();
 		if (controllerTE == null)
 			return;
 
@@ -90,9 +90,7 @@ public class ReactorCasingBlockItem extends BlockItem {
 				BlockState blockState = world.getBlockState(offsetPos);
 				if (ReactorCasingBlock.isReactor(blockState))
 					continue;
-				if (!blockState.getMaterial()
-					.isReplaceable())
-					return;
+				if (!blockState.canBeReplaced()) return;
 				blocksToPlace++;
 			}
 		}

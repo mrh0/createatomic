@@ -1,8 +1,8 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.index.AtomicItems;
 import net.minecraft.core.BlockPos;
@@ -13,13 +13,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class RodAssemblyBlockEntity extends SmartTileEntity implements IHaveGoggleInformation {
+public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     public RodAssemblyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> list) {
+    public void addBehaviours(List<BlockEntityBehaviour> list) {
 
     }
 
@@ -49,7 +49,7 @@ public class RodAssemblyBlockEntity extends SmartTileEntity implements IHaveGogg
 
     public void notifyReactor() {
         if(!(level.getBlockEntity(getBlockPos().above()) instanceof ReactorCasingBlockEntity rcbe)) return;
-        var con = rcbe.getControllerTE();
+        var con = rcbe.getControllerBE();
         if(con == null) return;
         con.onMeltdown();
     }

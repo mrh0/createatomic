@@ -1,8 +1,8 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
 import github.mrh0.createatomic.index.AtomicItems;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,15 +28,15 @@ public enum RodConfiguration implements StringRepresentable {
     public MutableComponent getTooltip() {
         switch (this) {
             case SmallControlRod:
-                return new TranslatableComponent("createatomic.tooltip.rod_assembly.small_control_rod");
+                return Component.literal("createatomic.tooltip.rod_assembly.small_control_rod");
             case LargeControlRod:
-                return new TranslatableComponent("createatomic.tooltip.rod_assembly.large_control_rod");
+                return Component.literal("createatomic.tooltip.rod_assembly.large_control_rod");
             case FuelRod:
-                return new TranslatableComponent("createatomic.tooltip.rod_assembly.fuel_rod");
+                return Component.literal("createatomic.tooltip.rod_assembly.fuel_rod");
             case DepletedFuelRod:
-                return new TranslatableComponent("createatomic.tooltip.rod_assembly.depleted_fuel_rod");
+                return Component.literal("createatomic.tooltip.rod_assembly.depleted_fuel_rod");
         }
-        return new TranslatableComponent("createatomic.tooltip.rod_assembly.none");
+        return Component.literal("createatomic.tooltip.rod_assembly.none");
     }
 
     public ItemStack asStack() {

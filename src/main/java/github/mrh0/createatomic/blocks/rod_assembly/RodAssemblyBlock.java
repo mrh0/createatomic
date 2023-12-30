@@ -1,10 +1,9 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.IBE;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import github.mrh0.createatomic.index.AtomicBlocks;
-import github.mrh0.createatomic.index.AtomicItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +22,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class RodAssemblyBlock extends Block implements IWrenchable, ITE<RodAssemblyBlockEntity> {
+public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssemblyBlockEntity> {
 
     public static final EnumProperty<RodConfiguration> ROD_STATE = EnumProperty.create("rod", RodConfiguration.class);
     public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
@@ -75,12 +74,12 @@ public class RodAssemblyBlock extends Block implements IWrenchable, ITE<RodAssem
     }
 
     @Override
-    public Class<RodAssemblyBlockEntity> getTileEntityClass() {
+    public Class<RodAssemblyBlockEntity> getBlockEntityClass() {
         return RodAssemblyBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends RodAssemblyBlockEntity> getTileEntityType() {
+    public BlockEntityType<? extends RodAssemblyBlockEntity> getBlockEntityType() {
         return AtomicBlockEntities.ROD_ASSEMBLY.get();
     }
 }
