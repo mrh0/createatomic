@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IMultiTileReactorContainer, IDebugDrawer, ThresholdSwitchObservable, IObserveBlockEntity {
+public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IMultiBlockEntityReactorContainer, IDebugDrawer, ThresholdSwitchObservable, IObserveBlockEntity {
     public static final int CAPACITY = 0,
             MAX_IN = 0,
             MAX_OUT = 0,
@@ -461,7 +461,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         int usedCoolant = Math.min(Math.min(getHeat(), getCoolant()), getTotalSize());
         setCoolant(getCoolant()-usedCoolant);
 
-        System.out.println("reactorTick " + getHeat() + "T |" + getCoolant() + "U |" + fuelLevel + "F |" + controlLevel + "C");
+        //System.out.println("reactorTick " + getHeat() + "T |" + getCoolant() + "U |" + fuelLevel + "F |" + controlLevel + "C");
     }
 
     public boolean hasReactor() {
@@ -481,9 +481,9 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     }
 
     public int getCoolant() {
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return 0;
-        return controllerTE.reactorCoolant;
+        ReactorCasingBlockEntity controllerBE = getControllerBE();
+        if (controllerBE == null) return 0;
+        return controllerBE.reactorCoolant;
     }
 
     public void setCoolant(int coolant) {

@@ -24,8 +24,7 @@ public class ReactorCasingBlockItem extends BlockItem {
 	@Override
 	public InteractionResult place(BlockPlaceContext ctx) {
 		InteractionResult initialResult = super.place(ctx);
-		if (!initialResult.consumesAction())
-			return initialResult;
+		if (!initialResult.consumesAction()) return initialResult;
 		tryMultiPlace(ctx);
 		return initialResult;
 	}
@@ -34,8 +33,7 @@ public class ReactorCasingBlockItem extends BlockItem {
 	protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player,
 		ItemStack stack, BlockState state) {
 		MinecraftServer minecraftserver = level.getServer();
-		if (minecraftserver == null)
-			return false;
+		if (minecraftserver == null) return false;
 		CompoundTag nbt = stack.getTagElement("BlockEntityTag");
 		if (nbt != null) {
 			nbt.remove("Size");
@@ -48,62 +46,50 @@ public class ReactorCasingBlockItem extends BlockItem {
 
 	private void tryMultiPlace(BlockPlaceContext ctx) {
 		Player player = ctx.getPlayer();
-		if (player == null)
-			return;
-		if (player.isShiftKeyDown())
-			return;
+		if (player == null) return;
+		if (player.isShiftKeyDown()) return;
 		Direction face = ctx.getClickedFace();
-		if (!face.getAxis()
-			.isVertical())
-			return;
+		if (!face.getAxis().isVertical()) return;
 		ItemStack stack = ctx.getItemInHand();
 		Level world = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
 		BlockPos placedOnPos = pos.relative(face.getOpposite());
 		BlockState placedOnState = world.getBlockState(placedOnPos);
 
-		if (!ReactorCasingBlock.isReactor(placedOnState))
-			return;
-		ReactorCasingBlockEntity accumulatorAt = AtomicConnectivityHandler.partAt(AtomicBlockEntities.REACTOR_CASING.get(), world, placedOnPos);
-		if (accumulatorAt == null)
-			return;
-		ReactorCasingBlockEntity controllerTE = accumulatorAt.getControllerBE();
-		if (controllerTE == null)
-			return;
+		if (!ReactorCasingBlock.isReactor(placedOnState)) return;
+		ReactorCasingBlockEntity reactorAt = AtomicConnectivityHandler.partAt(AtomicBlockEntities.REACTOR_CASING.get(), world, placedOnPos);
+		if (reactorAt == null) return;
+		ReactorCasingBlockEntity controllerBE = reactorAt.getControllerBE();
+		if (controllerBE == null) return;
 
-		int width = controllerTE.width;
-		if (width == 1)
-			return;
+		int width = controllerBE.width;
+		if (width == 1) return;
 
 		int blocksToPlace = 0;
-		BlockPos startPos = face == Direction.DOWN ? controllerTE.getBlockPos()
+		BlockPos startPos = face == Direction.DOWN ? controllerBE.getBlockPos()
 			.below()
-			: controllerTE.getBlockPos()
-				.above(controllerTE.height);
+			: controllerBE.getBlockPos()
+				.above(controllerBE.height);
 
-		if (startPos.getY() != pos.getY())
-			return;
+		if (startPos.getY() != pos.getY()) return;
 
 		for (int xOffset = 0; xOffset < width; xOffset++) {
 			for (int zOffset = 0; zOffset < width; zOffset++) {
 				BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
 				BlockState blockState = world.getBlockState(offsetPos);
-				if (ReactorCasingBlock.isReactor(blockState))
-					continue;
+				if (ReactorCasingBlock.isReactor(blockState)) continue;
 				if (!blockState.canBeReplaced()) return;
 				blocksToPlace++;
 			}
 		}
 
-		if (!player.isCreative() && stack.getCount() < blocksToPlace)
-			return;
+		if (!player.isCreative() && stack.getCount() < blocksToPlace) return;
 
 		for (int xOffset = 0; xOffset < width; xOffset++) {
 			for (int zOffset = 0; zOffset < width; zOffset++) {
 				BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
 				BlockState blockState = world.getBlockState(offsetPos);
-				if (ReactorCasingBlock.isReactor(blockState))
-					continue;
+				if (ReactorCasingBlock.isReactor(blockState)) continue;
 				BlockPlaceContext context = BlockPlaceContext.at(ctx, offsetPos, face);
 				player.getPersistentData()
 					.putBoolean("SilenceTankSound", true);

@@ -9,6 +9,7 @@ import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockItem;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingCTBehaviour;
 import github.mrh0.createatomic.blocks.reactor_debris.ReactorDebrisBlock;
+import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +62,7 @@ public class AtomicBlocks {
     public static final BlockEntry<RodAssemblyBlock> ROD_ASSEMBLY = CreateAtomic.REGISTRATE.block("rod_assembly",  RodAssemblyBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY))
-            .item()
+            .item(RodAssemblyBlockItem::new)
             .transform(customItemModel())
             .register();
 
