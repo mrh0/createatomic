@@ -12,8 +12,8 @@ import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
 import github.mrh0.createatomic.debug.IDebugDrawer;
 import github.mrh0.createatomic.index.AtomicBlocks;
 import github.mrh0.createatomic.network.IObserveBlockEntity;
-import github.mrh0.createatomic.network.ObservePacket;
-import github.mrh0.createatomic.network.SyncReactorPacket;
+import github.mrh0.createatomic.network.ObservePacketPayload;
+import github.mrh0.createatomic.network.ReactorPacketPayload;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -370,7 +370,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        ObservePacket.send(worldPosition, 0);
+        ObservePacketPayload.send(worldPosition, 0);
 
         ReactorCasingBlockEntity controllerTE = getControllerBE();
         if (controllerTE == null) return false;
@@ -381,22 +381,22 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(spacing)
                 .append(Component.translatable("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
         tooltip.add(Component.literal(spacing).append(Component.literal(" "))
-                .append(Component.literal(SyncReactorPacket.clientHeat + "/" + getMaxHeat() + "T").withStyle(ChatFormatting.AQUA)));
+                .append(Component.literal(ReactorPacketPayload.clientHeat + "/" + getMaxHeat() + "T").withStyle(ChatFormatting.AQUA)));
 
         tooltip.add(Component.literal(spacing)
                 .append(Component.translatable("createatomic.tooltip.reactor.coolant").withStyle(ChatFormatting.GRAY)));
         tooltip.add(Component.literal(spacing).append(" ")
-                .append(SyncReactorPacket.clientCoolant + "/" + getMaxCoolant() + "U").withStyle(ChatFormatting.AQUA));
+                .append(ReactorPacketPayload.clientCoolant + "/" + getMaxCoolant() + "U").withStyle(ChatFormatting.AQUA));
 
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
     @Override
-    public void onObserved(ServerPlayer player, ObservePacket pack) {
+    public void onObserved(ServerPlayer player, ObservePacketPayload pack) {
         ReactorCasingBlockEntity controllerTE = getControllerBE();
         if (controllerTE == null) return;
         //System.out.println("Observed " + getHeat() + ":" + getCoolant());
-        SyncReactorPacket.send(worldPosition, getHeat(), getCoolant(), controllerTE.rodInsertion, player);
+        ReactorPacketPayload.send(worldPosition, getHeat(), getCoolant(), controllerTE.rodInsertion, player);
     }
 
     public void setSize(int reactor, int blocks) {

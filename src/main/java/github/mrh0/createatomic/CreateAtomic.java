@@ -1,76 +1,167 @@
 package github.mrh0.createatomic;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
 import github.mrh0.createatomic.index.*;
-import github.mrh0.createatomic.network.ObservePacket;
-import github.mrh0.createatomic.network.SyncReactorPacket;
+import github.mrh0.createatomic.network.ClientPayloadHandler;
+import github.mrh0.createatomic.network.ObservePacketPayload;
+import github.mrh0.createatomic.network.ReactorPacketPayload;
+import github.mrh0.createatomic.network.ServerPayloadHandler;
+import net.createmod.catnip.lang.FontHelper;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.*;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import org.slf4j.Logger;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.ItemLike;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.HandlerThread;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.RegisterEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreateAtomic.MODID)
 public class CreateAtomic {
+    public static final Logger LOGGER = LogManager.getLogger();
+
     public static final String MODID = "createatomic";
 
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CreateAtomic.MODID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CreateAtomic.MODID)
+            .defaultCreativeTab((ResourceKey<CreativeModeTab>) null)
+            .setTooltipModifierFactory(item ->
+                    new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                            .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
+            );
 
-    private static final String PROTOCOL = "1";
-    public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main"))
-            .clientAcceptedVersions(PROTOCOL::equals)
-            .serverAcceptedVersions(PROTOCOL::equals)
-            .networkProtocolVersion(() -> PROTOCOL)
-            .simpleChannel();
+    static {
+        REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+    }
 
-    public static boolean CC_ACTIVE = false;
+    private static final ItemLike[] excludedItemsList = new ItemLike[]{};
 
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public CreateAtomic() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
-        // Register the setup method for modloading
-        //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register(MODID, () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+            .icon(() -> AtomicBlocks.REACTOR_CASING.get().asItem().getDefaultInstance())
+            .title(Component.translatable("itemGroup.createatomic.main"))
+            .displayItems((itemDisplayParameters, output) -> REGISTRATE.getAll(Registries.ITEM).forEach((item -> {
+                for (ItemLike excluded : excludedItemsList) {
+                    if (item.is(excluded.asItem())) {
+                        output.accept(item.get(), CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
+                        return;
+                    }
+                }
+                output.accept(item.get());
+            })))
+            .build());
 
-        // Register ourselves for server and other game events we are interested in
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.register(this);
+    public CreateAtomic(IEventBus eventBus, ModContainer container) {
+        eventBus.addListener(this::setup);
+        eventBus.addListener(this::doClientStuff);
+        eventBus.addListener(this::postInit);
+        eventBus.addListener(this::onRegister);
+        //eventBus.addListener(RegisterCapabilitiesEvent.class, CACapabilities::register);
+        //eventBus.addListener(RegisterPayloadHandlersEvent.class, CreateAtomic::registerPackets);
+        //FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, CARecipes::register);
 
-        CC_ACTIVE = ModList.get().isLoaded("computercraft");
+        NeoForge.EVENT_BUS.register(this);
 
-        AtomicCreativeModeTabs.register(eventBus);
         REGISTRATE.registerEventListeners(eventBus);
         AtomicBlocks.register();
         AtomicBlockEntities.register();
         AtomicItems.register();
-        AtomicArmInteractionPointTypes.register();
-    }
-
-    public static ResourceLocation asResource(String path) {
-        return new ResourceLocation(MODID, path);
+        CREATIVE_MODE_TABS.register(eventBus);
+        //CAFluids.register();
+        //CAEffects.register(eventBus);
+        // AtomicRecipes.register(eventBus);
+        //CASounds.register(eventBus);
+        //CASchedule.register();
+        //CADamageTypes.register();
+        //CADisplaySources.register();
+        //CatnipServices.PLATFORM.executeOnClientOnly(() -> AtomicPartials::init);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        //BlockStressValues.registerProvider(MODID, AllConfigs.SERVER.kinetics.stressValues);
-        AtomicBoilerHeaters.register();
+        // BlockStressValues.CAPACITIES.registerProvider(MODID, AllConfigs.server().kinetics.stressValues);
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {}
+    private void doClientStuff(final FMLClientSetupEvent event) {
+        //event.enqueueWork(CAItemProperties::register);
+
+        //PonderIndex.addPlugin(new AtomicPonderPlugin());
+
+        RenderType cutout = RenderType.cutoutMipped();
+
+        //ItemBlockRenderTypes.setRenderLayer(AtomicBlocks.TESLA_COIL.get(), cutout);
+    }
 
     public void postInit(FMLLoadCompleteEvent evt) {
-        Network.registerMessage(0, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
-        Network.registerMessage(1, SyncReactorPacket.class, SyncReactorPacket::encode, SyncReactorPacket::decode, SyncReactorPacket::handle);
+        //Network.registerMessage(0, ObservePacketLegacy.class, ObservePacketLegacy::encode, ObservePacketLegacy::decode, ObservePacketLegacy::handle);
+        //Network.registerMessage(1, EnergyNetworkPacket.class, EnergyNetworkPacket::encode, EnergyNetworkPacket::decode, EnergyNetworkPacket::handle);
 
-        System.out.println("Create: Atomic Initialized!");
+        BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get(), (level, pos, state) -> 1);
+        BoilerHeater.REGISTRY.register(AtomicBlocks.RAW_URANIUM_BLOCK.get(), (level, pos, state) -> 0);
+
+        LOGGER.info("Create Crafts & Additions Initialized!");
+    }
+
+    public void onRegister(final RegisterEvent event) {
+        AtomicArmInteractionPointTypes.register();
+    }
+
+    @SubscribeEvent
+    public void onRegisterCommandEvent(RegisterCommandsEvent event) {
+        CommandDispatcher<CommandSourceStack> dispather = event.getDispatcher();
+    }
+
+    private static final String PROTOCOL = "1";
+    public static void registerPackets(final RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(PROTOCOL);
+        registrar = registrar.executesOn(HandlerThread.MAIN);
+        registrar.playBidirectional(
+                ObservePacketPayload.TYPE,
+                ObservePacketPayload.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        ClientPayloadHandler::handleObservePayload,
+                        ServerPayloadHandler::handleObservePayload
+                )
+        );
+
+        registrar.playBidirectional(
+                ReactorPacketPayload.TYPE,
+                ReactorPacketPayload.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        ClientPayloadHandler::handleReactorPayload,
+                        ServerPayloadHandler::handleReactorPayload
+                )
+        );
+    }
+
+    public static ResourceLocation asResource(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

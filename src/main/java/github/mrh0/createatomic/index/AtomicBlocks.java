@@ -20,7 +20,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class AtomicBlocks {
     static {
-        CreateAtomic.REGISTRATE.setCreativeTab(AtomicCreativeModeTabs.MAIN_TAB);
+        CreateAtomic.REGISTRATE.setCreativeTab(CreateAtomic.MAIN_TAB);
     }
 
     public static final BlockEntry<Block> RAW_URANIUM_BLOCK = CreateAtomic.REGISTRATE.block("raw_uranium_block",  Block::new)

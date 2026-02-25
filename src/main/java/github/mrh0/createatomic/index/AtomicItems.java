@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 
 public class AtomicItems {
     static {
-        CreateAtomic.REGISTRATE.setCreativeTab(AtomicCreativeModeTabs.MAIN_TAB);
+        CreateAtomic.REGISTRATE.setCreativeTab(CreateAtomic.MAIN_TAB);
     }
 
     public static final ItemEntry<Item> RAW_URANIUM =

@@ -11,12 +11,12 @@ public class AtomicSpriteShifts {
     public static final CTSpriteShiftEntry
             REACTOR_CASING = getCT(
                 RECTANGLE,
-                new ResourceLocation(CreateAtomic.MODID, "block/reactor_casing/block"),
-                new ResourceLocation(CreateAtomic.MODID, "block/reactor_casing/block_connected")
+                ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/reactor_casing/block"),
+                ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/reactor_casing/block_connected")
             ),
             REACTOR_CASING_TOP = getCT(
                 RECTANGLE,
-                new ResourceLocation(CreateAtomic.MODID, "block/reactor_casing/block_top"),
-                new ResourceLocation(CreateAtomic.MODID, "block/reactor_casing/block_top_connected")
+                ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/reactor_casing/block_top"),
+                ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/reactor_casing/block_top_connected")
             );
 }

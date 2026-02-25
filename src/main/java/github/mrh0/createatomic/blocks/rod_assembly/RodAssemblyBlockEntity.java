@@ -1,6 +1,6 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;

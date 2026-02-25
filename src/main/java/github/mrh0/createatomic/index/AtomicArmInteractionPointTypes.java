@@ -1,35 +1,32 @@
 package github.mrh0.createatomic.index;
 
+import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.AllArmInteractionPointTypes;
+import com.simibubi.create.content.kinetics.mechanicalArm.ArmBlockEntity;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import github.mrh0.createatomic.CreateAtomic;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
-import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
-import github.mrh0.createatomic.blocks.rod_assembly.RodConfiguration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Function;
 
 public class AtomicArmInteractionPointTypes {
-    public static final RodAssemblyType ROD_ASSEMBLY = register("rod_assembly", RodAssemblyType::new);
+    private static <T extends ArmInteractionPointType> void register(String name, T type) {
+        Registry.register(CreateBuiltInRegistries.ARM_INTERACTION_POINT_TYPE, CreateAtomic.asResource(name), type);
+    }
 
-    private static <T extends ArmInteractionPointType> T register(String id, Function<ResourceLocation, T> factory) {
-        T type = factory.apply(CreateAtomic.asResource(id));
-        ArmInteractionPointType.register(type);
-        return type;
+    static {
+        register("rod_assembly", new RodAssemblyType());
     }
 
     public static class RodAssemblyType extends ArmInteractionPointType {
-        public RodAssemblyType(ResourceLocation id) {
-            super(id);
-        }
-
         @Override
         public boolean canCreatePoint(Level level, BlockPos pos, BlockState state) {
             return AtomicBlocks.ROD_ASSEMBLY.has(state);
@@ -41,16 +38,26 @@ public class AtomicArmInteractionPointTypes {
         }
     }
 
-    public static class RodAssemblyPoint extends AllArmInteractionPointTypes.TopFaceArmInteractionPoint {
+    public static class RodAssemblyPoint extends AllArmInteractionPointTypes.DepositOnlyArmInteractionPoint {
         public RodAssemblyPoint(ArmInteractionPointType type, Level level, BlockPos pos, BlockState state) {
             super(type, level, pos, state);
         }
 
         @Override
-        public int getSlotCount() {
-            return 1;
+        public ItemStack insert(ArmBlockEntity armBlockEntity, ItemStack stack, boolean simulate) {
+            ItemStack input = stack.copy();
+            InteractionResultHolder<ItemStack> res =
+                    RodAssemblyBlock.tryInsert(cachedState, level, pos, input, false, false, simulate);
+            ItemStack remainder = res.getObject();
+            if (input.isEmpty()) {
+                return remainder;
+            } else {
+                if (!simulate) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), remainder);
+                return input;
+            }
         }
 
+        /*
         @Override
         public ItemStack extract(int slot, int amount, boolean simulate) {
             if (!cachedState.getOptionalValue(RodAssemblyBlock.ROD_STATE)
@@ -70,7 +77,7 @@ public class AtomicArmInteractionPointTypes {
         }
 
         @Override
-        public ItemStack insert(ItemStack stack, boolean simulate) {
+        public ItemStack insert(ArmBlockEntity armBlockEntity, ItemStack stack, boolean simulate) {
             if (!RodConfiguration.isAcceptedStack(stack))
                 return stack;
             if (cachedState.getOptionalValue(RodAssemblyBlock.ROD_STATE)
@@ -90,6 +97,7 @@ public class AtomicArmInteractionPointTypes {
             }
             return remainder;
         }
+        */
     }
 
     public static void register() {}
