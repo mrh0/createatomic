@@ -7,6 +7,8 @@ import github.mrh0.createatomic.index.AtomicBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -41,6 +43,22 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         return SHAPE;
     }
 
+    public static InteractionResultHolder<ItemStack> tryInsert(BlockState state, Level world, BlockPos pos,
+                                                               ItemStack stack, boolean doNotConsume, boolean forceOverflow, boolean simulate) {
+        return InteractionResultHolder.pass(ItemStack.EMPTY);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if(level.isClientSide()) return ItemInteractionResult.SUCCESS;
+
+        BlockEntity be = level.getBlockEntity(pos);
+        if(!(be instanceof RodAssemblyBlockEntity rabe)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    /*
+    @Override
     public InteractionResult use(BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
         if(level.isClientSide()) return InteractionResult.SUCCESS;
 
@@ -67,6 +85,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
 
         return InteractionResult.PASS;
     }
+    */
 
     public static void setRodState(ItemStack stack, RodConfiguration rod, Level level, BlockPos pos) {
         level.setBlock(pos, AtomicBlocks.ROD_ASSEMBLY.getDefaultState().setValue(ROD_STATE, rod), Block.UPDATE_ALL);

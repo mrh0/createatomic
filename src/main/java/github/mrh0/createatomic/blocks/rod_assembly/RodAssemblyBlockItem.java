@@ -1,11 +1,13 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
+import com.simibubi.create.foundation.block.IBE;
 import github.mrh0.createatomic.blocks.reactor_casing.AtomicConnectivityHandler;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionResult;
@@ -13,10 +15,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class RodAssemblyBlockItem extends BlockItem {
 
@@ -27,25 +32,37 @@ public class RodAssemblyBlockItem extends BlockItem {
     @Override
     public InteractionResult place(BlockPlaceContext ctx) {
         InteractionResult initialResult = super.place(ctx);
-        if (!initialResult.consumesAction()) return initialResult;
-        System.out.println("HERE1");
+        if (!initialResult.consumesAction())
+            return initialResult;
         tryMultiPlace(ctx);
         return initialResult;
     }
 
     @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player,
-                                                 ItemStack stack, BlockState state) {
+    protected boolean updateCustomBlockEntityTag(BlockPos blockPos, Level level, Player player,
+                                                 ItemStack itemStack, BlockState blockState) {
         MinecraftServer minecraftserver = level.getServer();
-        if (minecraftserver == null) return false;
-        CompoundTag nbt = stack.getTagElement("BlockEntityTag");
-        if (nbt != null) {
+        if (minecraftserver == null)
+            return false;
+        CustomData blockEntityData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (blockEntityData != null) {
+            CompoundTag nbt = blockEntityData.copyTag();
+            nbt.remove("Luminosity");
             nbt.remove("Size");
             nbt.remove("Height");
             nbt.remove("Controller");
             nbt.remove("LastKnownPos");
+            if (nbt.contains("TankContent")) {
+                FluidStack fluid = FluidStack.parseOptional(minecraftserver.registryAccess(), nbt.getCompound("TankContent"));
+                if (!fluid.isEmpty()) {
+                    fluid.setAmount(Math.min(ReactorCasingBlockEntity.getCapacityMultiplier(), fluid.getAmount()));
+                    nbt.put("TankContent", fluid.saveOptional(minecraftserver.registryAccess()));
+                }
+            }
+            BlockEntity.addEntityType(nbt, ((IBE<?>) this.getBlock()).getBlockEntityType());
+            itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(nbt));
         }
-        return super.updateCustomBlockEntityTag(pos, level, player, stack, state);
+        return super.updateCustomBlockEntityTag(blockPos, level, player, itemStack, blockState);
     }
 
     private void tryMultiPlace(BlockPlaceContext ctx) {

@@ -29,21 +29,6 @@ public class ReactorCasingBlockItem extends BlockItem {
 		return initialResult;
 	}
 
-	@Override
-	protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player,
-		ItemStack stack, BlockState state) {
-		MinecraftServer minecraftserver = level.getServer();
-		if (minecraftserver == null) return false;
-		CompoundTag nbt = stack.getTagElement("BlockEntityTag");
-		if (nbt != null) {
-			nbt.remove("Size");
-			nbt.remove("Height");
-			nbt.remove("Controller");
-			nbt.remove("LastKnownPos");
-		}
-		return super.updateCustomBlockEntityTag(pos, level, player, stack, state);
-	}
-
 	private void tryMultiPlace(BlockPlaceContext ctx) {
 		Player player = ctx.getPlayer();
 		if (player == null) return;

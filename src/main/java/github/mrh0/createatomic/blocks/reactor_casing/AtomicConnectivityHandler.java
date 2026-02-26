@@ -117,7 +117,7 @@ public class AtomicConnectivityHandler {
 
 			splitMultiAndInvalidate(be, cache, false);
 			if (be instanceof ReactorCasingBlockEntity reactor && reactor.hasReactor())
-				reactor.setSize(0, bestAmount);
+				reactor.setTankSize(0, bestAmount);
 
 			tryToFormNewMultiOfWidth(be, bestWidth, cache, false);
 
@@ -285,7 +285,7 @@ public class AtomicConnectivityHandler {
 			
 			if (!be.isRemoved())
 				reactor.setHeat(reactor.getHeat() - maxCapacity);
-			reactor.setSize(0, 1);
+			reactor.setTankSize(0, 1);
 		}
 
 		for (int yOffset = 0; yOffset < height; yOffset++) {
