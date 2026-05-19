@@ -6,9 +6,11 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,13 +55,35 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     public void updateRod(ItemStack stack) {
         currentRod = stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
+
+        // Restore depletion progress that was embedded on the item when it was last extracted.
         fuelTicks = 0;
+        if (!currentRod.isEmpty()) {
+            CustomData custom = currentRod.get(DataComponents.CUSTOM_DATA);
+            if (custom != null) fuelTicks = custom.copyTag().getInt("FuelTicks");
+        }
+
         if (hasLevel() && !level.isClientSide()) {
             RodConfiguration config = RodConfiguration.fromStack(currentRod);
             level.setBlock(worldPosition, getBlockState().setValue(RodAssemblyBlock.ROD_STATE, config), Block.UPDATE_ALL);
             setChanged();
             sendData();
         }
+    }
+
+    // Returns the rod item for the current configuration with fuelTicks embedded so that
+    // re-inserting it later resumes from the same depletion level.
+    public ItemStack getRodWithDepletion() {
+        RodConfiguration config = getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
+                .orElse(RodConfiguration.None);
+        ItemStack rod = config.asStack();
+        if (rod.isEmpty()) return ItemStack.EMPTY;
+        if (config == RodConfiguration.FuelRod && fuelTicks > 0) {
+            CompoundTag tag = new CompoundTag();
+            tag.putInt("FuelTicks", fuelTicks);
+            rod.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+        }
+        return rod;
     }
 
     // Called every lazy tick by the reactor controller to advance fuel consumption.

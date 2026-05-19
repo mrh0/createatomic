@@ -1,12 +1,11 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"parent": "minecraft:block/cube_all",
 	"textures": {
 		"0": "createatomic:block/turbine/intake",
-		"1": "createatomic:block/turbine/casing",
+		"1": "createatomic:block/turbine/casing_inline",
 		"2": "createatomic:block/turbine/intake_back",
-		"particle": "createatomic:block/turbine/casing"
+		"particle": "createatomic:block/turbine/casing_inline"
 	},
 	"elements": [
 		{

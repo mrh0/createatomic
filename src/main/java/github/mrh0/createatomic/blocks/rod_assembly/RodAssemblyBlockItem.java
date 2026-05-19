@@ -1,27 +1,20 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
-import com.simibubi.create.foundation.block.IBE;
-import github.mrh0.createatomic.blocks.reactor_casing.AtomicConnectivityHandler;
+import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 public class RodAssemblyBlockItem extends BlockItem {
 
@@ -34,94 +27,65 @@ public class RodAssemblyBlockItem extends BlockItem {
         InteractionResult initialResult = super.place(ctx);
         if (!initialResult.consumesAction())
             return initialResult;
-        tryMultiPlace(ctx);
+        tryLayerPlace(ctx);
         return initialResult;
     }
 
-    @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos blockPos, Level level, Player player,
-                                                 ItemStack itemStack, BlockState blockState) {
-        MinecraftServer minecraftserver = level.getServer();
-        if (minecraftserver == null)
-            return false;
-        CustomData blockEntityData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (blockEntityData != null) {
-            CompoundTag nbt = blockEntityData.copyTag();
-            nbt.remove("Luminosity");
-            nbt.remove("Size");
-            nbt.remove("Height");
-            nbt.remove("Controller");
-            nbt.remove("LastKnownPos");
-            if (nbt.contains("TankContent")) {
-                FluidStack fluid = FluidStack.parseOptional(minecraftserver.registryAccess(), nbt.getCompound("TankContent"));
-                if (!fluid.isEmpty()) {
-                    fluid.setAmount(Math.min(ReactorCasingBlockEntity.getCapacityMultiplier(), fluid.getAmount()));
-                    nbt.put("TankContent", fluid.saveOptional(minecraftserver.registryAccess()));
-                }
-            }
-            BlockEntity.addEntityType(nbt, ((IBE<?>) this.getBlock()).getBlockEntityType());
-            itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(nbt));
-        }
-        return super.updateCustomBlockEntityTag(blockPos, level, player, itemStack, blockState);
-    }
-
-    private void tryMultiPlace(BlockPlaceContext ctx) {
+    private void tryLayerPlace(BlockPlaceContext ctx) {
         Player player = ctx.getPlayer();
-        System.out.println("HERE2");
         if (player == null) return;
         if (player.isShiftKeyDown()) return;
+
         Direction face = ctx.getClickedFace();
-        if (!face.getAxis().isVertical()) return;
-        System.out.println("HERE3");
-        ItemStack stack = ctx.getItemInHand();
-        Level world = ctx.getLevel();
-        BlockPos pos = ctx.getClickedPos();
-        BlockPos placedOnPos = pos.relative(face.getOpposite());
-        BlockState placedOnState = world.getBlockState(placedOnPos);
-        System.out.println("HERE4");
-        if (!ReactorCasingBlock.isReactor(placedOnState)) return;
-        ReactorCasingBlockEntity reactorAt = AtomicConnectivityHandler.partAt(AtomicBlockEntities.REACTOR_CASING.get(), world, placedOnPos);
+        // Only trigger when clicking the top face of the reactor (placing above it)
+        if (face != Direction.UP) return;
+
+        Level world      = ctx.getLevel();
+        BlockPos pos     = ctx.getClickedPos();
+        BlockPos onPos   = pos.relative(Direction.DOWN);
+        BlockState onState = world.getBlockState(onPos);
+
+        if (!ReactorCasingBlock.isReactor(onState)) return;
+
+        // Resolve the multiblock controller so we know width and height.
+        ReactorCasingBlockEntity reactorAt = ConnectivityHandler.partAt(
+                AtomicBlockEntities.REACTOR_CASING.get(), world, onPos);
         if (reactorAt == null) return;
-        ReactorCasingBlockEntity controllerBE = reactorAt.getControllerBE();
-        if (controllerBE == null) return;
+        ReactorCasingBlockEntity controller = reactorAt.getControllerBE();
+        if (controller == null) return;
 
-        int width = controllerBE.getWidth();
-        if (width == 1) return;
-        System.out.println("HERE5");
-        int blocksToPlace = 0;
-        BlockPos startPos = face == Direction.DOWN ? controllerBE.getBlockPos()
-                .below()
-                : controllerBE.getBlockPos()
-                .above(controllerBE.getHeight());
+        int width = controller.getWidth();
+        if (width <= 1) return; // 1x1: first placement already covered the only slot
 
-        if (startPos.getY() != pos.getY()) return;
-        System.out.println("HERE6");
-        for (int xOffset = 0; xOffset < width; xOffset++) {
-            for (int zOffset = 0; zOffset < width; zOffset++) {
-                BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
-                BlockState blockState = world.getBlockState(offsetPos);
-                System.out.println("HERE6.1");
-                if (ReactorCasingBlock.isReactor(blockState)) continue;
-                System.out.println("HERE6.2");
-                if (!blockState.canBeReplaced()) return;
-                System.out.println("HERE6.3");
-                blocksToPlace++;
+        // The top layer of rod-assembly slots starts at controller.pos + (0, height, 0)
+        BlockPos startPos = controller.getBlockPos().above(controller.getHeight());
+        if (startPos.getY() != pos.getY()) return; // clicked somewhere other than the top
+
+        // Pre-scan: count how many new blocks we need, and abort if any non-rod-assembly
+        // block is in the way.
+        ItemStack stack = ctx.getItemInHand();
+        int needed = 0;
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < width; z++) {
+                BlockPos slot = startPos.offset(x, 0, z);
+                BlockState at = world.getBlockState(slot);
+                if (at.getBlock() instanceof RodAssemblyBlock) continue; // already filled
+                if (!at.canBeReplaced()) return; // something else is blocking
+                needed++;
             }
         }
-        System.out.println("HERE7");
-        if (!player.isCreative() && stack.getCount() < blocksToPlace) return;
 
-        for (int xOffset = 0; xOffset < width; xOffset++) {
-            for (int zOffset = 0; zOffset < width; zOffset++) {
-                BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
-                BlockState blockState = world.getBlockState(offsetPos);
-                if (ReactorCasingBlock.isReactor(blockState)) continue;
-                BlockPlaceContext context = BlockPlaceContext.at(ctx, offsetPos, face);
-                player.getPersistentData()
-                        .putBoolean("SilenceTankSound", true);
-                super.place(context);
-                player.getPersistentData()
-                        .remove("SilenceTankSound");
+        if (!player.isCreative() && stack.getCount() < needed) return;
+
+        // Place rod assemblies into every empty slot in the layer.
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < width; z++) {
+                BlockPos slot = startPos.offset(x, 0, z);
+                BlockState at = world.getBlockState(slot);
+                if (at.getBlock() instanceof RodAssemblyBlock) continue;
+                player.getPersistentData().putBoolean("SilenceTankSound", true);
+                super.place(BlockPlaceContext.at(ctx, slot, Direction.UP));
+                player.getPersistentData().remove("SilenceTankSound");
             }
         }
     }

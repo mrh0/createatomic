@@ -72,7 +72,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (!(be instanceof RodAssemblyBlockEntity rabe))
             return ItemStack.EMPTY;
 
-        ItemStack rod = currentConfig.asStack();
+        ItemStack rod = rabe.getRodWithDepletion();
         if (!simulate)
             rabe.updateRod(ItemStack.EMPTY);
         return rod;
@@ -89,11 +89,11 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
 
         RodConfiguration currentConfig = state.getValue(ROD_STATE);
 
-        // Empty hand: extract rod if one is present
+        // Empty hand: extract rod (with depletion progress embedded) if one is present
         if (stack.isEmpty()) {
             if (!currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            player.getInventory().placeItemBackInInventory(currentConfig.asStack());
+            player.getInventory().placeItemBackInInventory(rabe.getRodWithDepletion());
             rabe.updateRod(ItemStack.EMPTY);
             return ItemInteractionResult.SUCCESS;
         }
