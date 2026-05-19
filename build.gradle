@@ -213,3 +213,9 @@ idea {
         downloadJavadoc = true
     }
 }
+
+tasks.configureEach { task ->
+    if (task.name == "createMinecraftArtifacts" || task.name == "jar") {
+        task.dependsOn(generateModMetadata)
+    }
+}

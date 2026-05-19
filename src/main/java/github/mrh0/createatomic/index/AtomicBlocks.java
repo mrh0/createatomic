@@ -10,7 +10,7 @@ import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockItem;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingCTBehaviour;
 import github.mrh0.createatomic.blocks.reactor_debris.ReactorDebrisBlock;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockItem;
-import net.minecraft.world.item.BlockItem;
+import github.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
@@ -69,6 +69,13 @@ public class AtomicBlocks {
     public static final BlockEntry<ReactorDebrisBlock> REACTOR_DEBRIS = CreateAtomic.REGISTRATE.block("reactor_debris",  ReactorDebrisBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY))
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY).strength(3.5f).requiresCorrectToolForDrops())
             .item()
             .transform(customItemModel())
             .register();

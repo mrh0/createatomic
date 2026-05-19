@@ -27,11 +27,11 @@ public enum RodConfiguration implements StringRepresentable {
 
     public MutableComponent getTooltip() {
         return switch (this) {
-            case SmallControlRod -> Component.literal("createatomic.tooltip.rod_assembly.small_control_rod");
-            case LargeControlRod -> Component.literal("createatomic.tooltip.rod_assembly.large_control_rod");
-            case FuelRod -> Component.literal("createatomic.tooltip.rod_assembly.fuel_rod");
-            case DepletedFuelRod -> Component.literal("createatomic.tooltip.rod_assembly.depleted_fuel_rod");
-            default -> Component.literal("createatomic.tooltip.rod_assembly.none");
+            case SmallControlRod -> Component.translatable("createatomic.tooltip.rod_assembly.small_control_rod");
+            case LargeControlRod -> Component.translatable("createatomic.tooltip.rod_assembly.large_control_rod");
+            case FuelRod -> Component.translatable("createatomic.tooltip.rod_assembly.fuel_rod");
+            case DepletedFuelRod -> Component.translatable("createatomic.tooltip.rod_assembly.depleted_fuel_rod");
+            default -> Component.translatable("createatomic.tooltip.rod_assembly.none");
         };
     }
 

@@ -6,7 +6,6 @@ import github.mrh0.createatomic.index.AtomicBlockEntities;
 import github.mrh0.createatomic.index.AtomicBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
 public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssemblyBlockEntity> {
 
@@ -43,53 +41,78 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         return SHAPE;
     }
 
+    // Used by mechanical arm to insert rods.
     public static InteractionResultHolder<ItemStack> tryInsert(BlockState state, Level world, BlockPos pos,
                                                                ItemStack stack, boolean doNotConsume, boolean forceOverflow, boolean simulate) {
-        return InteractionResultHolder.pass(ItemStack.EMPTY);
+        if (!RodConfiguration.isAcceptedStack(stack))
+            return InteractionResultHolder.pass(stack);
+
+        RodConfiguration currentConfig = state.getOptionalValue(ROD_STATE).orElse(RodConfiguration.None);
+        if (currentConfig.isPopulated())
+            return InteractionResultHolder.pass(stack);
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof RodAssemblyBlockEntity rabe))
+            return InteractionResultHolder.pass(stack);
+
+        ItemStack remainder = stack.copy();
+        ItemStack toInsert = remainder.split(1);
+        if (!simulate)
+            rabe.updateRod(toInsert);
+        return InteractionResultHolder.success(remainder);
+    }
+
+    // Used by mechanical arm to extract rods.
+    public static ItemStack tryExtract(BlockState state, Level world, BlockPos pos, boolean simulate) {
+        RodConfiguration currentConfig = state.getOptionalValue(ROD_STATE).orElse(RodConfiguration.None);
+        if (!currentConfig.isPopulated())
+            return ItemStack.EMPTY;
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof RodAssemblyBlockEntity rabe))
+            return ItemStack.EMPTY;
+
+        ItemStack rod = currentConfig.asStack();
+        if (!simulate)
+            rabe.updateRod(ItemStack.EMPTY);
+        return rod;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.isClientSide()) return ItemInteractionResult.SUCCESS;
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide()) return ItemInteractionResult.SUCCESS;
 
         BlockEntity be = level.getBlockEntity(pos);
-        if(!(be instanceof RodAssemblyBlockEntity rabe)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-    }
+        if (!(be instanceof RodAssemblyBlockEntity rabe))
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-    /*
-    @Override
-    public InteractionResult use(BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-        if(level.isClientSide()) return InteractionResult.SUCCESS;
+        RodConfiguration currentConfig = state.getValue(ROD_STATE);
 
-        BlockEntity be = level.getBlockEntity(pos);
-        if(!(be instanceof RodAssemblyBlockEntity rabe)) return InteractionResult.PASS;
-
-        ItemStack stack = player.getItemInHand(hand);
-        RodConfiguration rod = state.getValue(ROD_STATE);
-        rabe.updateRod(stack);
-
-        if(rod.isPopulated()) {
-            if(player.isCrouching())
-                return InteractionResult.PASS;
-            if(stack.isEmpty()) {
-                setRodState(stack, RodConfiguration.None, level, pos);
-                player.setItemInHand(hand, rod.asStack());
-            }
-            return InteractionResult.SUCCESS;
+        // Empty hand: extract rod if one is present
+        if (stack.isEmpty()) {
+            if (!currentConfig.isPopulated())
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            player.getInventory().placeItemBackInInventory(currentConfig.asStack());
+            rabe.updateRod(ItemStack.EMPTY);
+            return ItemInteractionResult.SUCCESS;
         }
 
-        if(stack.isEmpty()) return InteractionResult.PASS;
+        // Holding a rod item: insert if slot is empty
+        if (RodConfiguration.isAcceptedStack(stack)) {
+            if (currentConfig.isPopulated())
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            ItemStack toInsert = stack.copyWithCount(1);
+            if (!player.isCreative()) stack.shrink(1);
+            rabe.updateRod(toInsert);
+            return ItemInteractionResult.SUCCESS;
+        }
 
-
-
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
-    */
 
     public static void setRodState(ItemStack stack, RodConfiguration rod, Level level, BlockPos pos) {
         level.setBlock(pos, AtomicBlocks.ROD_ASSEMBLY.getDefaultState().setValue(ROD_STATE, rod), Block.UPDATE_ALL);
-        // TODO: Alert below reactor
     }
 
     @Override

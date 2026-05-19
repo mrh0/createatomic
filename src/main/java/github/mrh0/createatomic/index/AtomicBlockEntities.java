@@ -4,6 +4,7 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import github.mrh0.createatomic.CreateAtomic;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
+import github.mrh0.createatomic.blocks.turbine.TurbineBlockEntity;
 
 public class AtomicBlockEntities {
     public static final BlockEntityEntry<ReactorCasingBlockEntity> REACTOR_CASING = CreateAtomic.REGISTRATE
@@ -16,6 +17,11 @@ public class AtomicBlockEntities {
             .blockEntity("rod_assembly", RodAssemblyBlockEntity::new)
             .validBlocks(AtomicBlocks.ROD_ASSEMBLY)
             //.renderer(() -> ModularAccumulatorRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TurbineBlockEntity> TURBINE = CreateAtomic.REGISTRATE
+            .blockEntity("steam_turbine", TurbineBlockEntity::new)
+            .validBlocks(AtomicBlocks.TURBINE)
             .register();
 
     public static void register() {}

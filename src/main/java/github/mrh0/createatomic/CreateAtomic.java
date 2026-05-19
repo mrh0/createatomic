@@ -7,12 +7,18 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import com.simibubi.create.api.stress.BlockStressValues;
+import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
+import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingRenderer;
+import github.mrh0.createatomic.blocks.turbine.TurbineRenderer;
 import github.mrh0.createatomic.index.*;
 import github.mrh0.createatomic.network.ClientPayloadHandler;
 import github.mrh0.createatomic.network.ObservePacketPayload;
 import github.mrh0.createatomic.network.ReactorPacketPayload;
 import github.mrh0.createatomic.network.ServerPayloadHandler;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.catnip.platform.CatnipServices;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.registries.Registries;
@@ -31,6 +37,7 @@ import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.HandlerThread;
@@ -84,8 +91,8 @@ public class CreateAtomic {
         eventBus.addListener(this::doClientStuff);
         eventBus.addListener(this::postInit);
         eventBus.addListener(this::onRegister);
-        //eventBus.addListener(RegisterCapabilitiesEvent.class, CACapabilities::register);
-        //eventBus.addListener(RegisterPayloadHandlersEvent.class, CreateAtomic::registerPackets);
+        eventBus.addListener(RegisterCapabilitiesEvent.class, ReactorCasingBlockEntity::registerCapabilities);
+        eventBus.addListener(RegisterPayloadHandlersEvent.class, CreateAtomic::registerPackets);
         //FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, CARecipes::register);
 
         NeoForge.EVENT_BUS.register(this);
@@ -102,7 +109,7 @@ public class CreateAtomic {
         //CASchedule.register();
         //CADamageTypes.register();
         //CADisplaySources.register();
-        //CatnipServices.PLATFORM.executeOnClientOnly(() -> AtomicPartials::init);
+        CatnipServices.PLATFORM.executeOnClientOnly(() -> AtomicPartials::init);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -110,13 +117,11 @@ public class CreateAtomic {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        //event.enqueueWork(CAItemProperties::register);
-
-        //PonderIndex.addPlugin(new AtomicPonderPlugin());
-
-        RenderType cutout = RenderType.cutoutMipped();
-
-        //ItemBlockRenderTypes.setRenderLayer(AtomicBlocks.TESLA_COIL.get(), cutout);
+        event.enqueueWork(() -> {
+            BlockEntityRenderers.register(AtomicBlockEntities.REACTOR_CASING.get(), ReactorCasingRenderer::new);
+            BlockEntityRenderers.register(AtomicBlockEntities.TURBINE.get(), TurbineRenderer::new);
+        });
+        AtomicPartials.init();
     }
 
     public void postInit(FMLLoadCompleteEvent evt) {
@@ -125,6 +130,13 @@ public class CreateAtomic {
 
         BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get(), (level, pos, state) -> 1);
         BoilerHeater.REGISTRY.register(AtomicBlocks.RAW_URANIUM_BLOCK.get(), (level, pos, state) -> 0);
+
+        // Steam turbine: 2 SU capacity per RPM (1/4 of original 8).
+        // Balance: 2 turbines are required to fully absorb 1 effective power.
+        BlockStressValues.CAPACITIES.register(AtomicBlocks.TURBINE.get(), () -> 2.0);
+        // Inform Create's tooltip system that the turbine can generate up to 256 RPM
+        BlockStressValues.RPM.register(AtomicBlocks.TURBINE.get(),
+                new BlockStressValues.GeneratedRpm(256, true));
 
         LOGGER.info("Create Crafts & Additions Initialized!");
     }

@@ -1,0 +1,17 @@
+{
+	"credit": "Adapted from Create's boiler gauge dial model",
+	"textures": {
+		"0": "createatomic:block/reactor/gauge",
+		"particle": "createatomic:block/reactor/gauge"
+	},
+	"elements": [
+		{
+			"name": "needle",
+			"from": [16.5, 4.5, 7.5],
+			"to":   [16.5, 11.5, 8.5],
+			"faces": {
+				"east": {"uv": [15, 4, 15.5, 7.5], "texture": "#0"}
+			}
+		}
+	]
+}

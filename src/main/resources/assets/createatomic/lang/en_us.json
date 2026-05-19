@@ -11,6 +11,7 @@
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
 	"block.createatomic.reactor_casing": "Reactor Casing",
+	"block.createatomic.steam_turbine": "Steam Turbine",
 	"block.createatomic.rod_assembly": "Rod Assembly",
 	"block.createatomic.radioisotope_heat_generator": "Radioisotope Heat Generator",
 	
@@ -26,7 +27,15 @@
 	"createatomic.tooltip.rod_assembly.small_control_rod": "Small Control Rod",
 	"createatomic.tooltip.rod_assembly.depleted_fuel_rod": "Depleted Fuel Rod",
 	"createatomic.tooltip.rod_assembly.fuel_rod": "Fuel Rod",
-	"createatomic.tooltip.reactor.info": "Info",
-	"createatomic.tooltip.reactor.heat": "Heat",
-	"createatomic.tooltip.reactor.coolant": "Coolant"
+	"createatomic.tooltip.reactor.info": "Reactor Status",
+	"createatomic.tooltip.reactor.active": "● Active",
+	"createatomic.tooltip.reactor.inactive": "○ Inactive",
+	"createatomic.tooltip.reactor.control_rods": "Control Rods",
+	"createatomic.tooltip.reactor.capacity": "Hull Capacity",
+	"createatomic.tooltip.reactor.power": "Effective Power",
+	"createatomic.tooltip.reactor.heat": "Temperature",
+	"createatomic.tooltip.reactor.health": "Hull Integrity",
+	"createatomic.tooltip.reactor.water": "Water",
+	"createatomic.tooltip.reactor.turbines": "Turbines",
+	"createatomic.tooltip.reactor.reactivity": "Reactivity Bonus"
 }

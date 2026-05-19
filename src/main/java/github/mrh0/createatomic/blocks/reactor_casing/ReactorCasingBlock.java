@@ -89,11 +89,24 @@ public class ReactorCasingBlock extends Block implements IWrenchable, IBE<Reacto
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
             BlockEntity te = world.getBlockEntity(pos);
-            if (!(te instanceof ReactorCasingBlockEntity))
+            if (!(te instanceof ReactorCasingBlockEntity rcbe)) {
+                world.removeBlockEntity(pos);
                 return;
-            ReactorCasingBlockEntity accumulatorTE = (ReactorCasingBlockEntity) te;
+            }
+
+            // Trigger meltdown if the reactor is active or dangerously hot when a casing is broken
+            boolean triggeredMeltdown = false;
+            if (!world.isClientSide()) {
+                ReactorCasingBlockEntity controller = rcbe.getControllerBE();
+                if (controller != null && controller.shouldMeltdownOnBreak()) {
+                    controller.onMeltdown();
+                    triggeredMeltdown = true;
+                }
+            }
+
             world.removeBlockEntity(pos);
-            AtomicConnectivityHandler.splitMulti(accumulatorTE);
+            if (!triggeredMeltdown)
+                AtomicConnectivityHandler.splitMulti(rcbe);
         }
     }
 

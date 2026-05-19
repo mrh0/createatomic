@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=south": {"model": "createatomic:block/turbine/block", "y": 180},
+    "facing=north": {"model": "createatomic:block/turbine/block"},
+    "facing=east":  {"model": "createatomic:block/turbine/block", "y": 270},
+    "facing=west":  {"model": "createatomic:block/turbine/block", "y": 90},
+    "facing=up":    {"model": "createatomic:block/turbine/block", "x": 90},
+    "facing=down":  {"model": "createatomic:block/turbine/block", "x": 270}
+  }
+}

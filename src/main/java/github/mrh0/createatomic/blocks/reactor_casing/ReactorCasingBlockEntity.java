@@ -1,13 +1,14 @@
 package github.mrh0.createatomic.blocks.reactor_casing;
 
-import static java.lang.Math.abs;
-
-import java.awt.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
+import github.mrh0.createatomic.blocks.turbine.TurbineBlock;
+import github.mrh0.createatomic.blocks.turbine.TurbineBlockEntity;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
 import github.mrh0.createatomic.index.AtomicBlocks;
 import github.mrh0.createatomic.network.IObserveBlockEntity;
@@ -16,6 +17,7 @@ import github.mrh0.createatomic.network.ReactorPacketPayload;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +39,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -74,10 +77,18 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     protected int syncCooldown;
     protected boolean queuedSync;
 
-    // Reactor specific
-    private int reactorHeat = 0;
-    private int reactorCoolant = 0;
-    private float rodInsertion = 1f;
+    int   reactorHeat   = 25;
+    float reactorHealth = 100f;
+
+    int   cachedEffectivePower;
+    int   cachedControlRodLevel;
+    int   cachedHullCapacity;
+    int   cachedInstalledFuelRods;
+    float cachedReactivityFactor = 1f;
+    public float turbineTargetRpm;  // RPM each connected turbine should reach
+    int   cachedTurbineCount;
+
+    public LerpedFloat gauge;
 
     // For rendering purposes only
     private LerpedFloat fluidLevel;
@@ -143,18 +154,11 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             updateConnectivity();
         if (fluidLevel != null)
             fluidLevel.tickChaser();
-        //if (isController())
-        //    boiler.tick(this);
+        if (gauge != null)
+            gauge.tickChaser();
+        // boiler.tick() requires FluidTankBlockEntity; steam engine integration deferred
     }
 
-    /*
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-        if (isController())
-            boiler.updateOcclusion(this);
-    }
-    */
 
     @Override
     public BlockPos getLastKnownPos() {
@@ -371,6 +375,15 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             tankInventory.readFromNBT(registries, compound.getCompound("TankContent"));
             if (tankInventory.getSpace() < 0)
                 tankInventory.drain(-tankInventory.getSpace(), FluidAction.EXECUTE);
+
+            reactorHeat         = compound.getInt("ReactorHeat");
+            reactorHealth       = compound.contains("ReactorHealth") ? compound.getFloat("ReactorHealth") : 100f;
+            cachedEffectivePower  = compound.getInt("EffectivePower");
+            cachedHullCapacity    = compound.getInt("HullCapacity");
+            cachedInstalledFuelRods = compound.getInt("InstalledRods");
+            cachedReactivityFactor  = compound.contains("ReactivityFactor") ? compound.getFloat("ReactivityFactor") : 1f;
+            turbineTargetRpm    = compound.getFloat("TurbineRpm");
+            cachedTurbineCount  = compound.getInt("TurbineCount");
         }
 
         boiler.read(compound.getCompound("Boiler"), width * width * height);
@@ -406,6 +419,15 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         if (compound.contains("LazySync"))
             fluidLevel.chase(fluidLevel.getChaseTarget(), 0.125f, Chaser.EXP);
+
+        if (isController()) {
+            // Gauge shows effective power relative to hull capacity (0 = cold, 1 = at limit)
+            float gaugeRatio = cachedHullCapacity > 0
+                    ? Math.min(1f, (float) cachedEffectivePower / cachedHullCapacity) : 0f;
+            if (gauge == null)
+                gauge = LerpedFloat.linear().startWithValue(gaugeRatio);
+            gauge.chase(gaugeRatio, 0.4f, Chaser.EXP);
+        }
     }
 
     public float getFillState() {
@@ -425,6 +447,14 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             compound.put("TankContent", tankInventory.writeToNBT(registries, new CompoundTag()));
             compound.putInt("Size", width);
             compound.putInt("Height", height);
+            compound.putInt("ReactorHeat", reactorHeat);
+            compound.putFloat("ReactorHealth", reactorHealth);
+            compound.putInt("EffectivePower", cachedEffectivePower);
+            compound.putInt("HullCapacity", cachedHullCapacity);
+            compound.putInt("InstalledRods", cachedInstalledFuelRods);
+            compound.putFloat("ReactivityFactor", cachedReactivityFactor);
+            compound.putFloat("TurbineRpm", turbineTargetRpm);
+            compound.putInt("TurbineCount", cachedTurbineCount);
         }
         compound.putInt("Luminosity", luminosity);
         super.write(compound, registries, clientPacket);
@@ -464,7 +494,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     }
 
     public static int getCapacityMultiplier() {
-        return AllConfigs.server().fluids.fluidTankCapacity.get() * 1000;
+        return 1000; // 1 bucket (1000 mB) per casing block
     }
 
     public static int getMaxHeight() {
@@ -566,58 +596,161 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         ObservePacketPayload.send(worldPosition, 0);
 
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return false;
-        String spacing = "  ";
-        tooltip.add(Component.literal(spacing)
-                .append(Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
+        ReactorCasingBlockEntity con = getControllerBE();
+        if (con == null) return false;
+        String s = "  ";
 
-        tooltip.add(Component.literal(spacing)
-                .append(Component.translatable("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(spacing).append(Component.literal(" "))
-                .append(Component.literal(ReactorPacketPayload.clientHeat + "/" + getMaxHeat() + "T").withStyle(ChatFormatting.AQUA)));
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
 
-        tooltip.add(Component.literal(spacing)
-                .append(Component.translatable("createatomic.tooltip.reactor.coolant").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(spacing).append(" ")
-                .append(ReactorPacketPayload.clientCoolant + "/" + getMaxCoolant() + "U").withStyle(ChatFormatting.AQUA));
+        // Active / inactive status
+        boolean active = con.isActive();
+        tooltip.add(Component.literal(s).append(
+                Component.translatable(active
+                        ? "createatomic.tooltip.reactor.active"
+                        : "createatomic.tooltip.reactor.inactive")
+                        .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)));
+
+        // Effective power vs capacity (red when overloaded)
+        boolean overloaded = con.cachedEffectivePower - con.cachedControlRodLevel > con.cachedHullCapacity;
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.capacity").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(String.valueOf(con.cachedEffectivePower))
+                        .withStyle(overloaded ? ChatFormatting.RED : ChatFormatting.GREEN))
+                        .append(Component.literal(" (-" + String.valueOf(con.cachedControlRodLevel) + ")")
+                        .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY))
+                        .append(Component.literal(" / " + con.cachedHullCapacity)
+                        .withStyle(overloaded ? ChatFormatting.RED : ChatFormatting.GREEN)));
+
+        // Temperature (display-only)
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(con.reactorHeat + "°C").withStyle(con.reactorHeat > 315 ? ChatFormatting.RED : ChatFormatting.AQUA)));
+
+        // Hull integrity - colour-coded by damage level
+        int hp = (int) con.reactorHealth;
+        ChatFormatting hpColour = hp > 75 ? ChatFormatting.GREEN : hp > 40 ? ChatFormatting.YELLOW : ChatFormatting.RED;
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.health").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(hp + "%").withStyle(hpColour)));
+
+        // Water content
+        int waterMb  = con.tankInventory.getFluidAmount();
+        int waterCap = con.tankInventory.getCapacity();
+        boolean waterLow = con.isActive() && waterMb == 0;
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.water").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(waterMb + " / " + waterCap + " mB")
+                        .withStyle(waterLow ? ChatFormatting.RED : ChatFormatting.AQUA)));
+
+        // Turbines (shown only when at least one is connected)
+        if (con.cachedTurbineCount > 0) {
+            tooltip.add(Component.literal(s).append(
+                    Component.translatable("createatomic.tooltip.reactor.turbines").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal(s + " ").append(
+                    Component.literal(con.cachedTurbineCount + "× @ " + String.format("%.0f", con.turbineTargetRpm) + " RPM")
+                            .withStyle(ChatFormatting.AQUA)));
+        }
+
+        // Reactivity bonus (only when adjacency bonus is active)
+        if (con.cachedInstalledFuelRods > 0 && con.cachedReactivityFactor > 1.01f) {
+            int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
+            ChatFormatting rxColour = con.cachedReactivityFactor >= 2f ? ChatFormatting.RED : ChatFormatting.YELLOW;
+            tooltip.add(Component.literal(s).append(
+                    Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal(s + " ").append(
+                    Component.literal(con.cachedInstalledFuelRods + " rods → " + effective
+                            + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
+                            .withStyle(rxColour)));
+        }
 
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
     @Override
     public void onObserved(ServerPlayer player, ObservePacketPayload pack) {
+        // Push the controller's latest NBT (including reactorHeat / reactorCoolant)
+        // to all nearby clients immediately. The tooltip reads from the per-instance
+        // block entity fields, so this one call correctly updates any reactor the player
+        // is looking at without relying on a global static cache.
         ReactorCasingBlockEntity controllerBE = getControllerBE();
         if (controllerBE == null) return;
-        //System.out.println("Observed " + getHeat() + ":" + getCoolant());
-        ReactorPacketPayload.send(worldPosition, getHeat(), getCoolant(), player);
+        controllerBE.sendDataImmediately();
     }
 
     public Pair<Integer, Integer> getRodLevels(boolean tick) {
-        int fuelLevel = 0, controlLevel = 0;
-        for (int x = 0; x < getWidth(); x++) {
-            for (int z = 0; z < getWidth(); z++) {
-                var pos = getController().offset(x, getHeight(), z);
-                BlockEntity be = level.getBlockEntity(pos);
-                if(!(be instanceof RodAssemblyBlockEntity rabe)) continue;
-                fuelLevel += rabe.getFuelLevel();
-                controlLevel += rabe.getControlLevel();
-                if(tick) rabe.tickRod();
+        int w = getWidth();
+        // Pass 1: populate the grid of rod assembly block entities and their fuel levels
+        RodAssemblyBlockEntity[][] grid = new RodAssemblyBlockEntity[w][w];
+        int[][] fuelGrid = new int[w][w]; // 0 = no active fuel, 1 = fuel rod present
+
+        for (int x = 0; x < w; x++) {
+            for (int z = 0; z < w; z++) {
+                BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
+                if (be instanceof RodAssemblyBlockEntity rabe) {
+                    grid[x][z] = rabe;
+                    fuelGrid[x][z] = rabe.getFuelLevel();
+                }
             }
         }
-        return Pair.of(fuelLevel, controlLevel);
+
+        // Pass 2: tally fuel/control with adjacency reactivity bonus.
+        // Each fuel rod gains +50% power per orthogonally adjacent fuel rod.
+        //   1 neighbour 1.5x,  2 neighbours 2.0x,  3 neighbours 2.5x, etc.
+        // This matches the examples: 2 adjacent = power of 3, 4-in-square = power of 8.
+        int[] dx = {-1, 1, 0, 0};
+        int[] dz = { 0, 0,-1, 1};
+
+        float effectiveFuel = 0f;
+        int installedFuel   = 0;
+        int controlLevel    = 0;
+
+        for (int x = 0; x < w; x++) {
+            for (int z = 0; z < w; z++) {
+                RodAssemblyBlockEntity rabe = grid[x][z];
+                if (rabe == null) continue;
+
+                controlLevel += rabe.getControlLevel();
+
+                int fuel = fuelGrid[x][z];
+                if (fuel > 0) {
+                    installedFuel += fuel;
+                    int neighbours = 0;
+                    for (int d = 0; d < 4; d++) {
+                        int nx = x + dx[d], nz = z + dz[d];
+                        if (nx >= 0 && nx < w && nz >= 0 && nz < w && fuelGrid[nx][nz] > 0)
+                            neighbours++;
+                    }
+                    effectiveFuel += fuel * (1f + 0.5f * neighbours);
+                }
+
+                if (tick) rabe.tickRod();
+            }
+        }
+
+        // Cache for display / goggle tooltip (updated server-side each lazy tick)
+        cachedInstalledFuelRods  = installedFuel;
+        cachedReactivityFactor   = installedFuel > 0 ? effectiveFuel / installedFuel : 1f;
+
+        return Pair.of(Math.round(effectiveFuel), controlLevel);
     }
 
-    int cachedFuelRodLevel;
-    int cachedControlRodLevel;
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if(!isController()) return;
+        if (!isController()) return;
         var rodLevels = getRodLevels(true);
-        cachedFuelRodLevel = rodLevels.getFirst();
+        cachedEffectivePower  = rodLevels.getFirst();
         cachedControlRodLevel = rodLevels.getSecond();
-        reactorTick(cachedFuelRodLevel, cachedControlRodLevel);
+        reactorTick(cachedEffectivePower, cachedControlRodLevel);
+        // Proactively sync heat/coolant/reactivity to clients so the gauge renderer
+        // and goggle tooltip always have fresh per-instance data without needing the
+        // observe packet. The rate-limiter in sendData() prevents spamming.
+        sendData();
     }
 
     public int getTotalSize() {
@@ -626,90 +759,163 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         return con.width * con.width * con.height;
     }
 
-    private void reactorTick(int fuelLevel, int controlLevel) {
-        /*
-         * Fuel Rod +3 heat
-         * Control Rod -1 heat
-         * -1 * coolant where < size
-         * meltdown: heat > 25 * size
-         * */
+    private static final float MAX_TURBINE_RPM = 256f;
 
-        setHeat(Math.max(getHeat() + fuelLevel*3 - controlLevel, 0));
-        if(getHeat() > 25*getTotalSize()) onMeltdown();
+    private void reactorTick(int effectivePower, int controlLevel) {
+        int hullCapacity = getTotalSize() / 4;  // 0 for reactors smaller than 4 blocks
+        cachedHullCapacity = hullCapacity;
 
-        int usedCoolant = Math.min(Math.min(getHeat(), getCoolant()), getTotalSize());
-        setCoolant(getCoolant()-usedCoolant);
+        // Net power after control-rod suppression
+        int netPower = Math.max(0, effectivePower - controlLevel);
+        boolean isRunning = netPower > 0;
 
-        System.out.println("reactorTick " + getHeat() + "T |" + getCoolant() + "U |" + fuelLevel + "F |" + controlLevel + "C");
+        // 25C idle = 315C at hull capacity = 895C at 3x overload
+        if (isRunning) {
+            reactorHeat = (int)(25 + 290 * Math.min(3.0, (double) netPower / Math.max(1, hullCapacity)));
+        } else {
+            reactorHeat = Math.max(25, reactorHeat - 5); // passive cool-down display
+        }
+
+        // Dry-run check uses the level BEFORE turbine consumption so a reactor that
+        // just drained its last mB on the previous tick fails immediately.
+        boolean hasWater = tankInventory.getFluidAmount() > 0;
+
+        // Each active turbine consumes 8 mB per lazy tick (16 game ticks).
+        if (isRunning && cachedTurbineCount > 0) {
+            tankInventory.drain(
+                    new FluidStack(Fluids.WATER, cachedTurbineCount * 8), FluidAction.EXECUTE);
+        }
+
+        float damage = 0f;
+        if (netPower > hullCapacity)
+            damage += (float)(netPower - hullCapacity) / Math.max(1, hullCapacity);
+        if (isRunning && !hasWater)
+            damage += 0.5f;
+
+        if (damage > 0) {
+            reactorHealth = Math.max(0f, reactorHealth - damage);
+            if (reactorHealth <= 0f) {
+                onMeltdown();
+                return;
+            }
+        }
+
+        // A shut-down reactor slowly self-repairs: +0.5%/lazy-tick (160 s for full regen).
+        if (!isRunning && reactorHealth < 100f)
+            reactorHealth = Math.min(100f, reactorHealth + 0.5f);
+
+        // ── Turbine targeting ──────────────────────────────────────────────────────
+        scanAndUpdateTurbines(netPower);
+
+        boiler.needsHeatLevelUpdate = true;
     }
 
-    public boolean hasReactor() {
-        return true;
+    // Scans every face of the multiblock bounding box for attached turbine chains,
+    // then sets turbineTargetRpm = MAX_TURBINE_RPM x min(1, netPower / totalTurbines).
+    // Turbines may be stacked inline (Reactor -> T1 -> T2 -> T3) and all count toward
+    // the total.  Because every turbine in a chain generates the same RPM, the total
+    // SU output is constant regardless of chain length (N turbines x RPM/N x 8 SU/RPM).
+    private void scanAndUpdateTurbines(int netPower) {
+        int w = getWidth(), h = getHeight();
+        BlockPos con = getController();
+        Set<BlockPos> adjacentChecked = new HashSet<>(); // guards against double-scanning faces
+        Set<BlockPos> allTurbines     = new HashSet<>(); // deduplicates across overlapping chains
+
+        for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+                for (int z = 0; z < w; z++) {
+                    for (Direction dir : Direction.values()) {
+                        BlockPos neighbor = con.offset(x, y, z).relative(dir);
+                        // Skip if inside the bounding box
+                        if (neighbor.getX() >= con.getX() && neighbor.getX() < con.getX() + w
+                         && neighbor.getY() >= con.getY() && neighbor.getY() < con.getY() + h
+                         && neighbor.getZ() >= con.getZ() && neighbor.getZ() < con.getZ() + w)
+                            continue;
+                        if (!adjacentChecked.add(neighbor)) continue;
+
+                        BlockEntity adj = level.getBlockEntity(neighbor);
+                        if (!(adj instanceof TurbineBlockEntity entryTurbine)) continue;
+                        if (entryTurbine.getBlockState().getValue(TurbineBlock.FACING) != dir) continue;
+
+                        // Found an entry-point turbine - follow the chain outward (max 16 deep)
+                        BlockPos chainPos = neighbor;
+                        for (int depth = 0; depth < 16; depth++) {
+                            if (!allTurbines.add(chainPos)) break; // already counted
+                            BlockPos nextPos = chainPos.relative(dir);
+                            BlockEntity nextBE = level.getBlockEntity(nextPos);
+                            if (!(nextBE instanceof TurbineBlockEntity nextT)) break;
+                            if (nextT.getBlockState().getValue(TurbineBlock.FACING) != dir) break;
+                            chainPos = nextPos;
+                        }
+                    }
+                }
+            }
+        }
+
+        cachedTurbineCount = allTurbines.size();
+        // 2 turbines required per effective power unit: multiply netPower by 2 so that
+        // 2 turbines are fully powered by 1 effective power.
+        turbineTargetRpm = cachedTurbineCount == 0 ? 0f
+                : Math.min(MAX_TURBINE_RPM, MAX_TURBINE_RPM * (float)(netPower * 2) / cachedTurbineCount);
     }
 
-    public int getHeat() {
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return 0;
-        return controllerTE.reactorHeat;
+    public boolean shouldMeltdownOnBreak() {
+        if (hasMeltdown) return false;
+        // Damaged or actively running reactors are dangerous to dismantle
+        return isActive() || reactorHealth < 90f;
     }
 
-    public void setHeat(int heat) {
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return;
-        controllerTE.reactorHeat = heat;
-    }
-
-    public int getCoolant() {
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return 0;
-        return controllerTE.reactorCoolant;
-    }
-
-    public void setCoolant(int coolant) {
-        ReactorCasingBlockEntity controllerTE = getControllerBE();
-        if (controllerTE == null) return;
-        controllerTE.reactorCoolant = coolant;
+    // Called each render frame by the renderer to keep the gauge synced.
+    public void observe() {
+        if (level == null || !level.isClientSide()) return;
+        ObservePacketPayload.send(worldPosition, 0);
     }
 
     public boolean isActive() {
-        return rodInsertion > 0f;
+        return cachedEffectivePower > cachedControlRodLevel;
     }
 
-    public void onRodChange() {
-
+    // Used by AtomicConnectivityHandler to redistribute hull integrity when multis split/merge.
+    public int getHeat() {
+        ReactorCasingBlockEntity con = getControllerBE();
+        return con == null ? 100 : (int) con.reactorHealth;
     }
 
-    private boolean hasMeltdown = false;
+    public void setHeat(int value) {
+        ReactorCasingBlockEntity con = getControllerBE();
+        if (con != null) con.reactorHealth = Math.max(0, Math.min(100, value));
+    }
+
+    public boolean hasReactor() { return true; }
+
+    boolean hasMeltdown = false;
+
     public void onMeltdown() {
-        if(hasMeltdown) return;
+        if (hasMeltdown) return;
         hasMeltdown = true;
         BlockPos con = getController();
-        if(con == null || level == null) return;
-        for(int x = 0; x < getWidth(); x++) {
-            for(int y = 0; y < getHeight()+1; y++) {
-                for(int z = 0; z < getWidth(); z++) {
-                    int i = (int)(Math.random()*3d);
-                    switch (i) {
-                        case 0:
-                            level.setBlock(con.offset(x, y, z), Blocks.LAVA.defaultBlockState(), Block.UPDATE_ALL);
-                            break;
-                        case 1:
-                            level.setBlock(con.offset(x, y, z), AtomicBlocks.REACTOR_DEBRIS.getDefaultState(), Block.UPDATE_ALL);
-                            break;
-                        case 2:
-                            level.setBlock(con.offset(x, y, z), Blocks.OBSIDIAN.defaultBlockState(), Block.UPDATE_ALL);
-                            break;
-                    }
+        if (con == null || level == null) return;
+
+        float radius = Math.max(2.0f, (width + height) / 2.0f);
+        level.explode(null,
+                con.getX() + width / 2.0,
+                con.getY() + height / 2.0,
+                con.getZ() + width / 2.0,
+                radius,
+                Level.ExplosionInteraction.TNT);
+
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight() + 1; y++) {
+                for (int z = 0; z < getWidth(); z++) {
+                    int i = (int) (Math.random() * 3d);
+                    level.setBlock(con.offset(x, y, z), switch (i) {
+                        case 0 -> Blocks.LAVA.defaultBlockState();
+                        case 1 -> AtomicBlocks.REACTOR_DEBRIS.getDefaultState();
+                        default -> Blocks.OBSIDIAN.defaultBlockState();
+                    }, Block.UPDATE_ALL);
                 }
             }
         }
     }
 
-    public int getMaxHeat() {
-        return getTotalSize() * 64;
-    }
-
-    public int getMaxCoolant() {
-        return getTotalSize() * 8;
-    }
 }
