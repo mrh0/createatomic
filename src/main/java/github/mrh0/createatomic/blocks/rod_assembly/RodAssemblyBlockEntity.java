@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    // Ticks a fuel rod lasts before becoming depleted (~20 minutes)
+    // Ticks a fuel rod lasts before becoming depleted (20 minutes)
     private static final int FUEL_DURATION = 24000;
 
     private ItemStack currentRod = ItemStack.EMPTY;
