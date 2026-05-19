@@ -4,19 +4,19 @@
     "type=inlet,facing=south":   {"model": "createatomic:block/turbine/block",        "y": 180},
     "type=inlet,facing=east":    {"model": "createatomic:block/turbine/block",        "y": 90},
     "type=inlet,facing=west":    {"model": "createatomic:block/turbine/block",        "y": 270},
-    "type=inlet,facing=up":      {"model": "createatomic:block/turbine/block",        "x": 90},
-    "type=inlet,facing=down":    {"model": "createatomic:block/turbine/block",        "x": 270},
+    "type=inlet,facing=up":      {"model": "createatomic:block/turbine/block",        "x": 270},
+    "type=inlet,facing=down":    {"model": "createatomic:block/turbine/block",        "x": 90},
     "type=inline,facing=north":  {"model": "createatomic:block/turbine/block_inline"},
     "type=inline,facing=south":  {"model": "createatomic:block/turbine/block_inline", "y": 180},
     "type=inline,facing=east":   {"model": "createatomic:block/turbine/block_inline", "y": 90},
     "type=inline,facing=west":   {"model": "createatomic:block/turbine/block_inline", "y": 270},
-    "type=inline,facing=up":     {"model": "createatomic:block/turbine/block_inline", "x": 90},
-    "type=inline,facing=down":   {"model": "createatomic:block/turbine/block_inline", "x": 270},
+    "type=inline,facing=up":     {"model": "createatomic:block/turbine/block_inline", "x": 270},
+    "type=inline,facing=down":   {"model": "createatomic:block/turbine/block_inline", "x": 90},
     "type=outlet,facing=north":  {"model": "createatomic:block/turbine/block_outlet"},
     "type=outlet,facing=south":  {"model": "createatomic:block/turbine/block_outlet", "y": 180},
     "type=outlet,facing=east":   {"model": "createatomic:block/turbine/block_outlet", "y": 90},
     "type=outlet,facing=west":   {"model": "createatomic:block/turbine/block_outlet", "y": 270},
-    "type=outlet,facing=up":     {"model": "createatomic:block/turbine/block_outlet", "x": 90},
-    "type=outlet,facing=down":   {"model": "createatomic:block/turbine/block_outlet", "x": 270}
+    "type=outlet,facing=up":     {"model": "createatomic:block/turbine/block_outlet", "x": 270},
+    "type=outlet,facing=down":   {"model": "createatomic:block/turbine/block_outlet", "x": 90}
   }
 }

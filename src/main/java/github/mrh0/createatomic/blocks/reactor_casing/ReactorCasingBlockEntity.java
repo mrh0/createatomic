@@ -656,18 +656,13 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                             .withStyle(ChatFormatting.AQUA)));
         }
 
-        // Reactivity bonus (only when adjacency bonus is active)
-        if (con.cachedInstalledFuelRods > 0 && con.cachedReactivityFactor > 1.01f) {
-            int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
+        int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
             ChatFormatting rxColour = con.cachedReactivityFactor >= 2f ? ChatFormatting.RED : ChatFormatting.YELLOW;
             tooltip.add(Component.literal(s).append(
                     Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
             tooltip.add(Component.literal(s + " ").append(
-                    Component.literal(con.cachedInstalledFuelRods + " rods → " + effective
-                            + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
+                    Component.literal(effective + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
                             .withStyle(rxColour)));
-        }
-
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
@@ -804,8 +799,9 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         if (!isRunning && reactorHealth < 100f)
             reactorHealth = Math.min(100f, reactorHealth + 0.5f);
 
-        // ── Turbine targeting ──────────────────────────────────────────────────────
-        scanAndUpdateTurbines(netPower);
+        // Turbines receive the full effective power control rods do NOT throttle output.
+        // Control rods only reduce hull stress (via netPower vs hullCapacity).
+        scanAndUpdateTurbines(effectivePower);
 
         boiler.needsHeatLevelUpdate = true;
     }
@@ -853,16 +849,17 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         }
 
         cachedTurbineCount = allTurbines.size();
-        // 2 turbines required per effective power unit: multiply netPower by 2 so that
-        // 2 turbines are fully powered by 1 effective power.
+        // 1 turbine required per effective power unit
         turbineTargetRpm = cachedTurbineCount == 0 ? 0f
-                : Math.min(MAX_TURBINE_RPM, MAX_TURBINE_RPM * (float)(netPower * 2) / cachedTurbineCount);
+                : Math.min(MAX_TURBINE_RPM, MAX_TURBINE_RPM * (float)(netPower) / cachedTurbineCount);
     }
 
     public boolean shouldMeltdownOnBreak() {
         if (hasMeltdown) return false;
-        // Damaged or actively running reactors are dangerous to dismantle
-        return isActive() || reactorHealth < 90f;
+        // Only trigger when the reactor is actively generating power (fuel rods > control
+        // rods). An idle or fully-suppressed reactor is safe to break even if its hull
+        // has taken prior damage — removing fuel rods first is the safe procedure.
+        return isActive();
     }
 
     // Called each render frame by the renderer to keep the gauge synced.
