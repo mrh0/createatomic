@@ -1,8 +1,8 @@
 {
 	"textures": {
-		"rod": "createatomic:block/control_rod",
+		"rod": "createatomic:block/generic_uranium_depleted",
 		"cap": "createatomic:block/rod_assembly",
-		"particle": "createatomic:block/control_rod"
+		"particle": "createatomic:block/generic_uranium_depleted"
 	},
 	"elements": [
 		{

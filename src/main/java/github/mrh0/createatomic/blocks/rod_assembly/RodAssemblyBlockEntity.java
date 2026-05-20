@@ -3,6 +3,8 @@ package github.mrh0.createatomic.blocks.rod_assembly;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.animation.LerpedFloat.Chaser;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.ChatFormatting;
@@ -26,12 +28,27 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     private ItemStack currentRod = ItemStack.EMPTY;
     private int fuelTicks = 0;
 
+    // Client-only: smoothly animates the rod 4px down when the reactor is running.
+    public LerpedFloat insertAnimation;
+
     public RodAssemblyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> list) {}
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level == null || !level.isClientSide()) return;
+        if (insertAnimation == null)
+            insertAnimation = LerpedFloat.linear().startWithValue(0f);
+        insertAnimation.tickChaser();
+        ReactorCasingBlockEntity reactor = findReactor();
+        boolean active = getConfig().isPopulated() && reactor != null && reactor.getTemperature() > 25;
+        insertAnimation.chase(active ? 1f : 0f, 0.15f, Chaser.EXP);
+    }
 
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {

@@ -33,11 +33,18 @@ public class RodAssemblyRenderer extends SafeBlockEntityRenderer<RodAssemblyBloc
 
         if (partial == null) return;
 
+        float insertOffset = be.insertAnimation != null
+                ? be.insertAnimation.getValue(partialTicks) * (-4f / 16f)
+                : 0f;
+
         int rodLight = sampleRodLight(be);
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
+        ms.pushPose();
+        ms.translate(0, insertOffset, 0);
         CachedBuffers.partial(partial, be.getBlockState())
                 .light(rodLight)
                 .renderInto(ms, vb);
+        ms.popPose();
     }
 
     // Sample light from above the rod assembly so the rod isn't unlit inside a reactor.

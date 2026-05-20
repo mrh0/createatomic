@@ -864,6 +864,10 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         return cachedEffectivePower > cachedControlRodLevel;
     }
 
+    public int getTemperature() {
+        return reactorHeat;
+    }
+
     // Used by AtomicConnectivityHandler to redistribute hull integrity when multis split/merge.
     public int getHeat() {
         ReactorCasingBlockEntity con = getControllerBE();

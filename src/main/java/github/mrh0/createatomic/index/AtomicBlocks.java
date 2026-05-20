@@ -68,7 +68,7 @@ public class AtomicBlocks {
 
     public static final BlockEntry<ReactorDebrisBlock> REACTOR_DEBRIS = CreateAtomic.REGISTRATE.block("reactor_debris",  ReactorDebrisBlock::new)
             .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(DyeColor.GRAY))
+            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks())
             .item()
             .transform(customItemModel())
             .register();
