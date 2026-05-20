@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.api.stress.BlockStressValues;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingRenderer;
+import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyRenderer;
 import github.mrh0.createatomic.blocks.turbine.TurbineRenderer;
 import github.mrh0.createatomic.index.*;
 import github.mrh0.createatomic.network.ClientPayloadHandler;
@@ -120,6 +121,7 @@ public class CreateAtomic {
         event.enqueueWork(() -> {
             BlockEntityRenderers.register(AtomicBlockEntities.REACTOR_CASING.get(), ReactorCasingRenderer::new);
             BlockEntityRenderers.register(AtomicBlockEntities.TURBINE.get(), TurbineRenderer::new);
+            BlockEntityRenderers.register(AtomicBlockEntities.ROD_ASSEMBLY.get(), RodAssemblyRenderer::new);
         });
         AtomicPartials.init();
     }

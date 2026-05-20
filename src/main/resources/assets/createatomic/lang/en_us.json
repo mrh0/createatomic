@@ -10,6 +10,7 @@
 	"item.createatomic.large_control_rod": "Large Control Rod",
 	"item.createatomic.refined_uranium_rod": "Uranium Fuel Rod",
 	"item.createatomic.depleted_uranium_rod": "Depleted Uranium Fuel Rod",
+	"item.createatomic.neutron_reflector": "Neutron Reflector",
 
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
@@ -28,6 +29,9 @@
 	"createatomic.tooltip.rod_assembly.large_control_rod": "Large Control Rod",
 	"createatomic.tooltip.rod_assembly.fuel_rod": "Fuel Rod",
 	"createatomic.tooltip.rod_assembly.depleted_fuel_rod": "Depleted Fuel Rod",
+	"createatomic.tooltip.rod_assembly.neutron_reflector": "Neutron Reflector",
+	"createatomic.tooltip.rod_assembly.locked": "Locked — reactor is running",
+	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
 
 	"createatomic.tooltip.reactor.info": "Reactor Status",
 	"createatomic.tooltip.reactor.active": "● Active",

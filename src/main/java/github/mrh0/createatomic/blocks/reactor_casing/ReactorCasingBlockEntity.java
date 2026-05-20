@@ -421,9 +421,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             fluidLevel.chase(fluidLevel.getChaseTarget(), 0.125f, Chaser.EXP);
 
         if (isController()) {
-            // Gauge shows effective power relative to hull capacity (0 = cold, 1 = at limit)
-            float gaugeRatio = cachedHullCapacity > 0
-                    ? Math.min(1f, (float) cachedEffectivePower / cachedHullCapacity) : 0f;
+            // Gauge tracks temperature: 25°C = 0, 315°C = 1 (pegs at 1 and shakes above 315°C)
+            float gaugeRatio = Math.min(1f, (reactorHeat - 25f) / 290f);
             if (gauge == null)
                 gauge = LerpedFloat.linear().startWithValue(gaugeRatio);
             gauge.chase(gaugeRatio, 0.4f, Chaser.EXP);
@@ -611,17 +610,20 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                         : "createatomic.tooltip.reactor.inactive")
                         .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)));
 
-        // Effective power vs capacity (red when overloaded)
-        boolean overloaded = con.cachedEffectivePower - con.cachedControlRodLevel > con.cachedHullCapacity;
+        // Net power vs capacity: green = safe, yellow = hot (>1×), red = damaging (>2×)
+        int netPowerDisplay = con.cachedEffectivePower - con.cachedControlRodLevel;
+        boolean hot      = netPowerDisplay > con.cachedHullCapacity;
+        boolean damaging = netPowerDisplay > con.cachedHullCapacity * 2;
+        ChatFormatting powerColour = damaging ? ChatFormatting.RED : hot ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.capacity").withStyle(ChatFormatting.GRAY)));
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(String.valueOf(con.cachedEffectivePower))
-                        .withStyle(overloaded ? ChatFormatting.RED : ChatFormatting.GREEN))
+                        .withStyle(powerColour))
                         .append(Component.literal(" (-" + String.valueOf(con.cachedControlRodLevel) + ")")
                         .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY))
                         .append(Component.literal(" / " + con.cachedHullCapacity)
-                        .withStyle(overloaded ? ChatFormatting.RED : ChatFormatting.GREEN)));
+                        .withStyle(powerColour)));
 
         // Temperature (display-only)
         tooltip.add(Component.literal(s).append(
@@ -679,24 +681,25 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public Pair<Integer, Integer> getRodLevels(boolean tick) {
         int w = getWidth();
-        // Pass 1: populate the grid of rod assembly block entities and their fuel levels
-        RodAssemblyBlockEntity[][] grid = new RodAssemblyBlockEntity[w][w];
-        int[][] fuelGrid = new int[w][w]; // 0 = no active fuel, 1 = fuel rod present
+        // Pass 1: populate grids for fuel rods and neutron reflectors
+        RodAssemblyBlockEntity[][] grid          = new RodAssemblyBlockEntity[w][w];
+        int[][]                   fuelGrid       = new int[w][w]; // 1 = active fuel rod
+        boolean[][]               reflectorGrid  = new boolean[w][w]; // true = neutron reflector
 
         for (int x = 0; x < w; x++) {
             for (int z = 0; z < w; z++) {
                 BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
                 if (be instanceof RodAssemblyBlockEntity rabe) {
-                    grid[x][z] = rabe;
-                    fuelGrid[x][z] = rabe.getFuelLevel();
+                    grid[x][z]         = rabe;
+                    fuelGrid[x][z]     = rabe.getFuelLevel();
+                    reflectorGrid[x][z] = rabe.getConfig().isReflector();
                 }
             }
         }
 
         // Pass 2: tally fuel/control with adjacency reactivity bonus.
-        // Each fuel rod gains +50% power per orthogonally adjacent fuel rod.
+        // Each fuel rod gains +50% power per orthogonally adjacent fuel rod OR neutron reflector.
         //   1 neighbour 1.5x,  2 neighbours 2.0x,  3 neighbours 2.5x, etc.
-        // This matches the examples: 2 adjacent = power of 3, 4-in-square = power of 8.
         int[] dx = {-1, 1, 0, 0};
         int[] dz = { 0, 0,-1, 1};
 
@@ -717,7 +720,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                     int neighbours = 0;
                     for (int d = 0; d < 4; d++) {
                         int nx = x + dx[d], nz = z + dz[d];
-                        if (nx >= 0 && nx < w && nz >= 0 && nz < w && fuelGrid[nx][nz] > 0)
+                        if (nx >= 0 && nx < w && nz >= 0 && nz < w
+                                && (fuelGrid[nx][nz] > 0 || reflectorGrid[nx][nz]))
                             neighbours++;
                     }
                     effectiveFuel += fuel * (1f + 0.5f * neighbours);
@@ -757,37 +761,30 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     private static final float MAX_TURBINE_RPM = 256f;
 
     private void reactorTick(int effectivePower, int controlLevel) {
-        int hullCapacity = getTotalSize() / 4;  // 0 for reactors smaller than 4 blocks
+        // Each casing block contributes 1 capacity unit.
+        int hullCapacity = getTotalSize();
         cachedHullCapacity = hullCapacity;
 
-        // Net power after control-rod suppression
+        // Net power after control-rod suppression — drives both heat and turbines.
         int netPower = Math.max(0, effectivePower - controlLevel);
         boolean isRunning = netPower > 0;
 
-        // 25C idle = 315C at hull capacity = 895C at 3x overload
+        // 25°C idle → 315°C at capacity → 895°C at 3× overload
         if (isRunning) {
             reactorHeat = (int)(25 + 290 * Math.min(3.0, (double) netPower / Math.max(1, hullCapacity)));
         } else {
             reactorHeat = Math.max(25, reactorHeat - 5); // passive cool-down display
         }
 
-        // Dry-run check uses the level BEFORE turbine consumption so a reactor that
-        // just drained its last mB on the previous tick fails immediately.
-        boolean hasWater = tankInventory.getFluidAmount() > 0;
-
-        // Each active turbine consumes 8 mB per lazy tick (16 game ticks).
+        // Each active turbine consumes 8 mB per lazy tick.
         if (isRunning && cachedTurbineCount > 0) {
             tankInventory.drain(
                     new FluidStack(Fluids.WATER, cachedTurbineCount * 8), FluidAction.EXECUTE);
         }
 
-        float damage = 0f;
-        if (netPower > hullCapacity)
-            damage += (float)(netPower - hullCapacity) / Math.max(1, hullCapacity);
-        if (isRunning && !hasWater)
-            damage += 0.5f;
-
-        if (damage > 0) {
+        // Hull damage only begins when net power exceeds 2× capacity — permanent, no self-repair.
+        if (netPower > hullCapacity * 2) {
+            float damage = (float)(netPower - hullCapacity * 2) / Math.max(1, hullCapacity);
             reactorHealth = Math.max(0f, reactorHealth - damage);
             if (reactorHealth <= 0f) {
                 onMeltdown();
@@ -795,13 +792,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             }
         }
 
-        // A shut-down reactor slowly self-repairs: +0.5%/lazy-tick (160 s for full regen).
-        if (!isRunning && reactorHealth < 100f)
-            reactorHealth = Math.min(100f, reactorHealth + 0.5f);
-
-        // Turbines receive the full effective power control rods do NOT throttle output.
-        // Control rods only reduce hull stress (via netPower vs hullCapacity).
-        scanAndUpdateTurbines(effectivePower);
+        // Control rods throttle turbines — netPower (not effectivePower) drives output.
+        scanAndUpdateTurbines(netPower);
 
         boiler.needsHeatLevelUpdate = true;
     }

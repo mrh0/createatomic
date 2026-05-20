@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.6",
+	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "createatomic:block/turbine/blade",
@@ -8,9 +8,9 @@
 	"elements": [
 		{
 			"name": "blade",
-			"from": [0, 0, 14],
-			"to": [16, 16, 14.1],
-			"rotation": {"angle": 45, "axis": "z", "origin": [8, 8, 8]},
+			"from": [0, 0, 10],
+			"to": [16, 16, 10.1],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 8, 4]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#0"}
@@ -18,9 +18,9 @@
 		},
 		{
 			"name": "blade",
-			"from": [0, 0, 10],
-			"to": [16, 16, 10.1],
-			"rotation": {"angle": -22.5, "axis": "z", "origin": [8, 8, 8]},
+			"from": [0, 0, 6],
+			"to": [16, 16, 6.1],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8, 8, 4]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"}
@@ -28,13 +28,22 @@
 		},
 		{
 			"name": "blade",
-			"from": [0, 0, 6],
-			"to": [16, 16, 6.1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"from": [0, 0, 2],
+			"to": [16, 16, 2.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 4]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"}
 			}
+		}
+	],
+	"groups": [
+		{
+			"name": "blades",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1, 2]
 		}
 	]
 }

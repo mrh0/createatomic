@@ -3,8 +3,9 @@ package github.mrh0.createatomic.blocks.rod_assembly;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import github.mrh0.createatomic.index.AtomicBlockEntities;
-import github.mrh0.createatomic.index.AtomicBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ItemInteractionResult;
@@ -16,24 +17,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssemblyBlockEntity> {
 
-    public static final EnumProperty<RodConfiguration> ROD_STATE = EnumProperty.create("rod", RodConfiguration.class);
     public static VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
 
     public RodAssemblyBlock(Properties props) {
         super(props);
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ROD_STATE);
     }
 
     @Override
@@ -47,12 +40,15 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (!RodConfiguration.isAcceptedStack(stack))
             return InteractionResultHolder.pass(stack);
 
-        RodConfiguration currentConfig = state.getOptionalValue(ROD_STATE).orElse(RodConfiguration.None);
-        if (currentConfig.isPopulated())
-            return InteractionResultHolder.pass(stack);
-
         BlockEntity be = world.getBlockEntity(pos);
         if (!(be instanceof RodAssemblyBlockEntity rabe))
+            return InteractionResultHolder.pass(stack);
+
+        if (rabe.getConfig().isPopulated())
+            return InteractionResultHolder.pass(stack);
+
+        RodConfiguration incoming = RodConfiguration.fromStack(stack);
+        if (incoming.isLockedWhileRunning() && rabe.isReactorActive())
             return InteractionResultHolder.pass(stack);
 
         ItemStack remainder = stack.copy();
@@ -64,12 +60,15 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
 
     // Used by mechanical arm to extract rods.
     public static ItemStack tryExtract(BlockState state, Level world, BlockPos pos, boolean simulate) {
-        RodConfiguration currentConfig = state.getOptionalValue(ROD_STATE).orElse(RodConfiguration.None);
-        if (!currentConfig.isPopulated())
-            return ItemStack.EMPTY;
-
         BlockEntity be = world.getBlockEntity(pos);
         if (!(be instanceof RodAssemblyBlockEntity rabe))
+            return ItemStack.EMPTY;
+
+        RodConfiguration config = rabe.getConfig();
+        if (!config.isPopulated())
+            return ItemStack.EMPTY;
+
+        if (config.isLockedWhileRunning() && rabe.isReactorActive())
             return ItemStack.EMPTY;
 
         ItemStack rod = rabe.getRodWithDepletion();
@@ -87,12 +86,17 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (!(be instanceof RodAssemblyBlockEntity rabe))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        RodConfiguration currentConfig = state.getValue(ROD_STATE);
+        RodConfiguration currentConfig = rabe.getConfig();
 
-        // Empty hand: extract rod (with depletion progress embedded) if one is present
+        // Empty hand: extract rod if present
         if (stack.isEmpty()) {
             if (!currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if (currentConfig.isLockedWhileRunning() && rabe.isReactorActive()) {
+                player.displayClientMessage(
+                        Component.translatable("createatomic.message.rod_locked").withStyle(ChatFormatting.RED), true);
+                return ItemInteractionResult.FAIL;
+            }
             player.getInventory().placeItemBackInInventory(rabe.getRodWithDepletion());
             rabe.updateRod(ItemStack.EMPTY);
             return ItemInteractionResult.SUCCESS;
@@ -102,6 +106,12 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (RodConfiguration.isAcceptedStack(stack)) {
             if (currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            RodConfiguration incoming = RodConfiguration.fromStack(stack);
+            if (incoming.isLockedWhileRunning() && rabe.isReactorActive()) {
+                player.displayClientMessage(
+                        Component.translatable("createatomic.message.rod_locked").withStyle(ChatFormatting.RED), true);
+                return ItemInteractionResult.FAIL;
+            }
             ItemStack toInsert = stack.copyWithCount(1);
             if (!player.isCreative()) stack.shrink(1);
             rabe.updateRod(toInsert);
@@ -111,8 +121,17 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-    public static void setRodState(ItemStack stack, RodConfiguration rod, Level level, BlockPos pos) {
-        level.setBlock(pos, AtomicBlocks.ROD_ASSEMBLY.getDefaultState().setValue(ROD_STATE, rod), Block.UPDATE_ALL);
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof RodAssemblyBlockEntity rabe && !level.isClientSide()) {
+                var controller = rabe.findReactor();
+                if (controller != null && controller.shouldMeltdownOnBreak())
+                    controller.onMeltdown();
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

@@ -41,5 +41,9 @@ public class AtomicItems {
             CreateAtomic.REGISTRATE.item("depleted_uranium_rod", Item::new)
                     .register();
 
+    public static final ItemEntry<Item> NEUTRON_REFLECTOR =
+            CreateAtomic.REGISTRATE.item("neutron_reflector", Item::new)
+                    .register();
+
     public static void register() {}
 }

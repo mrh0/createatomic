@@ -3,6 +3,7 @@ package github.mrh0.createatomic.blocks.reactor_casing;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
+import net.minecraft.Util;
 import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import github.mrh0.createatomic.index.AtomicPartials;
@@ -44,6 +45,15 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
         float dialPivotZ = 8f / 16f;
         float progress = te.gauge.getValue(partialTicks);
 
+        // When temperature exceeds 315°C the needle pegs at max and shakes.
+        float shake = 0f;
+        if (te.reactorHeat > 315) {
+            float excess = (te.reactorHeat - 315f) / 290f; // 0 at 315°C, ~2 at 895°C
+            float amplitude = Math.min(10f, excess * 10f);
+            float time = (float)(Util.getMillis() % 4000) / 1000f;
+            shake = (float)Math.sin(time * (12f + excess * 20f)) * amplitude;
+        }
+
         // Sample light at the top block of the reactor, then boost to avoid the gauge
         // appearing unlit when the controller block is enclosed. The gauge face is an
         // electronic display so we bias toward full-bright while still responding to
@@ -65,7 +75,7 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
                     .uncenter()
                     .translate(te.width / 2f - 6 / 16f, 0, 0)
                     .translate(0, dialPivotY, dialPivotZ)
-                    .rotateXDegrees(-145 * progress + 90)
+                    .rotateXDegrees(-145 * progress + 90 + shake)
                     .translate(0, -dialPivotY, -dialPivotZ)
                     .light(gaugeLight)
                     .renderInto(ms, vb);

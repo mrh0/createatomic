@@ -3,6 +3,8 @@ package github.mrh0.createatomic.blocks.rod_assembly;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -11,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -19,8 +21,7 @@ import java.util.List;
 
 public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    // Ticks a fuel rod lasts before becoming depleted (20 minutes)
-    private static final int FUEL_DURATION = 24000;
+    private static final int FUEL_DURATION = 72000;
 
     private ItemStack currentRod = ItemStack.EMPTY;
     private int fuelTicks = 0;
@@ -49,6 +50,23 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         fuelTicks = tag.getInt("fuelTicks");
     }
 
+    public RodConfiguration getConfig() {
+        return RodConfiguration.fromStack(currentRod);
+    }
+
+    @Nullable
+    public ReactorCasingBlockEntity findReactor() {
+        if (level == null) return null;
+        BlockEntity below = level.getBlockEntity(worldPosition.below());
+        if (!(below instanceof ReactorCasingBlockEntity rce)) return null;
+        return rce.getControllerBE();
+    }
+
+    public boolean isReactorActive() {
+        ReactorCasingBlockEntity reactor = findReactor();
+        return reactor != null && reactor.isActive();
+    }
+
     public ItemStack getCurrentRod() {
         return currentRod.copy();
     }
@@ -64,18 +82,14 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         }
 
         if (hasLevel() && !level.isClientSide()) {
-            RodConfiguration config = RodConfiguration.fromStack(currentRod);
-            level.setBlock(worldPosition, getBlockState().setValue(RodAssemblyBlock.ROD_STATE, config), Block.UPDATE_ALL);
             setChanged();
             sendData();
         }
     }
 
-    // Returns the rod item for the current configuration with fuelTicks embedded so that
-    // re-inserting it later resumes from the same depletion level.
+    // Returns the rod item with fuelTicks embedded so that re-inserting it later resumes depletion.
     public ItemStack getRodWithDepletion() {
-        RodConfiguration config = getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
-                .orElse(RodConfiguration.None);
+        RodConfiguration config = getConfig();
         ItemStack rod = config.asStack();
         if (rod.isEmpty()) return ItemStack.EMPTY;
         if (config == RodConfiguration.FuelRod && fuelTicks > 0) {
@@ -89,9 +103,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     // Called every lazy tick by the reactor controller to advance fuel consumption.
     public void tickRod() {
         if (level == null || level.isClientSide()) return;
-        RodConfiguration config = getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
-                .orElse(RodConfiguration.None);
-        if (config != RodConfiguration.FuelRod) return;
+        if (getConfig() != RodConfiguration.FuelRod) return;
 
         fuelTicks++;
         if (fuelTicks >= FUEL_DURATION) {
@@ -101,13 +113,11 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     }
 
     public int getControlLevel() {
-        return getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
-                .orElse(RodConfiguration.None).getControlLevel();
+        return getConfig().getControlLevel();
     }
 
     public int getFuelLevel() {
-        return getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
-                .orElse(RodConfiguration.None).getFuelLevel();
+        return getConfig().getFuelLevel();
     }
 
     public int getFuelProgress() {
@@ -116,8 +126,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        RodConfiguration config = getBlockState().getOptionalValue(RodAssemblyBlock.ROD_STATE)
-                .orElse(RodConfiguration.None);
+        RodConfiguration config = getConfig();
         String spacing = "  ";
         tooltip.add(Component.literal(spacing).append(
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
@@ -126,6 +135,10 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
             int pct = (fuelTicks * 100) / FUEL_DURATION;
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.literal(pct + "% depleted").withStyle(ChatFormatting.YELLOW)));
+        }
+        if (config.isLockedWhileRunning() && isReactorActive()) {
+            tooltip.add(Component.literal(spacing + " ").append(
+                    Component.translatable("createatomic.tooltip.rod_assembly.locked").withStyle(ChatFormatting.RED)));
         }
         return true;
     }

@@ -1,9 +1,5 @@
 {
     "variants": {
-        "rod=none": { "model": "createatomic:block/rod_assembly/block" },
-        "rod=small_control_rod": { "model": "createatomic:block/rod_assembly/block_small_control_rod" },
-        "rod=large_control_rod": { "model": "createatomic:block/rod_assembly/block_large_control_rod" },
-        "rod=fuel_rod": { "model": "createatomic:block/rod_assembly/block_fuel_rod" },
-        "rod=depleted_fuel_rod": { "model": "createatomic:block/rod_assembly/block_depleted_fuel_rod" }
+        "": { "model": "createatomic:block/rod_assembly/block" }
     }
 }

@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"rod": "createatomic:block/neutron_reflector",
+		"particle": "createatomic:block/neutron_reflector"
+	},
+	"elements": [
+		{
+			"name": "Rod",
+			"from": [5, 10, 5],
+			"to": [11, 16, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#rod"},
+				"east":  {"uv": [0, 0, 6, 6], "texture": "#rod"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#rod"},
+				"west":  {"uv": [0, 0, 6, 6], "texture": "#rod"},
+				"up":    {"uv": [0, 0, 6, 6], "texture": "#rod"},
+				"down":  {"uv": [0, 0, 6, 6], "texture": "#rod"}
+			}
+		}
+	]
+}
