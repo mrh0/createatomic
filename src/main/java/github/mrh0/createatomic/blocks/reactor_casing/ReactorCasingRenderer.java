@@ -38,7 +38,6 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
         ms.pushPose();
         TransformStack<PoseTransformStack> msr = TransformStack.of(ms);
-        // Place the gauge on the top reactor casing block (height-1 blocks above controller)
         msr.translate(te.width / 2f, te.height - 0.5f, te.width / 2f);
 
         float dialPivotY = 6f / 16f;
@@ -48,21 +47,16 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
         // When temperature exceeds 315°C the needle pegs at max and shakes.
         float shake = 0f;
         if (te.reactorHeat > 315) {
-            float excess = (te.reactorHeat - 315f) / 290f; // 0 at 315°C, ~2 at 895°C
+            float excess = (te.reactorHeat - 315f) / 290f;
             float amplitude = Math.min(10f, excess * 10f);
             float time = (float)(Util.getMillis() % 4000) / 1000f;
             shake = (float)Math.sin(time * (12f + excess * 20f)) * amplitude;
         }
 
-        // Sample light at the top block of the reactor, then boost to avoid the gauge
-        // appearing unlit when the controller block is enclosed. The gauge face is an
-        // electronic display so we bias toward full-bright while still responding to
-        // the environment (gives a natural darkening in night/dim conditions).
         int gaugeLight = sampleTopLight(te);
 
         for (Direction d : Iterate.horizontalDirections) {
             ms.pushPose();
-            // Match Create's boiler gauge convention: -toYRot() - 90
             float yRot = -d.toYRot() - 90;
             CachedBuffers.partial(AtomicPartials.REACTOR_GUAGE, blockState)
                     .rotateYDegrees(yRot)
@@ -85,18 +79,12 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
         ms.popPose();
     }
 
-    // Sample the packed light value at the block just above the top of the reactor.
-    // Gauges sit on the top ring, so using the controller block's light (which is
-    // surrounded by casing) causes them to appear unlit. We take the better of the
-    // top-block light and the controller light, then clamp block-light to at least 8
-    // so the gauge face always reads at roughly "half lit" even in sealed rooms.
     private int sampleTopLight(ReactorCasingBlockEntity te) {
         LevelReader level = te.getLevel();
         if (level == null) return LightTexture.FULL_BRIGHT;
         BlockPos topAbove = te.getBlockPos().above(te.height);
-        int skyLight  = level.getBrightness(net.minecraft.world.level.LightLayer.SKY,   topAbove);
+        int skyLight   = level.getBrightness(net.minecraft.world.level.LightLayer.SKY,   topAbove);
         int blockLight = level.getBrightness(net.minecraft.world.level.LightLayer.BLOCK, topAbove);
-        // ensure a minimum block-light of 8 so the gauge is readable in sealed builds
         blockLight = Math.max(blockLight, 8);
         return LightTexture.pack(blockLight, skyLight);
     }

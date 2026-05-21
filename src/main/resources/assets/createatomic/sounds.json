@@ -1,0 +1,12 @@
+{
+    "reactor_beep": {
+        "sounds": [
+            { "name": "createatomic:reactor_beep", "stream": false }
+        ]
+    },
+    "reactor_loop": {
+        "sounds": [
+            { "name": "createatomic:reactor_loop" }
+        ]
+    }
+}

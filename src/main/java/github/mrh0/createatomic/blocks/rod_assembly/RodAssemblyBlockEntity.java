@@ -1,6 +1,7 @@
 package github.mrh0.createatomic.blocks.rod_assembly;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import github.mrh0.createatomic.config.AtomicConfigs;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.createmod.catnip.animation.LerpedFloat;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    private static final int FUEL_DURATION = 72000;
+    private static int fuelDuration() { return AtomicConfigs.server().fuelRodDuration.get(); }
 
     private ItemStack currentRod = ItemStack.EMPTY;
     private int fuelTicks = 0;
@@ -46,8 +47,16 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
             insertAnimation = LerpedFloat.linear().startWithValue(0f);
         insertAnimation.tickChaser();
         ReactorCasingBlockEntity reactor = findReactor();
-        boolean active = getConfig().isPopulated() && reactor != null && reactor.getTemperature() > 25;
-        insertAnimation.chase(active ? 1f : 0f, 0.15f, Chaser.EXP);
+        RodConfiguration config = getConfig();
+        boolean shouldInsert;
+        if (config.isControlRod()) {
+            // Control rods are "inserted" (animated down) when the reactor is suppressed.
+            shouldInsert = reactor != null && !reactor.cachedArmed;
+        } else {
+            // Fuel/depleted/reflector rods animate down when the reactor is running hot.
+            shouldInsert = config.isPopulated() && reactor != null && reactor.getTemperature() > 25;
+        }
+        insertAnimation.chase(shouldInsert ? 1f : 0f, 0.15f, Chaser.EXP);
     }
 
     @Override
@@ -123,7 +132,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         if (getConfig() != RodConfiguration.FuelRod) return;
 
         fuelTicks++;
-        if (fuelTicks >= FUEL_DURATION) {
+        if (fuelTicks >= fuelDuration()) {
             fuelTicks = 0;
             updateRod(RodConfiguration.DepletedFuelRod.asStack());
         }
@@ -149,7 +158,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
         if (config == RodConfiguration.FuelRod) {
-            int pct = (fuelTicks * 100) / FUEL_DURATION;
+            int pct = (fuelTicks * 100) / fuelDuration();
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.literal(pct + "% depleted").withStyle(ChatFormatting.YELLOW)));
         }

@@ -23,6 +23,7 @@ public class ReactorDebrisBlock extends Block {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!github.mrh0.createatomic.config.AtomicConfigs.server().debrisRadiation.get()) return;
         AABB area = new AABB(pos).inflate(RADIUS);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
 

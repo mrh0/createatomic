@@ -20,6 +20,7 @@
 	"block.createatomic.rod_assembly": "Rod Assembly",
 	"block.createatomic.reactor_debris": "Reactor Debris",
 	"block.createatomic.steam_turbine": "Steam Turbine",
+	"block.createatomic.reactor_redstone_interface": "Reactor Redstone Interface",
 
 	"effect.createatomic.radiation_poisoning": "Radiation Poisoning",
 	"effect.createatomic.radiation_poisoning.description": "Causes severely reduced movement speed",
@@ -33,6 +34,7 @@
 	"createatomic.tooltip.rod_assembly.locked": "Locked — reactor is running",
 	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
 
+	"createatomic.tooltip.reactor.scrammed": "⚠ Reactor SCRAMed!",
 	"createatomic.tooltip.reactor.info": "Reactor Status",
 	"createatomic.tooltip.reactor.active": "● Active",
 	"createatomic.tooltip.reactor.inactive": "○ Inactive",

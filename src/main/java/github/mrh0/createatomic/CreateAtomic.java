@@ -12,6 +12,7 @@ import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import github.mrh0.createatomic.blocks.reactor_casing.ReactorCasingRenderer;
 import github.mrh0.createatomic.blocks.rod_assembly.RodAssemblyRenderer;
 import github.mrh0.createatomic.blocks.turbine.TurbineRenderer;
+import github.mrh0.createatomic.config.AtomicConfigs;
 import github.mrh0.createatomic.index.*;
 import github.mrh0.createatomic.network.ClientPayloadHandler;
 import github.mrh0.createatomic.network.ObservePacketPayload;
@@ -98,10 +99,12 @@ public class CreateAtomic {
 
         NeoForge.EVENT_BUS.register(this);
 
+        AtomicConfigs.register(container);
         REGISTRATE.registerEventListeners(eventBus);
         AtomicBlocks.register();
         AtomicBlockEntities.register();
         AtomicItems.register();
+        AtomicSounds.register(eventBus);
         CREATIVE_MODE_TABS.register(eventBus);
         //CAFluids.register();
         //CAEffects.register(eventBus);

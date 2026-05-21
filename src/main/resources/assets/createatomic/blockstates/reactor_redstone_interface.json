@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=down,powered=false":  { "model": "createatomic:block/reactor_redstone_interface/block",                   "x": 180 },
+        "facing=down,powered=true":   { "model": "createatomic:block/reactor_redstone_interface/block_powered",           "x": 180 },
+        "facing=up,powered=false":    { "model": "createatomic:block/reactor_redstone_interface/block" },
+        "facing=up,powered=true":     { "model": "createatomic:block/reactor_redstone_interface/block_powered" },
+        "facing=north,powered=false": { "model": "createatomic:block/reactor_redstone_interface/block",                   "x": 270 },
+        "facing=north,powered=true":  { "model": "createatomic:block/reactor_redstone_interface/block_powered",           "x": 270 },
+        "facing=south,powered=false": { "model": "createatomic:block/reactor_redstone_interface/block",                   "x": 90 },
+        "facing=south,powered=true":  { "model": "createatomic:block/reactor_redstone_interface/block_powered",           "x": 90 },
+        "facing=east,powered=false":  { "model": "createatomic:block/reactor_redstone_interface/block",  "y": 90,         "x": 270 },
+        "facing=east,powered=true":   { "model": "createatomic:block/reactor_redstone_interface/block_powered", "y": 90,  "x": 270 },
+        "facing=west,powered=false":  { "model": "createatomic:block/reactor_redstone_interface/block",  "y": 270,        "x": 270 },
+        "facing=west,powered=true":   { "model": "createatomic:block/reactor_redstone_interface/block_powered", "y": 270, "x": 270 }
+    }
+}
