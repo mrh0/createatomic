@@ -14,7 +14,6 @@ import github.mrh0.createatomic.index.AtomicBlockEntities;
 import github.mrh0.createatomic.index.AtomicBlocks;
 import github.mrh0.createatomic.network.IObserveBlockEntity;
 import github.mrh0.createatomic.network.ObservePacketPayload;
-import github.mrh0.createatomic.network.ReactorPacketPayload;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,7 +28,8 @@ import com.simibubi.create.foundation.blockEntity.IMultiBlockEntityContainer;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
-import com.simibubi.create.infrastructure.config.AllConfigs;
+import github.mrh0.createatomic.config.AtomicConfigs;
+import github.mrh0.createatomic.index.AtomicSounds;
 
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.animation.LerpedFloat.Chaser;
@@ -40,6 +40,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -78,22 +79,20 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     protected int syncCooldown;
     protected boolean queuedSync;
 
-    int   reactorHeat   = 25;
+    int reactorHeat   = 25;
     float reactorHealth = 100f;
+    boolean hasMeltdown = false;
     private boolean wasRunning = false;
-    // cachedArmed:    interface present AND not signalled → control rods raised, reactor runs
-    // cachedScrammed: interface present AND signalled     → control rods inserted, reactor stops
-    // neither armed nor scrammed (no interface)           → control rods inserted, reactor stops
-    public boolean cachedArmed    = false;
     public boolean cachedScrammed = false;
+    public int poweredInterfaces = 0; // synced to client; isArmed() derives from this
 
-    int   cachedEffectivePower;
-    int   cachedControlRodLevel;
-    int   cachedHullCapacity;
-    int   cachedInstalledFuelRods;
+    int cachedEffectivePower;
+    int cachedControlRodLevel;
+    int cachedHullCapacity;
+    int cachedInstalledFuelRods;
     float cachedReactivityFactor = 1f;
     public float turbineTargetRpm;  // RPM each connected turbine should reach
-    int   cachedTurbineCount;
+    int cachedTurbineCount;
 
     public LerpedFloat gauge;
 
@@ -394,8 +393,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             cachedReactivityFactor  = compound.contains("ReactivityFactor") ? compound.getFloat("ReactivityFactor") : 1f;
             turbineTargetRpm    = compound.getFloat("TurbineRpm");
             cachedTurbineCount  = compound.getInt("TurbineCount");
-            cachedArmed    = compound.contains("Armed")    && compound.getBoolean("Armed");
-            cachedScrammed = compound.contains("Scrammed") && compound.getBoolean("Scrammed");
+            poweredInterfaces = compound.getInt("PoweredInterfaces");
+            cachedScrammed    = compound.contains("Scrammed") && compound.getBoolean("Scrammed");
         }
 
         boiler.read(compound.getCompound("Boiler"), width * width * height);
@@ -466,8 +465,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             compound.putFloat("ReactivityFactor", cachedReactivityFactor);
             compound.putFloat("TurbineRpm", turbineTargetRpm);
             compound.putInt("TurbineCount", cachedTurbineCount);
-            compound.putBoolean("Armed",    cachedArmed);
             compound.putBoolean("Scrammed", cachedScrammed);
+            compound.putInt("PoweredInterfaces", poweredInterfaces);
         }
         compound.putInt("Luminosity", luminosity);
         super.write(compound, registries, clientPacket);
@@ -679,12 +678,12 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         }
 
         int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
-            ChatFormatting rxColour = con.cachedReactivityFactor >= 2f ? ChatFormatting.RED : ChatFormatting.YELLOW;
-            tooltip.add(Component.literal(s).append(
-                    Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
-            tooltip.add(Component.literal(s + " ").append(
-                    Component.literal(effective + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
-                            .withStyle(rxColour)));
+        ChatFormatting rxColour = con.cachedReactivityFactor >= 2f ? ChatFormatting.RED : ChatFormatting.YELLOW;
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(effective + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
+                        .withStyle(rxColour)));
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
@@ -762,69 +761,25 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     public void lazyTick() {
         super.lazyTick();
         if (!isController()) return;
-        scanAndUpdateInterfaceState();
         var rodLevels = getRodLevels(true);
         cachedEffectivePower  = rodLevels.getFirst();
         cachedControlRodLevel = rodLevels.getSecond();
         // SCRAMed = control rods inserted (not lifted) AND sufficient to stop the reactor
-        cachedScrammed = !cachedArmed && cachedControlRodLevel > 0
+        cachedScrammed = !isArmed() && cachedControlRodLevel > 0
                 && cachedControlRodLevel >= cachedEffectivePower;
         reactorTick(cachedEffectivePower, cachedControlRodLevel);
         sendData();
     }
 
-    // Called by ReactorRedstoneInterfaceBlock.neighborChanged for fast redstone response.
-    public void onRedstoneInterfaceChanged() {
-        ReactorCasingBlockEntity controller = getControllerBE();
-        if (controller == null) return;
-        controller.scanAndUpdateInterfaceState();
-        controller.sendData();
-    }
-
-    private void scanAndUpdateInterfaceState() {
-        if (level == null) { cachedArmed = false; cachedScrammed = false; return; }
-        int w = getWidth(), h = getHeight();
-        BlockPos con = getController();
-        boolean hasInterface = false;
-        boolean hasSignal    = false;
-
-        for (int y = 0; y < h; y++) {
-            for (int z = 0; z < w; z++) {
-                hasInterface |= isInterface(con.offset(-1, y, z), Direction.EAST);
-                hasInterface |= isInterface(con.offset(w,  y, z), Direction.WEST);
-                if (isInterface(con.offset(-1, y, z), Direction.EAST) && isSignaled(con.offset(-1, y, z))) hasSignal = true;
-                if (isInterface(con.offset(w,  y, z), Direction.WEST) && isSignaled(con.offset(w,  y, z))) hasSignal = true;
-            }
-            for (int x = 0; x < w; x++) {
-                hasInterface |= isInterface(con.offset(x, y, -1), Direction.SOUTH);
-                hasInterface |= isInterface(con.offset(x, y, w),  Direction.NORTH);
-                if (isInterface(con.offset(x, y, -1), Direction.SOUTH) && isSignaled(con.offset(x, y, -1))) hasSignal = true;
-                if (isInterface(con.offset(x, y, w),  Direction.NORTH) && isSignaled(con.offset(x, y, w)))  hasSignal = true;
-            }
-        }
-        for (int x = 0; x < w; x++) {
-            for (int z = 0; z < w; z++) {
-                hasInterface |= isInterface(con.offset(x, -1, z), Direction.UP);
-                hasInterface |= isInterface(con.offset(x, h,  z), Direction.DOWN);
-                if (isInterface(con.offset(x, -1, z), Direction.UP)   && isSignaled(con.offset(x, -1, z))) hasSignal = true;
-                if (isInterface(con.offset(x, h,  z), Direction.DOWN) && isSignaled(con.offset(x, h,  z))) hasSignal = true;
-            }
-        }
-
-        // Powered interface → control rods lifted (armed), their suppression removed.
-        // No signal or no interface → control rods in effect normally.
-        cachedArmed    = hasInterface && hasSignal;
-        cachedScrammed = false; // computed after rod levels are known in lazyTick
-    }
-
-    private boolean isInterface(BlockPos pos, Direction facingRequired) {
-        BlockState state = level.getBlockState(pos);
-        return state.getBlock() instanceof ReactorRedstoneInterfaceBlock
-                && state.getValue(ReactorRedstoneInterfaceBlock.FACING) == facingRequired;
-    }
-
-    private boolean isSignaled(BlockPos pos) {
-        return level.hasNeighborSignal(pos);
+    // Called by ReactorRedstoneInterfaceBlock whenever it is placed, removed, or changes power state.
+    // wasActive = the interface was contributing a signal before this event.
+    // nowActive = the interface is contributing a signal after this event.
+    public void onInterfaceSignalChanged(boolean wasActive, boolean nowActive) {
+        ReactorCasingBlockEntity con = getControllerBE();
+        if (con == null) return;
+        if (wasActive) con.poweredInterfaces = Math.max(0, con.poweredInterfaces - 1);
+        if (nowActive) con.poweredInterfaces++;
+        con.sendData();
     }
 
     public int getTotalSize() {
@@ -841,11 +796,11 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         cachedHullCapacity = hullCapacity;
 
         // Armed (signal ON) = control rods lifted, their suppression ignored.
-        int effectiveControl = cachedArmed ? 0 : controlLevel;
+        int effectiveControl = isArmed() ? 0 : controlLevel;
         int netPower = Math.max(0, effectivePower - effectiveControl);
 
         // When meltdowns are disabled, a reactor at 0% health is forced offline until repaired.
-        boolean meltdownsEnabled = github.mrh0.createatomic.config.AtomicConfigs.server().meltdownEnabled.get();
+        boolean meltdownsEnabled = AtomicConfigs.server().meltdownEnabled.get();
         if (!meltdownsEnabled && reactorHealth <= 0f) netPower = 0;
 
         boolean isRunning = netPower > 0;
@@ -857,11 +812,11 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             reactorHeat = Math.max(25, reactorHeat - 5); // passive cool-down display
         }
 
-        // Each active turbine consumes 8 mB per lazy tick.
-        if (isRunning && cachedTurbineCount > 0) {
-            tankInventory.drain(
-                    new FluidStack(Fluids.WATER, cachedTurbineCount * 8), FluidAction.EXECUTE);
-        }
+        // Each active turbine requires 8 mB per lazy tick; turbines stop if water runs dry.
+        int requiredWater = cachedTurbineCount * 8;
+        boolean hasEnoughWater = cachedTurbineCount == 0 || tankInventory.getFluidAmount() >= requiredWater;
+        if (isRunning && cachedTurbineCount > 0)
+            tankInventory.drain(new FluidStack(Fluids.WATER, requiredWater), FluidAction.EXECUTE);
 
         // Hull damage only begins when net power exceeds 2× capacity.
         if (netPower > hullCapacity * 2) {
@@ -875,18 +830,17 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         // Self-repair when fully cooled (same threshold as rod unlock and active indicator).
         if (reactorHeat <= 25 && reactorHealth < 100f)
-            reactorHealth = Math.min(100f, reactorHealth + github.mrh0.createatomic.config.AtomicConfigs.server().hullRegenRate.get());
+            reactorHealth = Math.min(100f, reactorHealth + AtomicConfigs.server().hullRegenRate.get().floatValue());
 
         // Fire startup beep once from the multiblock centre when transitioning to active.
         if (isRunning && !wasRunning) {
             BlockPos centre = getBlockPos().offset(width / 2, height / 2, width / 2);
-            level.playSound(null, centre, github.mrh0.createatomic.index.AtomicSounds.REACTOR_BEEP.value(),
-                    net.minecraft.sounds.SoundSource.BLOCKS, 1.5f, 1.0f);
+            level.playSound(null, centre, AtomicSounds.REACTOR_BEEP.value(), SoundSource.BLOCKS, 1.5f, 1.0f);
         }
         wasRunning = isRunning;
 
-        // Control rods throttle turbines — netPower (not effectivePower) drives output.
-        scanAndUpdateTurbines(netPower);
+        // Control rods throttle turbines; turbines also need sufficient water to spin.
+        scanAndUpdateTurbines(isRunning && hasEnoughWater ? netPower : 0);
 
         boiler.needsHeatLevelUpdate = true;
     }
@@ -940,22 +894,17 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     }
 
     public boolean shouldMeltdownOnBreak() {
-        if (hasMeltdown) return false;
-        // Only trigger when the reactor is actively generating power (fuel rods > control
-        // rods). An idle or fully-suppressed reactor is safe to break even if its hull
-        // has taken prior damage — removing fuel rods first is the safe procedure.
-        return isActive();
+        return !hasMeltdown && isActive();
     }
 
-    // Called each render frame by the renderer to keep the gauge synced.
     public void observe() {
         if (level == null || !level.isClientSide()) return;
         ObservePacketPayload.send(worldPosition, 0);
     }
 
-    public boolean isActive() {
-        return reactorHeat > 25;
-    }
+    public boolean isActive() { return reactorHeat > 25; }
+
+    public boolean isArmed() { return poweredInterfaces > 0; }
 
     public int getTemperature() {
         return reactorHeat;
@@ -974,15 +923,13 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public boolean hasReactor() { return true; }
 
-    boolean hasMeltdown = false;
-
     public void onMeltdown() {
         if (hasMeltdown) return;
         hasMeltdown = true;
         BlockPos con = getController();
         if (con == null || level == null) return;
 
-        if (github.mrh0.createatomic.config.AtomicConfigs.server().meltdownExplosion.get()) {
+        if (AtomicConfigs.server().meltdownExplosion.get()) {
             float radius = Math.max(2.0f, (width + height) / 2.0f);
             level.explode(null,
                     con.getX() + width / 2.0,
@@ -1005,5 +952,4 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             }
         }
     }
-
 }
