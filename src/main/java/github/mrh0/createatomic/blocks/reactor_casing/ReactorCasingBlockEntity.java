@@ -81,7 +81,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     int reactorHeat   = 25;
     float reactorHealth = 100f;
-    boolean hasMeltdown = false;
+    public boolean hasMeltdown = false;
     private boolean wasRunning = false;
     public boolean cachedScrammed = false;
     public int poweredInterfaces = 0; // synced to client; isArmed() derives from this
@@ -89,6 +89,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     int cachedEffectivePower;
     int cachedControlRodLevel;
     int cachedHullCapacity;
+    int cachedHullCapacityDebuff;
     int cachedInstalledFuelRods;
     float cachedReactivityFactor = 1f;
     public float turbineTargetRpm;  // RPM each connected turbine should reach
@@ -388,7 +389,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             reactorHeat         = compound.getInt("ReactorHeat");
             reactorHealth       = compound.contains("ReactorHealth") ? compound.getFloat("ReactorHealth") : 100f;
             cachedEffectivePower  = compound.getInt("EffectivePower");
-            cachedHullCapacity    = compound.getInt("HullCapacity");
+            cachedHullCapacity       = compound.getInt("HullCapacity");
+            cachedHullCapacityDebuff = compound.getInt("HullCapacityDebuff");
             cachedInstalledFuelRods = compound.getInt("InstalledRods");
             cachedReactivityFactor  = compound.contains("ReactivityFactor") ? compound.getFloat("ReactivityFactor") : 1f;
             turbineTargetRpm    = compound.getFloat("TurbineRpm");
@@ -461,6 +463,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             compound.putFloat("ReactorHealth", reactorHealth);
             compound.putInt("EffectivePower", cachedEffectivePower);
             compound.putInt("HullCapacity", cachedHullCapacity);
+            compound.putInt("HullCapacityDebuff", cachedHullCapacityDebuff);
             compound.putInt("InstalledRods", cachedInstalledFuelRods);
             compound.putFloat("ReactivityFactor", cachedReactivityFactor);
             compound.putFloat("TurbineRpm", turbineTargetRpm);
@@ -629,20 +632,26 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                         : "createatomic.tooltip.reactor.inactive")
                         .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)));
 
-        // Net power vs capacity: green = safe, yellow = hot (>1×), red = damaging (>2×)
+        // Net power vs capacity: green = safe (≤ capacity), red = damaging (> capacity)
         int netPowerDisplay = con.cachedEffectivePower - con.cachedControlRodLevel;
-        boolean hot      = netPowerDisplay > con.cachedHullCapacity;
-        boolean damaging = netPowerDisplay > con.cachedHullCapacity * 2;
-        ChatFormatting powerColour = damaging ? ChatFormatting.RED : hot ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
+        int sum = con.cachedHullCapacity - netPowerDisplay;
+        boolean damaging = netPowerDisplay > con.cachedHullCapacity;
+        ChatFormatting powerColour = damaging ? ChatFormatting.RED : ChatFormatting.GREEN;
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.capacity").withStyle(ChatFormatting.GRAY)));
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(String.valueOf(con.cachedEffectivePower))
                         .withStyle(powerColour))
-                        .append(Component.literal(" (-" + String.valueOf(con.cachedControlRodLevel) + ")")
+                        .append(Component.literal(" [-" + String.valueOf(con.cachedControlRodLevel) + "]")
                         .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(" / " + con.cachedHullCapacity)
-                        .withStyle(powerColour)));
+                        .append(Component.literal(" / " + (con.cachedHullCapacity + con.cachedHullCapacityDebuff))
+                        .withStyle(powerColour))
+                        .append(con.cachedHullCapacityDebuff > 0
+                                ? Component.literal(" [-" + con.cachedHullCapacityDebuff + "]")
+                                        .withStyle(ChatFormatting.RED)
+                                : Component.empty()));
+        tooltip.add(Component.literal(s + " = ").append(sum > 0 ? "+" : "").append(String.valueOf(sum))
+                .withStyle(damaging ? ChatFormatting.RED : ChatFormatting.GREEN));
 
         // Temperature (display-only)
         tooltip.add(Component.literal(s).append(
@@ -765,8 +774,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         cachedEffectivePower  = rodLevels.getFirst();
         cachedControlRodLevel = rodLevels.getSecond();
         // SCRAMed = control rods inserted (not lifted) AND sufficient to stop the reactor
-        cachedScrammed = !isArmed() && cachedControlRodLevel > 0
-                && cachedControlRodLevel >= cachedEffectivePower;
+        cachedScrammed = !isArmed(); // SCRAM any time the signal is absent
         reactorTick(cachedEffectivePower, cachedControlRodLevel);
         sendData();
     }
@@ -774,12 +782,35 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     // Called by ReactorRedstoneInterfaceBlock whenever it is placed, removed, or changes power state.
     // wasActive = the interface was contributing a signal before this event.
     // nowActive = the interface is contributing a signal after this event.
-    public void onInterfaceSignalChanged(boolean wasActive, boolean nowActive) {
-        ReactorCasingBlockEntity con = getControllerBE();
-        if (con == null) return;
-        if (wasActive) con.poweredInterfaces = Math.max(0, con.poweredInterfaces - 1);
-        if (nowActive) con.poweredInterfaces++;
-        con.sendData();
+    public void rescanInterfaces() {
+        if (level == null) return;
+        int w = getWidth(), h = getHeight();
+        BlockPos con = getController();
+        poweredInterfaces = 0;
+        for (int y = 0; y < h; y++) {
+            for (int z = 0; z < w; z++) {
+                countInterface(con.offset(-1, y, z), Direction.EAST);
+                countInterface(con.offset(w,  y, z), Direction.WEST);
+            }
+            for (int x = 0; x < w; x++) {
+                countInterface(con.offset(x, y, -1), Direction.SOUTH);
+                countInterface(con.offset(x, y,  w), Direction.NORTH);
+            }
+        }
+        for (int x = 0; x < w; x++)
+            for (int z = 0; z < w; z++) {
+                countInterface(con.offset(x, -1, z), Direction.UP);
+                countInterface(con.offset(x,  h, z), Direction.DOWN);
+            }
+        cachedScrammed = !isArmed();
+        sendDataImmediately();
+    }
+
+    private void countInterface(BlockPos pos, Direction facingRequired) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof ReactorRedstoneInterfaceBlock)) return;
+        if (state.getValue(ReactorRedstoneInterfaceBlock.FACING) != facingRequired) return;
+        if (state.getValue(ReactorRedstoneInterfaceBlock.POWERED)) poweredInterfaces++;
     }
 
     public int getTotalSize() {
@@ -791,12 +822,18 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     private static final float MAX_TURBINE_RPM = 256f;
 
     private void reactorTick(int effectivePower, int controlLevel) {
-        // Each casing block contributes 1 capacity unit.
-        int hullCapacity = getTotalSize();
+        // Each casing block contributes 1 capacity unit, reduced when water is low.
+        int baseCapacity = getTotalSize();
+        float fill = tankInventory.getCapacity() > 0
+                ? (float) tankInventory.getFluidAmount() / tankInventory.getCapacity() : 0f;
+        float capacityMult = fill >= 0.5f ? 1.0f : fill >= 0.25f ? 0.8f : fill >= 0.15f ? 0.6f : 0.4f;
+        int hullCapacity = (int)(baseCapacity * capacityMult);
+        cachedHullCapacityDebuff = baseCapacity - hullCapacity;
         cachedHullCapacity = hullCapacity;
 
-        // Armed (signal ON) = control rods lifted, their suppression ignored.
-        int effectiveControl = isArmed() ? 0 : controlLevel;
+        // Armed (signal ON): control rods lifted/ignored → net power = full effective power.
+        // Not armed (SCRAM): virtual max control rods inserted → net power = 0.
+        int effectiveControl = isArmed() ? 0 : Integer.MAX_VALUE / 2;
         int netPower = Math.max(0, effectivePower - effectiveControl);
 
         // When meltdowns are disabled, a reactor at 0% health is forced offline until repaired.
@@ -818,9 +855,9 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         if (isRunning && cachedTurbineCount > 0)
             tankInventory.drain(new FluidStack(Fluids.WATER, requiredWater), FluidAction.EXECUTE);
 
-        // Hull damage only begins when net power exceeds 2× capacity.
-        if (netPower > hullCapacity * 2) {
-            float damage = (float)(netPower - hullCapacity * 2) / Math.max(1, hullCapacity);
+        // Hull damage begins when net power exceeds capacity.
+        if (netPower > hullCapacity) {
+            float damage = (float)(netPower - hullCapacity) / Math.max(1, hullCapacity);
             reactorHealth = Math.max(0f, reactorHealth - damage);
             if (reactorHealth <= 0f) {
                 if (meltdownsEnabled) { onMeltdown(); return; }
@@ -904,6 +941,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public boolean isActive() { return reactorHeat > 25; }
 
+    /** True when a powered interface is lifting the control rods. False = SCRAM (rods down). */
     public boolean isArmed() { return poweredInterfaces > 0; }
 
     public int getTemperature() {

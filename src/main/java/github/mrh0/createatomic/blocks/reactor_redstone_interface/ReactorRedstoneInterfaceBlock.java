@@ -66,19 +66,14 @@ public class ReactorRedstoneInterfaceBlock extends Block {
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
-        if (level.isClientSide()) return;
-        ReactorCasingBlockEntity reactor = findReactor(level, pos, state);
-        if (reactor != null)
-            reactor.onInterfaceSignalChanged(false, state.getValue(POWERED));
+        if (level.isClientSide() || state.getBlock() == oldState.getBlock()) return;
+        notifyReactor(level, pos, state);
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
-            ReactorCasingBlockEntity reactor = findReactor(level, pos, state);
-            if (reactor != null)
-                reactor.onInterfaceSignalChanged(state.getValue(POWERED), false);
-        }
+        if (!level.isClientSide() && state.getBlock() != newState.getBlock())
+            notifyReactor(level, pos, state);
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
@@ -87,19 +82,21 @@ public class ReactorRedstoneInterfaceBlock extends Block {
                                 Block block, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, block, fromPos, isMoving);
         if (level.isClientSide()) return;
+
         boolean nowPowered = level.hasNeighborSignal(pos);
         boolean wasPowered = state.getValue(POWERED);
         if (nowPowered == wasPowered) return;
-        level.setBlock(pos, state.setValue(POWERED, nowPowered), Block.UPDATE_ALL);
-        ReactorCasingBlockEntity reactor = findReactor(level, pos, state);
-        if (reactor != null)
-            reactor.onInterfaceSignalChanged(wasPowered, nowPowered);
+
+        level.setBlock(pos, state.setValue(POWERED, nowPowered), Block.UPDATE_CLIENTS);
+        notifyReactor(level, pos, state.setValue(POWERED, nowPowered));
     }
 
-    private static ReactorCasingBlockEntity findReactor(Level level, BlockPos pos, BlockState state) {
+    private static void notifyReactor(Level level, BlockPos pos, BlockState state) {
         BlockPos reactorPos = pos.relative(state.getValue(FACING));
         BlockEntity be = level.getBlockEntity(reactorPos);
-        if (!(be instanceof ReactorCasingBlockEntity rce)) return null;
-        return rce.getControllerBE();
+        if (!(be instanceof ReactorCasingBlockEntity rce)) return;
+        ReactorCasingBlockEntity controller = rce.getControllerBE();
+        if (controller != null)
+            controller.rescanInterfaces();
     }
 }

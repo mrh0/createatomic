@@ -50,8 +50,8 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         RodConfiguration config = getConfig();
         boolean shouldInsert;
         if (config.isControlRod()) {
-            // Control rods are "inserted" (animated down) when the reactor is suppressed.
-            shouldInsert = reactor != null && !reactor.isArmed();
+            // Down when SCRAMed (no signal) or no reactor; up only when signal is active.
+            shouldInsert = reactor == null || reactor.cachedScrammed;
         } else {
             // Fuel/depleted/reflector rods animate down when the reactor is running hot.
             shouldInsert = config.isPopulated() && reactor != null && reactor.getTemperature() > 25;

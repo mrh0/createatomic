@@ -126,13 +126,17 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof RodAssemblyBlockEntity rabe && !level.isClientSide()) {
-                // Drop the inserted rod (with depletion progress preserved) before removal.
-                ItemStack rod = rabe.getRodWithDepletion();
-                if (!rod.isEmpty())
-                    popResource(level, pos, rod);
-
                 var controller = rabe.findReactor();
-                if (controller != null && controller.shouldMeltdownOnBreak())
+                boolean inMeltdown = controller != null && controller.hasMeltdown;
+
+                // Drop the rod only when broken normally — rods are destroyed in a meltdown.
+                if (!inMeltdown) {
+                    ItemStack rod = rabe.getRodWithDepletion();
+                    if (!rod.isEmpty())
+                        popResource(level, pos, rod);
+                }
+
+                if (!inMeltdown && controller != null && controller.shouldMeltdownOnBreak())
                     controller.onMeltdown();
             }
         }
