@@ -1,0 +1,5 @@
+// 1.21.1	2026-05-23T20:07:10.767258899	createatomic's processing recipes: crushing
+f9fe335d6a2c56a2f19cabc588b50436f094872c data/createatomic/recipe/crushing/deepslate_uranium_ore.json
+9c23d9fcff1d6d7b7149c9cd9c3e7fbc3a18caa6 data/createatomic/recipe/crushing/raw_uranium.json
+38e013c1f599d1a818b49f27e43c58c72cbca21e data/createatomic/recipe/crushing/raw_uranium_block.json
+54bef0dc8eabd6b50d8cdc31979cf262503c7113 data/createatomic/recipe/crushing/uranium_ore.json

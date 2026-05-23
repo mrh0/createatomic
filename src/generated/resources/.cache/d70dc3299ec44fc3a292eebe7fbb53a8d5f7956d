@@ -1,0 +1,20 @@
+// 1.21.1	2026-05-23T18:54:25.477966088	Tags for minecraft:item mod id createatomic
+6aef365f5b0c8661e27d0cdb6e619e1a75e7a920 data/c/tags/item/ingots.json
+fbcfb8ff59c43a73ee6208631739e3a7f31e2eb1 data/c/tags/item/ingots/depleted_uranium.json
+16c2c7aa4161390443b65c3bd013d4997cf84eb4 data/c/tags/item/ingots/plutonium.json
+ae819a97d6842c82215d3103d9ed8280516198a1 data/c/tags/item/ingots/uranium.json
+479f8a0a227622b102304d7cb65ee6e95270ba9d data/c/tags/item/nuggets.json
+cac31c2f649356a99fe3926c6998006728ffb49c data/c/tags/item/nuggets/depleted_uranium.json
+5d6ecbacaee929ba4861de26afe24ae77ee0ecef data/c/tags/item/nuggets/plutonium.json
+a143717d619d8ae09fb76bd80d474fad97d0783e data/c/tags/item/nuggets/uranium.json
+8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/item/ores.json
+8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/item/ores/uranium.json
+ae9ec5367ac802494ade6372e2dd86d728e1de6d data/c/tags/item/ores_in_ground/deepslate.json
+8dee193204cd5f5bacc16044eee1fa892097492c data/c/tags/item/ores_in_ground/stone.json
+37c9b8ae385440a84f538dd543c6821c066492b1 data/c/tags/item/raw_materials.json
+37c9b8ae385440a84f538dd543c6821c066492b1 data/c/tags/item/raw_materials/uranium.json
+4582bfd908d163c29259ee813b4e4400ee7e7b30 data/c/tags/item/storage_blocks.json
+4582bfd908d163c29259ee813b4e4400ee7e7b30 data/c/tags/item/storage_blocks/raw_uranium.json
+87224ccba7555ad7962119f77f09769f7c4074d3 data/createatomic/tags/item/control_rods.json
+0de2138154bf9ea3d0b39552a1b360451d0d94f5 data/createatomic/tags/item/fuel_rods.json
+1e26bee5370341efd48488c3df1e93bb901ecb38 data/createatomic/tags/item/reactor_components.json

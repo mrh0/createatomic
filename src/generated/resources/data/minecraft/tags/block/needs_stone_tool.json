@@ -1,0 +1,10 @@
+{
+  "values": [
+    "createatomic:radioisotope_heat_generator",
+    "createatomic:reactor_casing",
+    "createatomic:rod_assembly",
+    "createatomic:reactor_debris",
+    "createatomic:reactor_redstone_interface",
+    "createatomic:steam_turbine"
+  ]
+}

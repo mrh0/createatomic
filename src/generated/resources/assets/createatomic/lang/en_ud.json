@@ -1,0 +1,23 @@
+{
+  "block.createatomic.deepslate_uranium_ore": "ǝɹO ɯnıuɐɹ∩ ǝʇɐןsdǝǝᗡ",
+  "block.createatomic.radioisotope_heat_generator": "ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
+  "block.createatomic.raw_uranium_block": "ʞɔoןᗺ ɯnıuɐɹ∩ ʍɐᴚ",
+  "block.createatomic.reactor_casing": "buısɐƆ ɹoʇɔɐǝᴚ",
+  "block.createatomic.reactor_debris": "sıɹqǝᗡ ɹoʇɔɐǝᴚ",
+  "block.createatomic.reactor_redstone_interface": "ǝɔɐɟɹǝʇuI ǝuoʇspǝᴚ ɹoʇɔɐǝᴚ",
+  "block.createatomic.rod_assembly": "ʎןqɯǝssⱯ poᴚ",
+  "block.createatomic.steam_turbine": "ǝuıqɹn⟘ ɯɐǝʇS",
+  "block.createatomic.uranium_ore": "ǝɹO ɯnıuɐɹ∩",
+  "item.createatomic.depleted_uranium": "ɯnıuɐɹ∩ pǝʇǝןdǝᗡ",
+  "item.createatomic.depleted_uranium_nugget": "ʇǝbbnN ɯnıuɐɹ∩ pǝʇǝןdǝᗡ",
+  "item.createatomic.depleted_uranium_rod": "poᴚ ɯnıuɐɹ∩ pǝʇǝןdǝᗡ",
+  "item.createatomic.large_control_rod": "poᴚ ןoɹʇuoƆ ǝbɹɐꞀ",
+  "item.createatomic.neutron_reflector": "ɹoʇɔǝןɟǝᴚ uoɹʇnǝN",
+  "item.createatomic.plutonium_ingot": "ʇobuI ɯnıuoʇnןԀ",
+  "item.createatomic.plutonium_nugget": "ʇǝbbnN ɯnıuoʇnןԀ",
+  "item.createatomic.raw_uranium": "ɯnıuɐɹ∩ ʍɐᴚ",
+  "item.createatomic.refined_uranium": "ɯnıuɐɹ∩ pǝuıɟǝᴚ",
+  "item.createatomic.refined_uranium_rod": "poᴚ ɯnıuɐɹ∩ pǝuıɟǝᴚ",
+  "item.createatomic.small_control_rod": "poᴚ ןoɹʇuoƆ ןןɐɯS",
+  "item.createatomic.uranium_nugget": "ʇǝbbnN ɯnıuɐɹ∩"
+}

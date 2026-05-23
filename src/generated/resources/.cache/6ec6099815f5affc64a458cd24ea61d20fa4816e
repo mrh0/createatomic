@@ -1,0 +1,21 @@
+// 1.21.1	2026-05-23T19:24:30.620945098	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+b1ca89a51dd7ec5750b6ece5459119621c8f2afe assets/createatomic/lang/en_ud.json
+31d88f1cb8c434927667638f9a2d8a8d1ee5ec56 assets/createatomic/lang/en_us.json
+18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
+cde290c86f6843d313c2a2881259a160e55bbe73 assets/createatomic/models/item/radioisotope_heat_generator.json
+805f8f4544df4bf5086cbcb6d4703424b1565ba6 assets/createatomic/models/item/raw_uranium_block.json
+be0414b02be53550b4ab363e28228cb41f261e4b assets/createatomic/models/item/reactor_casing.json
+f97b13aca420cdf75c2f30ae0f02a5663ddb01d0 assets/createatomic/models/item/reactor_debris.json
+5f8d8453124daddd1911a9fe85adac40c941f39a assets/createatomic/models/item/reactor_redstone_interface.json
+8836b44fd0b984e1c8606b8710b3b38035f4f02d assets/createatomic/models/item/rod_assembly.json
+3dc214cf59e09644a23d005f34dc30a2d19aa0d1 assets/createatomic/models/item/steam_turbine.json
+86601cc7d90014b54a8edc047a9aab7056c1773e assets/createatomic/models/item/uranium_ore.json
+4f8c522b6a82dcf18c5c5de41020a5a2ad054043 data/createatomic/loot_table/blocks/deepslate_uranium_ore.json
+037d494462a23c23f45f566231c7a29f4fb94581 data/createatomic/loot_table/blocks/radioisotope_heat_generator.json
+80c20cf9be9592b95f54626cbb4c207735e18f70 data/createatomic/loot_table/blocks/raw_uranium_block.json
+8a896e8f024c45acec1229eaecbc04cb6c3e89aa data/createatomic/loot_table/blocks/reactor_casing.json
+94f168a8883f20a0b2bee398e13690aa36207afc data/createatomic/loot_table/blocks/reactor_debris.json
+0766f5a2f5815eba8ac0467f00bd552b355143f8 data/createatomic/loot_table/blocks/reactor_redstone_interface.json
+4e06392e57c00a2686320a1a1ddbb4de32a0c1b7 data/createatomic/loot_table/blocks/rod_assembly.json
+76546f9cbe0c28a77859f0a6067ec5530b39cf05 data/createatomic/loot_table/blocks/steam_turbine.json
+9c71fce2cee11435e310d870e6de0a959d2cbc96 data/createatomic/loot_table/blocks/uranium_ore.json
