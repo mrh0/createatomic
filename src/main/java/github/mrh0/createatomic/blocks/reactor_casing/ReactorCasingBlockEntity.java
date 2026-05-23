@@ -613,7 +613,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         ReactorCasingBlockEntity con = getControllerBE();
         if (con == null) return false;
-        String s = "  ";
+        String s = "    ";
 
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
@@ -637,21 +637,34 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         int sum = con.cachedHullCapacity - netPowerDisplay;
         boolean damaging = netPowerDisplay > con.cachedHullCapacity;
         ChatFormatting powerColour = damaging ? ChatFormatting.RED : ChatFormatting.GREEN;
+
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.capacity").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
-                Component.literal(String.valueOf(con.cachedEffectivePower))
-                        .withStyle(powerColour))
-                        .append(Component.literal(" [-" + String.valueOf(con.cachedControlRodLevel) + "]")
-                        .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(" / " + (con.cachedHullCapacity + con.cachedHullCapacityDebuff))
+        tooltip.add(Component.literal(s + " ")
+                        .append(Component.literal((String.valueOf(con.cachedHullCapacity)))
                         .withStyle(powerColour))
                         .append(con.cachedHullCapacityDebuff > 0
-                                ? Component.literal(" [-" + con.cachedHullCapacityDebuff + "]")
+                                ? Component.literal(" [" + String.valueOf(con.cachedHullCapacity + con.cachedHullCapacityDebuff) + "-" + con.cachedHullCapacityDebuff + "]")
                                         .withStyle(ChatFormatting.RED)
                                 : Component.empty()));
-        tooltip.add(Component.literal(s + " = ").append(sum > 0 ? "+" : "").append(String.valueOf(sum))
-                .withStyle(damaging ? ChatFormatting.RED : ChatFormatting.GREEN));
+
+        int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(effective + " [" + String.format("%.1f", con.cachedReactivityFactor) + "x]")
+                        .withStyle(ChatFormatting.YELLOW)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.translatable(effective <= con.cachedHullCapacity ? "createatomic.tooltip.reactor.safety.safe" : "createatomic.tooltip.reactor.safety.unsafe")).withStyle(effective <= con.cachedHullCapacity ? ChatFormatting.GREEN : ChatFormatting.RED));
+
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.control_rods").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(String.valueOf(con.cachedControlRodLevel))
+                        .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY)));
+
+        tooltip.add(Component.literal(s + " ").append(
+                Component.translatable(effective <= con.cachedControlRodLevel ? "createatomic.tooltip.reactor.safety.safe" : "createatomic.tooltip.reactor.safety.unsafe")).withStyle(effective <= con.cachedHullCapacity ? ChatFormatting.GREEN : ChatFormatting.RED));
 
         // Temperature (display-only)
         tooltip.add(Component.literal(s).append(
@@ -686,13 +699,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                             .withStyle(ChatFormatting.AQUA)));
         }
 
-        int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
-        ChatFormatting rxColour = con.cachedReactivityFactor >= 2f ? ChatFormatting.RED : ChatFormatting.YELLOW;
-        tooltip.add(Component.literal(s).append(
-                Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
-                Component.literal(effective + " effective (" + String.format("%.1f", con.cachedReactivityFactor) + "×)")
-                        .withStyle(rxColour)));
+        
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 

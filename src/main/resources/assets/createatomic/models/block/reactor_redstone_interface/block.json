@@ -1,6 +1,6 @@
 {
 	"format_version": "1.9.0",
-	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "createatomic:block/reactor_redstone_interface",
 		"particle": "createatomic:block/reactor_redstone_interface"

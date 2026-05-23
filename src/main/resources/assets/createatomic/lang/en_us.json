@@ -11,6 +11,8 @@
 	"item.createatomic.refined_uranium_rod": "Uranium Fuel Rod",
 	"item.createatomic.depleted_uranium_rod": "Depleted Uranium Fuel Rod",
 	"item.createatomic.neutron_reflector": "Neutron Reflector",
+	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
+	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
 
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
@@ -34,7 +36,7 @@
 	"createatomic.tooltip.rod_assembly.locked": "Locked — reactor is running",
 	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
 
-	"createatomic.tooltip.reactor.scrammed": "⚠ Reactor SCRAMed!",
+	"createatomic.tooltip.reactor.scrammed": "⚠ Reactor SCRAM!",
 	"createatomic.tooltip.reactor.info": "Reactor Status",
 	"createatomic.tooltip.reactor.active": "● Active",
 	"createatomic.tooltip.reactor.inactive": "○ Inactive",
@@ -45,5 +47,8 @@
 	"createatomic.tooltip.reactor.health": "Hull Integrity",
 	"createatomic.tooltip.reactor.water": "Water",
 	"createatomic.tooltip.reactor.turbines": "Turbines",
-	"createatomic.tooltip.reactor.reactivity": "Reactivity Bonus"
+	"createatomic.tooltip.reactor.reactivity": "Reactivity Bonus",
+
+	"createatomic.tooltip.reactor.safety.safe": "Safe",
+	"createatomic.tooltip.reactor.safety.unsafe": "Unsafe"
 }

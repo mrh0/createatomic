@@ -143,7 +143,7 @@ public class CreateAtomic {
         BlockStressValues.RPM.register(AtomicBlocks.TURBINE.get(),
                 new BlockStressValues.GeneratedRpm(256, true));
 
-        LOGGER.info("Create Crafts & Additions Initialized!");
+        LOGGER.info("Create Atomic Initialized!");
     }
 
     public void onRegister(final RegisterEvent event) {

@@ -50,11 +50,12 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         RodConfiguration config = getConfig();
         boolean shouldInsert;
         if (config.isControlRod()) {
-            // Down when SCRAMed (no signal) or no reactor; up only when signal is active.
-            shouldInsert = reactor == null || reactor.cachedScrammed;
+            // Up when armed. Down when SCRAMed and reactor is still hot. Up again once cooled.
+            shouldInsert = reactor != null && !reactor.isArmed() && reactor.getTemperature() > 25;
         } else {
-            // Fuel/depleted/reflector rods animate down when the reactor is running hot.
-            shouldInsert = config.isPopulated() && reactor != null && reactor.getTemperature() > 25;
+            // Fuel/depleted/reflector: down when armed or still hot, up once off and cooled.
+            shouldInsert = config.isPopulated() && reactor != null
+                    && (reactor.isArmed() || reactor.getTemperature() > 25);
         }
         insertAnimation.chase(shouldInsert ? 1f : 0f, 0.15f, Chaser.EXP);
     }

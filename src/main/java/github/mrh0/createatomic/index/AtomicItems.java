@@ -45,5 +45,13 @@ public class AtomicItems {
             CreateAtomic.REGISTRATE.item("neutron_reflector", Item::new)
                     .register();
 
+    public static final ItemEntry<Item> PLUTONIUM_INGOT =
+            CreateAtomic.REGISTRATE.item("plutonium_ingot", Item::new)
+                    .register();
+
+    public static final ItemEntry<Item> PLUTONIUM_NUGGET =
+            CreateAtomic.REGISTRATE.item("plutonium_nugget", Item::new)
+                    .register();
+
     public static void register() {}
 }
