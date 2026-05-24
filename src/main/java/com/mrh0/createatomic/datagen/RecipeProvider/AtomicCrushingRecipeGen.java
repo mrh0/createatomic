@@ -15,24 +15,24 @@ public class AtomicCrushingRecipeGen extends CrushingRecipeGen {
 
     GeneratedRecipe URANIUM_ORE = create(CreateAtomic.MODID, AtomicBlocks.URANIUM_ORE::get, b -> b
         .duration(350)
-        .output(AtomicItems.RAW_URANIUM.get(), 2)
-        .output(0.5f, AtomicItems.RAW_URANIUM.get(), 1)
+        .output(AllItems.CRUSHED_URANIUM.get(), 2)
+        .output(0.5f, AllItems.CRUSHED_URANIUM.get(), 1)
         .output(0.75f, AllItems.EXP_NUGGET.get(), 1)
         .output(0.125f, Blocks.COBBLESTONE)
     );
 
     GeneratedRecipe DEEPSLATE_URANIUM_ORE = create(CreateAtomic.MODID, AtomicBlocks.DEEPSLATE_URANIUM_ORE::get, b -> b
         .duration(500)
-        .output(AtomicItems.RAW_URANIUM.get(), 2)
-        .output(0.75f, AtomicItems.RAW_URANIUM.get(), 1)
+        .output(AllItems.CRUSHED_URANIUM.get(), 2)
+        .output(0.75f, AllItems.CRUSHED_URANIUM.get(), 1)
         .output(0.75f, AllItems.EXP_NUGGET.get(), 1)
         .output(0.125f, Blocks.COBBLED_DEEPSLATE)
     );
 
     GeneratedRecipe RAW_URANIUM = create(CreateAtomic.MODID, AtomicItems.RAW_URANIUM::get, b -> b
-        .duration(400)
-        .output(AtomicItems.DEPLETED_URANIUM.get(), 1)
-        .output(0.5f, AtomicItems.DEPLETED_URANIUM.get(), 1)
+        .duration(350)
+        .output(AllItems.CRUSHED_URANIUM.get(), 1)
+        .output(0.5f, AllItems.CRUSHED_URANIUM.get(), 1)
         .output(0.75f, AllItems.EXP_NUGGET.get(), 1)
     );
 

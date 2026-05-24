@@ -22,12 +22,12 @@ public class CATagRegister {
         public static final TagKey<Item> RAW_MATERIALS = commonTags("raw_materials");
         public static final TagKey<Item> RAW_MATERIALS_URANIUM = commonTags("raw_materials", "uranium");
         public static final TagKey<Item> INGOTS = commonTags("ingots");
+        public static final TagKey<Item> INGOTS_REFINED_URANIUM = commonTags("ingots", "refined_uranium");
         public static final TagKey<Item> INGOTS_URANIUM = commonTags("ingots", "uranium");
-        public static final TagKey<Item> INGOTS_DEPLETED_URANIUM = commonTags("ingots", "depleted_uranium");
         public static final TagKey<Item> INGOTS_PLUTONIUM = commonTags("ingots", "plutonium");
         public static final TagKey<Item> NUGGETS = commonTags("nuggets");
+        public static final TagKey<Item> NUGGETS_REFINED_URANIUM = commonTags("nuggets", "refined_uranium");
         public static final TagKey<Item> NUGGETS_URANIUM = commonTags("nuggets", "uranium");
-        public static final TagKey<Item> NUGGETS_DEPLETED_URANIUM = commonTags("nuggets", "depleted_uranium");
         public static final TagKey<Item> NUGGETS_PLUTONIUM = commonTags("nuggets", "plutonium");
 
         // Mod-specific tags (createatomic: namespace)

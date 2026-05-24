@@ -14,23 +14,23 @@ public class AtomicItems {
                     .model((ctx, prov) -> {})
                     .register();
 
+    public static final ItemEntry<Item> REFINED_URANIUM_NUGGET =
+            CreateAtomic.REGISTRATE.item("refined_uranium_nugget", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
+    public static final ItemEntry<Item> REFINED_URANIUM_INGOT =
+            CreateAtomic.REGISTRATE.item("refined_uranium_ingot", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
+    public static final ItemEntry<Item> URANIUM_INGOT =
+            CreateAtomic.REGISTRATE.item("uranium_ingot", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
     public static final ItemEntry<Item> URANIUM_NUGGET =
             CreateAtomic.REGISTRATE.item("uranium_nugget", Item::new)
-                    .model((ctx, prov) -> {})
-                    .register();
-
-    public static final ItemEntry<Item> REFINED_URANIUM =
-            CreateAtomic.REGISTRATE.item("refined_uranium", Item::new)
-                    .model((ctx, prov) -> {})
-                    .register();
-
-    public static final ItemEntry<Item> DEPLETED_URANIUM =
-            CreateAtomic.REGISTRATE.item("depleted_uranium", Item::new)
-                    .model((ctx, prov) -> {})
-                    .register();
-
-    public static final ItemEntry<Item> DEPLETED_URANIUM_NUGGET =
-            CreateAtomic.REGISTRATE.item("depleted_uranium_nugget", Item::new)
                     .model((ctx, prov) -> {})
                     .register();
 

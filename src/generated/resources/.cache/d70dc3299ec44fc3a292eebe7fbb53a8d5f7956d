@@ -1,11 +1,11 @@
-// 1.21.1	2026-05-23T18:54:25.477966088	Tags for minecraft:item mod id createatomic
-6aef365f5b0c8661e27d0cdb6e619e1a75e7a920 data/c/tags/item/ingots.json
-fbcfb8ff59c43a73ee6208631739e3a7f31e2eb1 data/c/tags/item/ingots/depleted_uranium.json
+// 1.21.1	2026-05-25T01:24:39.182837838	Tags for minecraft:item mod id createatomic
+b273a7735b0bd8ef09f17b8e7db3365d17ab7139 data/c/tags/item/ingots.json
 16c2c7aa4161390443b65c3bd013d4997cf84eb4 data/c/tags/item/ingots/plutonium.json
-ae819a97d6842c82215d3103d9ed8280516198a1 data/c/tags/item/ingots/uranium.json
-479f8a0a227622b102304d7cb65ee6e95270ba9d data/c/tags/item/nuggets.json
-cac31c2f649356a99fe3926c6998006728ffb49c data/c/tags/item/nuggets/depleted_uranium.json
+7f1464a8772f5154007d82c8fee75cc91031cde9 data/c/tags/item/ingots/refined_uranium.json
+b3e16a8b761508ea1ff7ce087666bf6aa517aa0c data/c/tags/item/ingots/uranium.json
+185f0e1338a678353a008459331cef12eb47f183 data/c/tags/item/nuggets.json
 5d6ecbacaee929ba4861de26afe24ae77ee0ecef data/c/tags/item/nuggets/plutonium.json
+6810b7bd8d8c5ed2be95c197c460737830066b06 data/c/tags/item/nuggets/refined_uranium.json
 a143717d619d8ae09fb76bd80d474fad97d0783e data/c/tags/item/nuggets/uranium.json
 8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/item/ores.json
 8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/item/ores/uranium.json

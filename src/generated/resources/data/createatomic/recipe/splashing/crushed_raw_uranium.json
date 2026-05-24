@@ -1,0 +1,22 @@
+{
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "create:crushed_raw_uranium"
+    }
+  ],
+  "results": [
+    {
+      "count": 7,
+      "id": "createatomic:uranium_nugget"
+    },
+    {
+      "chance": 0.5,
+      "id": "createatomic:refined_uranium_nugget"
+    },
+    {
+      "chance": 0.25,
+      "id": "createatomic:refined_uranium_nugget"
+    }
+  ]
+}

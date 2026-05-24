@@ -1,8 +1,8 @@
 package com.mrh0.createatomic.datagen;
 
 import com.mrh0.createatomic.CreateAtomic;
+import com.mrh0.createatomic.datagen.RecipeProvider.AtomicCraftingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicCrushingRecipeGen;
-import com.mrh0.createatomic.datagen.RecipeProvider.AtomicSmeltingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicWashingRecipeGen;
 import com.mrh0.createatomic.datagen.TagProvider.CABlockTagProvider;
 import com.mrh0.createatomic.datagen.TagProvider.CAFluidTagProvider;
@@ -34,7 +34,7 @@ public class CreateAtomicDataGen {
         generator.addProvider(event.includeServer(), new CAItemTagProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
 
         // Recipes
-        generator.addProvider(event.includeServer(), new AtomicSmeltingRecipeGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new AtomicCraftingRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new AtomicCrushingRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new AtomicWashingRecipeGen(output, lookupProvider));
     }

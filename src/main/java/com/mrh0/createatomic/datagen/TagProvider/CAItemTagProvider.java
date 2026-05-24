@@ -34,25 +34,25 @@ public class CAItemTagProvider extends ItemTagsProvider {
 
         // Ingots
         tag(CATagRegister.Items.INGOTS)
-                .add(AtomicItems.REFINED_URANIUM.get())
-                .add(AtomicItems.DEPLETED_URANIUM.get())
+                .add(AtomicItems.REFINED_URANIUM_INGOT.get())
+                .add(AtomicItems.URANIUM_INGOT.get())
                 .add(AtomicItems.PLUTONIUM_INGOT.get());
+        tag(CATagRegister.Items.INGOTS_REFINED_URANIUM)
+                .add(AtomicItems.REFINED_URANIUM_INGOT.get());
         tag(CATagRegister.Items.INGOTS_URANIUM)
-                .add(AtomicItems.REFINED_URANIUM.get());
-        tag(CATagRegister.Items.INGOTS_DEPLETED_URANIUM)
-                .add(AtomicItems.DEPLETED_URANIUM.get());
+                .add(AtomicItems.URANIUM_INGOT.get());
         tag(CATagRegister.Items.INGOTS_PLUTONIUM)
                 .add(AtomicItems.PLUTONIUM_INGOT.get());
 
         // Nuggets
         tag(CATagRegister.Items.NUGGETS)
+                .add(AtomicItems.REFINED_URANIUM_NUGGET.get())
                 .add(AtomicItems.URANIUM_NUGGET.get())
-                .add(AtomicItems.DEPLETED_URANIUM_NUGGET.get())
                 .add(AtomicItems.PLUTONIUM_NUGGET.get());
+        tag(CATagRegister.Items.NUGGETS_REFINED_URANIUM)
+                .add(AtomicItems.REFINED_URANIUM_NUGGET.get());
         tag(CATagRegister.Items.NUGGETS_URANIUM)
                 .add(AtomicItems.URANIUM_NUGGET.get());
-        tag(CATagRegister.Items.NUGGETS_DEPLETED_URANIUM)
-                .add(AtomicItems.DEPLETED_URANIUM_NUGGET.get());
         tag(CATagRegister.Items.NUGGETS_PLUTONIUM)
                 .add(AtomicItems.PLUTONIUM_NUGGET.get());
 

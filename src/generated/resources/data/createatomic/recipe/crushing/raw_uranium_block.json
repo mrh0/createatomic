@@ -10,11 +10,6 @@
     {
       "count": 9,
       "id": "createatomic:raw_uranium"
-    },
-    {
-      "chance": 0.75,
-      "count": 3,
-      "id": "create:experience_nugget"
     }
   ]
 }

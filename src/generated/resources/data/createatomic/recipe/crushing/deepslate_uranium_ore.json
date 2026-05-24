@@ -9,11 +9,11 @@
   "results": [
     {
       "count": 2,
-      "id": "createatomic:raw_uranium"
+      "id": "create:crushed_raw_uranium"
     },
     {
       "chance": 0.75,
-      "id": "createatomic:raw_uranium"
+      "id": "create:crushed_raw_uranium"
     },
     {
       "chance": 0.75,

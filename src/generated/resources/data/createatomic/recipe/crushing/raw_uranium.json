@@ -5,14 +5,14 @@
       "item": "createatomic:raw_uranium"
     }
   ],
-  "processing_time": 400,
+  "processing_time": 350,
   "results": [
     {
-      "id": "createatomic:refined_uranium"
+      "id": "create:crushed_raw_uranium"
     },
     {
       "chance": 0.5,
-      "id": "createatomic:refined_uranium"
+      "id": "create:crushed_raw_uranium"
     },
     {
       "chance": 0.75,

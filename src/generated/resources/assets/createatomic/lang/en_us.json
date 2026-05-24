@@ -1,0 +1,23 @@
+{
+  "block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
+  "block.createatomic.radioisotope_heat_generator": "Radioisotope Heat Generator",
+  "block.createatomic.raw_uranium_block": "Raw Uranium Block",
+  "block.createatomic.reactor_casing": "Reactor Casing",
+  "block.createatomic.reactor_debris": "Reactor Debris",
+  "block.createatomic.reactor_redstone_interface": "Reactor Redstone Interface",
+  "block.createatomic.rod_assembly": "Rod Assembly",
+  "block.createatomic.steam_turbine": "Steam Turbine",
+  "block.createatomic.uranium_ore": "Uranium Ore",
+  "item.createatomic.depleted_uranium_rod": "Depleted Uranium Rod",
+  "item.createatomic.large_control_rod": "Large Control Rod",
+  "item.createatomic.neutron_reflector": "Neutron Reflector",
+  "item.createatomic.plutonium_ingot": "Plutonium Ingot",
+  "item.createatomic.plutonium_nugget": "Plutonium Nugget",
+  "item.createatomic.raw_uranium": "Raw Uranium",
+  "item.createatomic.refined_uranium_ingot": "Refined Uranium Ingot",
+  "item.createatomic.refined_uranium_nugget": "Refined Uranium Nugget",
+  "item.createatomic.refined_uranium_rod": "Refined Uranium Rod",
+  "item.createatomic.small_control_rod": "Small Control Rod",
+  "item.createatomic.uranium_ingot": "Uranium Ingot",
+  "item.createatomic.uranium_nugget": "Uranium Nugget"
+}
