@@ -13,6 +13,9 @@ import com.mrh0.createatomic.blocks.reactor_redstone_interface.ReactorRedstoneIn
 import com.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.PushReaction;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
@@ -87,6 +90,13 @@ public class AtomicBlocks {
                     .item()
                     .transform(customItemModel())
                     .register();
+
+    public static final BlockEntry<CakeBlock> YELLOW_CAKE = CreateAtomic.REGISTRATE.block("yellow_cake", CakeBlock::new)
+            .properties(p -> p.noOcclusion().strength(0.5f).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY))
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)

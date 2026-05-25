@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cake",
+  "textures": {
+    "bottom": "createatomic:block/yellow_cake_bottom",
+    "top":    "createatomic:block/yellow_cake_top",
+    "side":   "createatomic:block/yellow_cake_side"
+  }
+}

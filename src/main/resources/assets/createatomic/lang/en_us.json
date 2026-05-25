@@ -15,6 +15,7 @@
 	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
 	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
 
+	"block.createatomic.yellow_cake": "Yellow Cake",
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
 	"block.createatomic.raw_uranium_block": "Raw Uranium Block",

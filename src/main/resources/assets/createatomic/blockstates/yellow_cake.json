@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "bites=0": { "model": "createatomic:block/yellow_cake/slice0" },
+    "bites=1": { "model": "createatomic:block/yellow_cake/slice1" },
+    "bites=2": { "model": "createatomic:block/yellow_cake/slice2" },
+    "bites=3": { "model": "createatomic:block/yellow_cake/slice3" },
+    "bites=4": { "model": "createatomic:block/yellow_cake/slice4" },
+    "bites=5": { "model": "createatomic:block/yellow_cake/slice5" },
+    "bites=6": { "model": "createatomic:block/yellow_cake/slice6" }
+  }
+}

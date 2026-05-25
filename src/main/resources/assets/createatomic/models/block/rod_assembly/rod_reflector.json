@@ -1,21 +1,44 @@
 {
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
 	"textures": {
-		"rod": "createatomic:block/neutron_reflector",
-		"particle": "createatomic:block/neutron_reflector"
+		"0": "createatomic:block/rod_assembly/rod_reflector",
+		"particle": "createatomic:block/rod_assembly/rod_reflector"
 	},
 	"elements": [
 		{
 			"name": "Rod",
-			"from": [6, 10, 6],
-			"to": [10, 16, 10],
+			"from": [6, 9, 6],
+			"to": [10, 15, 10],
 			"faces": {
-				"north": {"uv": [0, 0, 4, 6], "texture": "#rod"},
-				"east":  {"uv": [0, 0, 4, 6], "texture": "#rod"},
-				"south": {"uv": [0, 0, 4, 6], "texture": "#rod"},
-				"west":  {"uv": [0, 0, 4, 6], "texture": "#rod"},
-				"up":    {"uv": [0, 0, 4, 4], "texture": "#rod"},
-				"down":  {"uv": [0, 0, 4, 4], "texture": "#rod"}
+				"north": {"uv": [4, 2, 8, 8], "texture": "#0"},
+				"east": {"uv": [0, 2, 4, 8], "texture": "#0"},
+				"south": {"uv": [4, 2, 8, 8], "texture": "#0"},
+				"west": {"uv": [0, 2, 4, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#missing"}
 			}
+		},
+		{
+			"name": "Cap",
+			"from": [5.5, 14, 5.5],
+			"to": [10.5, 16, 10.5],
+			"faces": {
+				"north": {"uv": [9, 12, 14, 14], "texture": "#0"},
+				"east": {"uv": [9, 12, 14, 14], "texture": "#0"},
+				"south": {"uv": [9, 12, 14, 14], "texture": "#0"},
+				"west": {"uv": [9, 12, 14, 14], "texture": "#0"},
+				"up": {"uv": [1, 9, 6, 14], "texture": "#0"},
+				"down": {"uv": [1, 9, 6, 14], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "rod_fuel",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1]
 		}
 	]
 }
