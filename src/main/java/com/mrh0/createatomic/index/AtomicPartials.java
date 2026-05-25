@@ -10,7 +10,7 @@ public class AtomicPartials {
     public static final PartialModel TURBINE_BLADE = block("turbine/blades");
 
     public static final PartialModel ROD_FUEL          = block("rod_assembly/rod_fuel");
-    public static final PartialModel ROD_DEPLETED      = block("rod_assembly/rod_depleted");
+    public static final PartialModel ROD_DEPLETED      = block("rod_assembly/rod_depleted_fuel");
     public static final PartialModel ROD_CONTROL_SMALL = block("rod_assembly/rod_control_small");
     public static final PartialModel ROD_CONTROL_LARGE = block("rod_assembly/rod_control_large");
     public static final PartialModel ROD_REFLECTOR     = block("rod_assembly/rod_reflector");

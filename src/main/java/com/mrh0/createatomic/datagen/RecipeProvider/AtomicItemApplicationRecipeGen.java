@@ -16,7 +16,7 @@ public class AtomicItemApplicationRecipeGen extends ItemApplicationRecipeGen {
     GeneratedRecipe REACTOR_CASING = create(
         CreateAtomic.asResource("item_application/reactor_casing_from_tank"),
         b -> b.require(AllBlocks.FLUID_TANK.get())
-              .require(AtomicItems.REACTOR_HULL_PLATE.get())
+              .require(AtomicItems.DENSE_ALLOY_PLATE.get())
               .output(AtomicBlocks.REACTOR_CASING.get())
     );
 

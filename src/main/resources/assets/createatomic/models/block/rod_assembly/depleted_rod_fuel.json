@@ -2,8 +2,8 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "createatomic:block/rod_assembly/fuel_rod",
-		"particle": "createatomic:block/rod_assembly/fuel_rod"
+		"0": "createatomic:block/rod_assembly/depleted_fuel_rod",
+		"particle": "createatomic:block/rod_assembly/depleted_fuel_rod"
 	},
 	"elements": [
 		{

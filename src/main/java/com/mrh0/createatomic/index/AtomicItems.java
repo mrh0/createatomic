@@ -54,8 +54,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> {})
                     .register();
 
-    public static final ItemEntry<Item> REACTOR_HULL_PLATE =
-            CreateAtomic.REGISTRATE.item("reactor_hull_plate", Item::new)
+    public static final ItemEntry<Item> DENSE_ALLOY_PLATE =
+            CreateAtomic.REGISTRATE.item("dense_alloy_plate", Item::new)
                     .model((ctx, prov) -> {})
                     .register();
 

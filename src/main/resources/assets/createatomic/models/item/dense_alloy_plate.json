@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "createatomic:item/reactor_hull_plate"
+		"layer0": "createatomic:item/dense_alloy_plate"
 	}
 }
