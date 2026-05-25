@@ -1,6 +1,6 @@
-// 1.21.1	2026-05-25T01:24:39.182017815	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-a7e6e790efe88f43162606293c9a37a8894747c7 assets/createatomic/lang/en_ud.json
-9f4f0d72c5ba2715059cac8e76b42bac5fa2799e assets/createatomic/lang/en_us.json
+// 1.21.1	2026-05-25T13:36:55.816564697	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+1b359ccd25e7ffb1d5f78799982eb77cc3a0854e assets/createatomic/lang/en_ud.json
+659ae04da85185d9e3b7e5ec74a1ebcfe109ffa7 assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 cde290c86f6843d313c2a2881259a160e55bbe73 assets/createatomic/models/item/radioisotope_heat_generator.json
 805f8f4544df4bf5086cbcb6d4703424b1565ba6 assets/createatomic/models/item/raw_uranium_block.json

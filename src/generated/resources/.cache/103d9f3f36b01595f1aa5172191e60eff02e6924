@@ -1,0 +1,4 @@
+// 1.21.1	2026-05-25T13:36:55.81738303	Registries
+5b313e777be6ee8a05dd7d95e061f6bed8da297c data/createatomic/neoforge/biome_modifier/add_uranium_ore.json
+2beb0d12fb85f089d33f34057f826a3631e14a1c data/createatomic/worldgen/configured_feature/uranium_ore.json
+7ea3ca740ed210373ad2a3f639e6bc17d0d2b5c7 data/createatomic/worldgen/placed_feature/uranium_ore.json

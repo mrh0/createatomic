@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:fluid_tank"
+    },
+    {
+      "item": "createatomic:reactor_hull_plate"
+    }
+  ],
+  "results": [
+    {
+      "id": "createatomic:reactor_casing"
+    }
+  ]
+}
