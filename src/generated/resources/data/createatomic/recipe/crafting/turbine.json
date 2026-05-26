@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "D": {
+      "item": "createatomic:dense_alloy_plate"
+    },
+    "F": {
+      "item": "create:encased_fan"
+    },
+    "P": {
+      "item": "create:propeller"
+    }
+  },
+  "pattern": [
+    "DCC",
+    "FPP",
+    "DCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:steam_turbine"
+  }
+}

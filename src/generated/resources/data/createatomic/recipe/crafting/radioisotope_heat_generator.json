@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "createatomic:dense_alloy_plate"
+    },
+    "P": {
+      "item": "createatomic:plutonium_ingot"
+    },
+    "R": {
+      "item": "createatomic:reactor_casing"
+    }
+  },
+  "pattern": [
+    "PRP",
+    "DPD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:radioisotope_heat_generator"
+  }
+}

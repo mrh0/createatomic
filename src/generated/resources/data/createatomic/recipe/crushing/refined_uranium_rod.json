@@ -1,0 +1,23 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "createatomic:refined_uranium_rod"
+    }
+  ],
+  "processing_time": 350,
+  "results": [
+    {
+      "count": 4,
+      "id": "createatomic:refined_uranium_nugget"
+    },
+    {
+      "count": 2,
+      "id": "createatomic:uranium_nugget"
+    },
+    {
+      "chance": 0.5,
+      "id": "createatomic:uranium_nugget"
+    }
+  ]
+}

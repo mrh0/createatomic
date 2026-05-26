@@ -1,15 +1,31 @@
-// 1.21.1	2026-05-25T20:31:16.226190666	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-3db8baa706623975dc6a11e372474c37f7b14288 assets/createatomic/lang/en_ud.json
-1a08ca38957b71f957db936904f115a5f3a28b74 assets/createatomic/lang/en_us.json
+// 1.21.1	2026-05-27T00:27:34.895221021	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+102028f22ef9070ebb5fef34bf914765b1004905 assets/createatomic/lang/en_ud.json
+68901f223c23d06f3a4fca1e7f1271729b0aa3ef assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
+740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
+bd2f67b749f11c7fe265b941a59c87eeee616a27 assets/createatomic/models/item/dense_alloy_plate.json
+9decd22979162fefb7f0d2a89a1f194763193278 assets/createatomic/models/item/depleted_uranium_rod.json
+bf81e13dda04907a3782ca875bc50e5d027a09d1 assets/createatomic/models/item/graphite_dust.json
+4f504fb15028244995700ae6e0f760bcd77ba99e assets/createatomic/models/item/large_control_rod.json
+7aa16f4722e4287ad695be4c234a739c57b39f2a assets/createatomic/models/item/neutron_reflector.json
+c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json
+b53e109017e3cbafb9b4c6358c106236f1690098 assets/createatomic/models/item/plutonium_nugget.json
 cde290c86f6843d313c2a2881259a160e55bbe73 assets/createatomic/models/item/radioisotope_heat_generator.json
+6dc767864527c23bed8cac97abd38bffd9045891 assets/createatomic/models/item/raw_uranium.json
 805f8f4544df4bf5086cbcb6d4703424b1565ba6 assets/createatomic/models/item/raw_uranium_block.json
 be0414b02be53550b4ab363e28228cb41f261e4b assets/createatomic/models/item/reactor_casing.json
 f97b13aca420cdf75c2f30ae0f02a5663ddb01d0 assets/createatomic/models/item/reactor_debris.json
 5f8d8453124daddd1911a9fe85adac40c941f39a assets/createatomic/models/item/reactor_redstone_interface.json
+edd02c5f2ffe21d11cfded0ac1df98bbb11da7ca assets/createatomic/models/item/refined_uranium_ingot.json
+7be5c5255265bbf42f681c88f430cff6b271182b assets/createatomic/models/item/refined_uranium_nugget.json
+0cac3ac8789844d11632e30544d9a1fdf1d3bb9c assets/createatomic/models/item/refined_uranium_rod.json
 8836b44fd0b984e1c8606b8710b3b38035f4f02d assets/createatomic/models/item/rod_assembly.json
+2aea4cbb26b1a3fc6b07351439b7956c2f34b709 assets/createatomic/models/item/small_control_rod.json
 3dc214cf59e09644a23d005f34dc30a2d19aa0d1 assets/createatomic/models/item/steam_turbine.json
+17a34ea502e71c1a24d7ff6f874c031f60a22001 assets/createatomic/models/item/uranium_ingot.json
+a8a53949b33ccbf824e840af138f87cf6c3ce667 assets/createatomic/models/item/uranium_nugget.json
 86601cc7d90014b54a8edc047a9aab7056c1773e assets/createatomic/models/item/uranium_ore.json
+8f4add57d402ae82288a79594b19116483267041 assets/createatomic/models/item/yellow_cake.json
 4f8c522b6a82dcf18c5c5de41020a5a2ad054043 data/createatomic/loot_table/blocks/deepslate_uranium_ore.json
 037d494462a23c23f45f566231c7a29f4fb94581 data/createatomic/loot_table/blocks/radioisotope_heat_generator.json
 80c20cf9be9592b95f54626cbb4c207735e18f70 data/createatomic/loot_table/blocks/raw_uranium_block.json
@@ -19,3 +35,4 @@ f97b13aca420cdf75c2f30ae0f02a5663ddb01d0 assets/createatomic/models/item/reactor
 4e06392e57c00a2686320a1a1ddbb4de32a0c1b7 data/createatomic/loot_table/blocks/rod_assembly.json
 76546f9cbe0c28a77859f0a6067ec5530b39cf05 data/createatomic/loot_table/blocks/steam_turbine.json
 9c71fce2cee11435e310d870e6de0a959d2cbc96 data/createatomic/loot_table/blocks/uranium_ore.json
+1b9f154f967fe1e83e98e1b7ea68dd1e650ef6c3 data/createatomic/loot_table/blocks/yellow_cake.json

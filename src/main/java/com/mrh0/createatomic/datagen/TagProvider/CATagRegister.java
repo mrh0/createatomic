@@ -22,6 +22,7 @@ public class CATagRegister {
         public static final TagKey<Item> RAW_MATERIALS = commonTags("raw_materials");
         public static final TagKey<Item> RAW_MATERIALS_URANIUM = commonTags("raw_materials", "uranium");
         public static final TagKey<Item> INGOTS = commonTags("ingots");
+        public static final TagKey<Item> INGOTS_IRON = commonTags("ingots", "iron");
         public static final TagKey<Item> INGOTS_REFINED_URANIUM = commonTags("ingots", "refined_uranium");
         public static final TagKey<Item> INGOTS_URANIUM = commonTags("ingots", "uranium");
         public static final TagKey<Item> INGOTS_PLUTONIUM = commonTags("ingots", "plutonium");
@@ -29,6 +30,13 @@ public class CATagRegister {
         public static final TagKey<Item> NUGGETS_REFINED_URANIUM = commonTags("nuggets", "refined_uranium");
         public static final TagKey<Item> NUGGETS_URANIUM = commonTags("nuggets", "uranium");
         public static final TagKey<Item> NUGGETS_PLUTONIUM = commonTags("nuggets", "plutonium");
+        public static final TagKey<Item> PLATES = commonTags("plates");
+        public static final TagKey<Item> PLATES_IRON = commonTags("plates", "iron");
+        public static final TagKey<Item> PLATES_COPPER = commonTags("plates", "copper");
+        public static final TagKey<Item> PLATES_LEAD = commonTags("plates", "lead");
+        public static final TagKey<Item> PLATES_GRAPHITE = commonTags("plates", "graphite");
+        public static final TagKey<Item> DUSTS = commonTags("dusts");
+        public static final TagKey<Item> DUSTS_GRAPHITE = commonTags("dusts", "graphite");
 
         // Mod-specific tags (createatomic: namespace)
         public static final TagKey<Item> CONTROL_RODS = atomicTags("control_rods");

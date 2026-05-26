@@ -32,6 +32,19 @@ public class CAItemTagProvider extends ItemTagsProvider {
         tag(CATagRegister.Items.RAW_MATERIALS_URANIUM)
                 .add(AtomicItems.RAW_URANIUM.get());
 
+        // Dusts
+        tag(CATagRegister.Items.DUSTS)
+                .add(AtomicItems.GRAPHITE_DUST.get());
+        tag(CATagRegister.Items.DUSTS_GRAPHITE)
+                .add(AtomicItems.GRAPHITE_DUST.get());
+
+        // Plates
+        tag(CATagRegister.Items.PLATES)
+                .add(AtomicItems.GRAPHITE_SHEET.get())
+                .add(AtomicItems.DENSE_ALLOY_PLATE.get());
+        tag(CATagRegister.Items.PLATES_GRAPHITE)
+                .add(AtomicItems.GRAPHITE_SHEET.get());
+
         // Ingots
         tag(CATagRegister.Items.INGOTS)
                 .add(AtomicItems.REFINED_URANIUM_INGOT.get())

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "createatomic:dense_alloy_plate"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "I I",
+    "IDI",
+    "I I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:rod_assembly"
+  }
+}

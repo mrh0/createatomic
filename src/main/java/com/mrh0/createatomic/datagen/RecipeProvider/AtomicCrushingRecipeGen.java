@@ -4,6 +4,7 @@ import com.mrh0.createatomic.CreateAtomic;
 import com.mrh0.createatomic.index.AtomicBlocks;
 import com.mrh0.createatomic.index.AtomicItems;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.api.data.recipe.BaseRecipeProvider.GeneratedRecipe;
 import com.simibubi.create.api.data.recipe.CrushingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -39,6 +40,20 @@ public class AtomicCrushingRecipeGen extends CrushingRecipeGen {
     GeneratedRecipe RAW_URANIUM_BLOCK = create(CreateAtomic.MODID, AtomicBlocks.RAW_URANIUM_BLOCK::get, b -> b
         .duration(600)
         .output(AtomicItems.RAW_URANIUM.get(), 9)
+    );
+
+    GeneratedRecipe FUEL_ROD_RECYCLE = create(CreateAtomic.MODID, AtomicItems.FUEL_ROD::get, b -> b
+        .duration(350)
+        .output(AtomicItems.REFINED_URANIUM_NUGGET.get(), 4)
+        .output(AtomicItems.URANIUM_NUGGET.get(), 2)
+        .output(0.5f, AtomicItems.URANIUM_NUGGET.get(), 1)
+    );
+
+    GeneratedRecipe DEPLETED_FUEL_ROD_RECYCLE = create(CreateAtomic.MODID, AtomicItems.DEPLETED_FUEL_ROD::get, b -> b
+        .duration(350)
+        .output(AtomicItems.URANIUM_NUGGET.get(), 4)
+        .output(AtomicItems.PLUTONIUM_NUGGET.get(), 2)
+        .output(0.5f, AtomicItems.PLUTONIUM_NUGGET.get(), 1)
     );
 
     public AtomicCrushingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

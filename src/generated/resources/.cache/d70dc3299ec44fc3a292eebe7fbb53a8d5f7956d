@@ -1,4 +1,6 @@
-// 1.21.1	2026-05-25T01:24:39.182837838	Tags for minecraft:item mod id createatomic
+// 1.21.1	2026-05-27T00:27:34.896157083	Tags for minecraft:item mod id createatomic
+97abd72081c24bd4311c11c89ef1d2401a0fe7cc data/c/tags/item/dusts.json
+97abd72081c24bd4311c11c89ef1d2401a0fe7cc data/c/tags/item/dusts/graphite.json
 b273a7735b0bd8ef09f17b8e7db3365d17ab7139 data/c/tags/item/ingots.json
 16c2c7aa4161390443b65c3bd013d4997cf84eb4 data/c/tags/item/ingots/plutonium.json
 7f1464a8772f5154007d82c8fee75cc91031cde9 data/c/tags/item/ingots/refined_uranium.json
