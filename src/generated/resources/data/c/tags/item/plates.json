@@ -1,6 +1,5 @@
 {
   "values": [
-    "createatomic:graphite_sheet",
-    "createatomic:dense_alloy_plate"
+    "createatomic:hull_plate"
   ]
 }

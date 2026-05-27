@@ -11,6 +11,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -115,7 +116,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("blasting/uranium_from_depleted_rod"));*/
 
         // Crafting Components
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY.get(), 1)
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY.get(), 1)
             .pattern("L")
             .pattern("C")
             .pattern("I")
@@ -123,24 +124,24 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .define('C', CATagRegister.Items.PLATES_COPPER)
             .define('I', CATagRegister.Items.PLATES_IRON)
             .unlockedBy("has_plates", has(CATagRegister.Items.PLATES))
-            .save(output, CreateAtomic.asResource("crafting/dense_alloy"));
+            .save(output, CreateAtomic.asResource("crafting/dense_alloy"));*/
 
         // Reactor Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
             .pattern("E")
             .pattern("D")
             .define('E', AllItems.ELECTRON_TUBE.get())
-            .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .define('D', AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/reactor_redstone_interface"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.ROD_ASSEMBLY.get())
             .pattern("I I")
             .pattern("IDI")
             .pattern("I I")
-            .define('I', CATagRegister.Items.INGOTS_IRON)
-            .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .define('I', Tags.Items.INGOTS_IRON)
+            .define('D', AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/rod_assembly"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.TURBINE.get())
@@ -150,8 +151,8 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .define('P', AllItems.PROPELLER.get())
             .define('F', AllBlocks.SHAFT.get())
             .define('C', AllItems.COPPER_SHEET.get())
-            .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .define('D', AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/turbine"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.TURBINE.get())
@@ -161,44 +162,44 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .define('P', AllItems.PROPELLER.get())
             .define('F', AllBlocks.SHAFT.get())
             .define('C', CATagRegister.Items.PLATES_COPPER)
-            .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .define('D', AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/turbine_alt"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get())
             .pattern("PRP")
             .pattern("DPD")
-            .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
+            .define('D', AtomicItems.HULL_PLATE.get())
             .define('P', AtomicItems.PLUTONIUM_INGOT.get())
             .define('R', AtomicBlocks.REACTOR_CASING.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/radioisotope_heat_generator"));
 
         // Reactor Components
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.FUEL_ROD.get(), 1)
             .requires(CATagRegister.Items.INGOTS_REFINED_URANIUM)
-            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
+            .requires(AtomicItems.HULL_PLATE.get())
             .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
             .save(output, CreateAtomic.asResource("crafting/fuel_rod"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.SMALL_CONTROL_ROD.get(), 1)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
-            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .requires(AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/small_control_rod"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.LARGE_CONTROL_ROD.get(), 1)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
-            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .requires(AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/large_control_rod"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.NEUTRON_REFLECTOR.get(), 1)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_COAL)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_COAL)
-            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .requires(AtomicItems.HULL_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/neutron_reflector"));
     }
 }

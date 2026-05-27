@@ -6,10 +6,10 @@
       "item": "create:copper_sheet"
     },
     "D": {
-      "item": "createatomic:dense_alloy_plate"
+      "item": "createatomic:hull_plate"
     },
     "F": {
-      "item": "create:encased_fan"
+      "item": "create:shaft"
     },
     "P": {
       "item": "create:propeller"

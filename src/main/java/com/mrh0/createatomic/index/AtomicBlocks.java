@@ -91,12 +91,12 @@ public class AtomicBlocks {
                     .transform(customItemModel())
                     .register();
 
-    public static final BlockEntry<CakeBlock> YELLOW_CAKE = CreateAtomic.REGISTRATE.block("yellow_cake", CakeBlock::new)
+    /*public static final BlockEntry<CakeBlock> YELLOW_CAKE = CreateAtomic.REGISTRATE.block("yellow_cake", CakeBlock::new)
             .properties(p -> p.noOcclusion().strength(0.5f).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY))
             .blockstate((ctx, prov) -> {})
             .item()
             .transform(customItemModel())
-            .register();
+            .register();*/
 
     public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)

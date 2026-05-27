@@ -54,12 +54,12 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> DENSE_ALLOY_PLATE =
-            CreateAtomic.REGISTRATE.item("dense_alloy_plate", Item::new)
+    public static final ItemEntry<Item> HULL_PLATE =
+            CreateAtomic.REGISTRATE.item("hull_plate", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> DENSE_ALLOY =
+    /*public static final ItemEntry<Item> DENSE_ALLOY =
             CreateAtomic.REGISTRATE.item("dense_alloy", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
@@ -72,7 +72,7 @@ public class AtomicItems {
     public static final ItemEntry<Item> GRAPHITE_SHEET =
             CreateAtomic.REGISTRATE.item("graphite_sheet", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
+                    .register();*/
 
     public static final ItemEntry<Item> NEUTRON_REFLECTOR =
             CreateAtomic.REGISTRATE.item("neutron_reflector", Item::new)
