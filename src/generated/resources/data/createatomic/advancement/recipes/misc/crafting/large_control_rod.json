@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_depleted_fuel_rod": {
+    "has_dense_alloy_plate": {
       "conditions": {
         "items": [
           {
-            "items": "createatomic:depleted_uranium_rod"
+            "items": "createatomic:dense_alloy_plate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createatomic:blasting/uranium_from_depleted_rod"
+        "recipe": "createatomic:crafting/large_control_rod"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_depleted_fuel_rod"
+      "has_dense_alloy_plate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "createatomic:blasting/uranium_from_depleted_rod"
+      "createatomic:crafting/large_control_rod"
     ]
   }
 }

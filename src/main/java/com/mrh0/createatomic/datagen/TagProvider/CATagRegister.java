@@ -19,6 +19,8 @@ public class CATagRegister {
         public static final TagKey<Item> ORES_IN_GROUND_DEEPSLATE = commonTags("ores_in_ground", "deepslate");
         public static final TagKey<Item> STORAGE_BLOCKS = commonTags("storage_blocks");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_URANIUM = commonTags("storage_blocks", "raw_uranium");
+        public static final TagKey<Item> STORAGE_BLOCKS_IRON = commonTags("storage_blocks", "iron");
+        public static final TagKey<Item> STORAGE_BLOCKS_COAL = commonTags("storage_blocks", "coal");
         public static final TagKey<Item> RAW_MATERIALS = commonTags("raw_materials");
         public static final TagKey<Item> RAW_MATERIALS_URANIUM = commonTags("raw_materials", "uranium");
         public static final TagKey<Item> INGOTS = commonTags("ingots");
@@ -72,6 +74,8 @@ public class CATagRegister {
         public static final TagKey<Block> ORES_IN_GROUND_DEEPSLATE = commonTags("ores_in_ground", "deepslate");
         public static final TagKey<Block> STORAGE_BLOCKS = commonTags("storage_blocks");
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_URANIUM = commonTags("storage_blocks", "raw_uranium");
+        public static final TagKey<Block> STORAGE_BLOCKS_IRON = commonTags("storage_blocks", "iron");
+        public static final TagKey<Block> STORAGE_BLOCKS_COAL = commonTags("storage_blocks", "coal");
 
         public static TagKey<Block> commonTags(String folder, String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", String.format("%s/%s", folder, name)));

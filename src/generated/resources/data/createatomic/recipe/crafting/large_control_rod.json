@@ -6,11 +6,14 @@
       "tag": "c:storage_blocks/iron"
     },
     {
+      "tag": "c:storage_blocks/iron"
+    },
+    {
       "item": "createatomic:dense_alloy_plate"
     }
   ],
   "result": {
     "count": 1,
-    "id": "createatomic:small_control_rod"
+    "id": "createatomic:large_control_rod"
   }
 }

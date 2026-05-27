@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "createatomic:graphite_dust"
+    }
+  ],
+  "results": [
+    {
+      "id": "createatomic:graphite_sheet"
+    }
+  ]
+}

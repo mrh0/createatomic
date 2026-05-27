@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "createatomic:dense_alloy"
+    }
+  ],
+  "results": [
+    {
+      "id": "createatomic:dense_alloy_plate"
+    }
+  ]
+}

@@ -148,7 +148,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .pattern("FPP")
             .pattern("DCC")
             .define('P', AllItems.PROPELLER.get())
-            .define('F', AllBlocks.ENCASED_FAN.get())
+            .define('F', AllBlocks.SHAFT.get())
             .define('C', AllItems.COPPER_SHEET.get())
             .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
@@ -159,7 +159,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .pattern("PPF")
             .pattern("CCD")
             .define('P', AllItems.PROPELLER.get())
-            .define('F', AllBlocks.ENCASED_FAN.get())
+            .define('F', AllBlocks.SHAFT.get())
             .define('C', CATagRegister.Items.PLATES_COPPER)
             .define('D', AtomicItems.DENSE_ALLOY_PLATE.get())
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
@@ -182,9 +182,23 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("crafting/fuel_rod"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.SMALL_CONTROL_ROD.get(), 1)
-            .requires(CATagRegister.Items.INGOTS_REFINED_URANIUM)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
             .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
-            .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
+            .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/small_control_rod"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.LARGE_CONTROL_ROD.get(), 1)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
+            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .save(output, CreateAtomic.asResource("crafting/large_control_rod"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.NEUTRON_REFLECTOR.get(), 1)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_COAL)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_COAL)
+            .requires(AtomicItems.DENSE_ALLOY_PLATE.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY_PLATE.get()))
+            .save(output, CreateAtomic.asResource("crafting/neutron_reflector"));
     }
 }

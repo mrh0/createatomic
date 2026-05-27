@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "createatomic:refined_uranium_ingot"
+            "items": "createatomic:dense_alloy_plate"
           }
         ]
       },

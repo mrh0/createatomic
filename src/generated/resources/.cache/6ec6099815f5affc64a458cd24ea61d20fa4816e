@@ -1,11 +1,12 @@
-// 1.21.1	2026-05-27T00:27:34.895221021	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-102028f22ef9070ebb5fef34bf914765b1004905 assets/createatomic/lang/en_ud.json
-68901f223c23d06f3a4fca1e7f1271729b0aa3ef assets/createatomic/lang/en_us.json
+// 1.21.1	2026-05-27T12:57:28.714298593	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+59036dca6eb41d6e04a8465a9303ed530d6b4870 assets/createatomic/lang/en_ud.json
+5e5827857d663f48e90c3fe35a2e66a4adb107b5 assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
 bd2f67b749f11c7fe265b941a59c87eeee616a27 assets/createatomic/models/item/dense_alloy_plate.json
 9decd22979162fefb7f0d2a89a1f194763193278 assets/createatomic/models/item/depleted_uranium_rod.json
 bf81e13dda04907a3782ca875bc50e5d027a09d1 assets/createatomic/models/item/graphite_dust.json
+29c96fae504f3e7e98d7b0c81785c81d265bdbf7 assets/createatomic/models/item/graphite_sheet.json
 4f504fb15028244995700ae6e0f760bcd77ba99e assets/createatomic/models/item/large_control_rod.json
 7aa16f4722e4287ad695be4c234a739c57b39f2a assets/createatomic/models/item/neutron_reflector.json
 c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json
