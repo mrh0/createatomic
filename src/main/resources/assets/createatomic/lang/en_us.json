@@ -19,7 +19,9 @@
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
 	"block.createatomic.raw_uranium_block": "Raw Uranium Block",
-	"block.createatomic.radioisotope_heat_generator": "Radioisotope Heat Generator",
+	"block.createatomic.radioisotope_heat_generator_kindled": "Radioisotope Heat Generator",
+	"block.createatomic.radioisotope_heat_generator_smouldering": "Radioisotope Heat Generator",
+	"block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator",
 	"block.createatomic.reactor_casing": "Reactor Casing",
 	"block.createatomic.rod_assembly": "Rod Assembly",
 	"block.createatomic.reactor_debris": "Reactor Debris",
@@ -28,6 +30,11 @@
 
 	"effect.createatomic.radiation_poisoning": "Radiation Poisoning",
 	"effect.createatomic.radiation_poisoning.description": "Causes severely reduced movement speed",
+
+	"createatomic.tooltip.rhg.heat_output": "Heat: %s",
+	"createatomic.tooltip.rhg.heat.kindled": "Kindled",
+	"createatomic.tooltip.rhg.heat.smouldering": "Smouldering",
+	"createatomic.tooltip.rhg.heat.none": "None",
 
 	"createatomic.tooltip.rod_assembly.none": "Empty",
 	"createatomic.tooltip.rod_assembly.small_control_rod": "Small Control Rod",

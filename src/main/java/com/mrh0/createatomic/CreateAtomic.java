@@ -132,8 +132,9 @@ public class CreateAtomic {
         //Network.registerMessage(0, ObservePacketLegacy.class, ObservePacketLegacy::encode, ObservePacketLegacy::decode, ObservePacketLegacy::handle);
         //Network.registerMessage(1, EnergyNetworkPacket.class, EnergyNetworkPacket::encode, EnergyNetworkPacket::decode, EnergyNetworkPacket::handle);
 
-        BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get(), (level, pos, state) -> 1);
-        BoilerHeater.REGISTRY.register(AtomicBlocks.RAW_URANIUM_BLOCK.get(), (level, pos, state) -> 0);
+        BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get(), (level, pos, state) -> 1);
+        BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get(), (level, pos, state) -> 0);
+        // BoilerHeater.REGISTRY.register(AtomicBlocks.RAW_URANIUM_BLOCK.get(), (level, pos, state) -> 0);
 
         // Steam turbine: 2 SU capacity per RPM (1/4 of original 8).
         // Balance: 2 turbines are required to fully absorb 1 effective power.

@@ -1,6 +1,8 @@
 {
   "block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
-  "block.createatomic.radioisotope_heat_generator": "Radioisotope Heat Generator",
+  "block.createatomic.radioisotope_heat_generator_kindled": "Radioisotope Heat Generator Kindled",
+  "block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator None",
+  "block.createatomic.radioisotope_heat_generator_smouldering": "Radioisotope Heat Generator Smouldering",
   "block.createatomic.raw_uranium_block": "Raw Uranium Block",
   "block.createatomic.reactor_casing": "Reactor Casing",
   "block.createatomic.reactor_debris": "Reactor Debris",

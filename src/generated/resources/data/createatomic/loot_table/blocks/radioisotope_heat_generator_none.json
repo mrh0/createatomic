@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "createatomic:radioisotope_heat_generator"
+          "name": "createatomic:radioisotope_heat_generator_none"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "createatomic:blocks/radioisotope_heat_generator"
+  "random_sequence": "createatomic:blocks/radioisotope_heat_generator_none"
 }

@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "createatomic:block/radioisotope_heat_generator_kindled/block" }
+    }
+}

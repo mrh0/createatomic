@@ -1,6 +1,8 @@
 {
   "block.createatomic.deepslate_uranium_ore": "ǝɹO ɯnıuɐɹ∩ ǝʇɐןsdǝǝᗡ",
-  "block.createatomic.radioisotope_heat_generator": "ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
+  "block.createatomic.radioisotope_heat_generator_kindled": "pǝןpuıʞ ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
+  "block.createatomic.radioisotope_heat_generator_none": "ǝuoN ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
+  "block.createatomic.radioisotope_heat_generator_smouldering": "buıɹǝpןnoɯS ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
   "block.createatomic.raw_uranium_block": "ʞɔoןᗺ ɯnıuɐɹ∩ ʍɐᴚ",
   "block.createatomic.reactor_casing": "buısɐƆ ɹoʇɔɐǝᴚ",
   "block.createatomic.reactor_debris": "sıɹqǝᗡ ɹoʇɔɐǝᴚ",

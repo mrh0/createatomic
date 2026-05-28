@@ -166,7 +166,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.HULL_PLATE.get()))
             .save(output, CreateAtomic.asResource("crafting/turbine_alt"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get())
             .pattern("PRP")
             .pattern("DPD")
             .define('D', AtomicItems.HULL_PLATE.get())

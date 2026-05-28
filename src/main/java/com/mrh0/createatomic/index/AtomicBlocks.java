@@ -1,8 +1,10 @@
 package com.mrh0.createatomic.index;
 
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.mrh0.createatomic.CreateAtomic;
+import com.mrh0.createatomic.blocks.radioisotope_heat_generator.RadioisotopeHeatGeneratorBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockItem;
@@ -49,13 +51,40 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<Block> RADIOISOTOPE_HEAT_GENERATOR = CreateAtomic.REGISTRATE.block("radioisotope_heat_generator", Block::new)
-            .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(DyeColor.GRAY))
-            .blockstate((ctx, prov) -> {})
-            .item()
-            .transform(customItemModel())
-            .register();
+    // Fully decayed — no heat output, no further transitions.
+    public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_INERT =
+            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_none",
+                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.NONE, null))
+                    .initialProperties(SharedProperties::softMetal)
+                    .properties(p -> p.mapColor(DyeColor.GRAY))
+                    .blockstate((ctx, prov) -> {})
+                    .item()
+                    .transform(customItemModel())
+                    .register();
+
+    // Partially decayed — smouldering heat, transitions to inert.
+    public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING =
+            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_smouldering",
+                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.SMOULDERING,
+                            () -> RADIOISOTOPE_HEAT_GENERATOR_INERT.get()))
+                    .initialProperties(SharedProperties::softMetal)
+                    .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 5))
+                    .blockstate((ctx, prov) -> {})
+                    .item()
+                    .transform(customItemModel())
+                    .register();
+
+    // Freshly placed — full heated output, transitions to smouldering.
+    public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_KINDLED =
+            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_kindled",
+                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.KINDLED,
+                            () -> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get()))
+                    .initialProperties(SharedProperties::softMetal)
+                    .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 13))
+                    .blockstate((ctx, prov) -> {})
+                    .item()
+                    .transform(customItemModel())
+                    .register();
 
     public static final BlockEntry<ReactorCasingBlock> REACTOR_CASING = CreateAtomic.REGISTRATE.block("reactor_casing", ReactorCasingBlock::new)
             .initialProperties(SharedProperties::softMetal)

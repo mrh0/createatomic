@@ -23,7 +23,7 @@ public class CABlockTagProvider extends BlockTagsProvider {
                 .add(AtomicBlocks.RAW_URANIUM_BLOCK.get())
                 .add(AtomicBlocks.URANIUM_ORE.get())
                 .add(AtomicBlocks.DEEPSLATE_URANIUM_ORE.get())
-                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get())
+                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get())
                 .add(AtomicBlocks.REACTOR_CASING.get())
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
                 .add(AtomicBlocks.REACTOR_DEBRIS.get())
@@ -38,7 +38,7 @@ public class CABlockTagProvider extends BlockTagsProvider {
 
         // Machine blocks require stone-tier tool
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR.get())
+                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get())
                 .add(AtomicBlocks.REACTOR_CASING.get())
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
                 .add(AtomicBlocks.REACTOR_DEBRIS.get())

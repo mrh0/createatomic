@@ -1,9 +1,0 @@
-{
-    "parent": "minecraft:block/cube_bottom_top",
-    "textures": {
-        "side":     "createatomic:block/radioisotope_heat_generator/block",
-        "top":      "createatomic:block/radioisotope_heat_generator/block_top",
-        "bottom":   "createatomic:block/radioisotope_heat_generator/block_bottom",
-        "particle": "createatomic:block/radioisotope_heat_generator/block"
-    }
-}

@@ -24,6 +24,11 @@ public class CAtomicServer extends ConfigBase {
             "Hull integrity regenerated per lazy tick (every ~1 s) when the reactor is fully cooled.",
             "0.5 = full regen from 0% in ~160 seconds.");
 
+    public final ConfigFloat rhgDecayDays = f(5f, 0.01f, 3650.0f, "rhgDecayDays",
+            "Average real-world days (24 hours at 20 TPS) between each decay step of the Radioisotope Heat Generator.",
+            "Each step: heated -> smouldering -> inert.",
+            "1.0 = on average 24 real hours (~1,728,000 ticks) per step.");
+
     @Override
     public String getName() {
         return "server";

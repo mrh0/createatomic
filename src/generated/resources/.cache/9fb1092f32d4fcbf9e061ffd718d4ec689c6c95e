@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-27T23:49:12.407896605	Recipes
+// 1.21.1	2026-05-28T22:40:32.755098598	Recipes
 9da2f4a6ac8ff708d0d093a377f9ffc83ddf8ac0 data/createatomic/advancement/recipes/misc/blasting/uranium_from_crushed_uranium.json
 9e47a900e9d0dbc644e0bed58375e71b5016eee2 data/createatomic/advancement/recipes/misc/blasting/uranium_from_deepslate_uranium_ore.json
 0df1a6ee42508acf2fe1e72f3e018389d9228bb3 data/createatomic/advancement/recipes/misc/blasting/uranium_from_raw_uranium.json
@@ -31,7 +31,7 @@ e1a16434558d2940808a3b45fdf812d87aa2ea14 data/createatomic/recipe/crafting/large
 a674360014d96409e02b1957966598a3841861bb data/createatomic/recipe/crafting/neutron_reflector.json
 e6c50acce68dc65d5b66b0e0298ed92504fe27af data/createatomic/recipe/crafting/plutonium_ingot.json
 9ca8957e91da01eee9fa14a5b575a25544ddd57c data/createatomic/recipe/crafting/plutonium_nuggets.json
-5002d398fb752ac0bffc2012ac3c7031f4d9f864 data/createatomic/recipe/crafting/radioisotope_heat_generator.json
+c6ed4bd5312a5b62a0c501ba3b6a3d57a63e3585 data/createatomic/recipe/crafting/radioisotope_heat_generator.json
 40fa62b39c3303221e9c2ea304d8300c7bded81e data/createatomic/recipe/crafting/reactor_redstone_interface.json
 05b3911bd7198ddf02193905af60f97a59d15384 data/createatomic/recipe/crafting/refined_uranium_ingot.json
 60e4c36a7c6d63f77e4b5f322bb2bce6ff31f0b2 data/createatomic/recipe/crafting/refined_uranium_nuggets.json
