@@ -41,7 +41,7 @@ public class CAItemTagProvider extends ItemTagsProvider {
         // Plates
         tag(CATagRegister.Items.PLATES)
                 //.add(AtomicItems.GRAPHITE_SHEET.get())
-                .add(AtomicItems.HULL_PLATE.get());
+                .add(AtomicItems.DENSE_ALLOY.get());
         //tag(CATagRegister.Items.PLATES_GRAPHITE)
                 //.add(AtomicItems.GRAPHITE_SHEET.get());
 

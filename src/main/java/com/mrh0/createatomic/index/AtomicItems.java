@@ -1,5 +1,6 @@
 package com.mrh0.createatomic.index;
 
+import com.mrh0.createatomic.items.FuelRodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
 import net.minecraft.world.item.Item;
@@ -44,8 +45,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> FUEL_ROD =
-            CreateAtomic.REGISTRATE.item("refined_uranium_rod", Item::new)
+    public static final ItemEntry<FuelRodItem> FUEL_ROD =
+            CreateAtomic.REGISTRATE.item("refined_uranium_rod", FuelRodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
@@ -54,8 +55,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> HULL_PLATE =
-            CreateAtomic.REGISTRATE.item("hull_plate", Item::new)
+    public static final ItemEntry<Item> DENSE_ALLOY =
+            CreateAtomic.REGISTRATE.item("dense_alloy", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

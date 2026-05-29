@@ -948,6 +948,11 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public boolean isActive() { return reactorHeat > 25; }
 
+    public float getHealth() {
+        ReactorCasingBlockEntity con = getControllerBE();
+        return con == null ? 100f : con.reactorHealth;
+    }
+
     /** True when a powered interface is lifting the control rods. False = SCRAM (rods down). */
     public boolean isArmed() { return poweredInterfaces > 0; }
 

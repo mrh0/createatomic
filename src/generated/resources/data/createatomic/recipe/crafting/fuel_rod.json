@@ -6,7 +6,7 @@
       "tag": "c:ingots/refined_uranium"
     },
     {
-      "item": "createatomic:hull_plate"
+      "item": "createatomic:dense_alloy"
     }
   ],
   "result": {

@@ -6,7 +6,7 @@
       "tag": "c:plates/copper"
     },
     "D": {
-      "item": "createatomic:hull_plate"
+      "item": "createatomic:dense_alloy"
     },
     "F": {
       "item": "create:shaft"

@@ -10,7 +10,7 @@
 	"item.createatomic.large_control_rod": "Large Control Rod",
 	"item.createatomic.refined_uranium_rod": "Uranium Fuel Rod",
 	"item.createatomic.depleted_uranium_rod": "Depleted Uranium Fuel Rod",
-	"item.createatomic.hull_plate": "Reactor Hull Plate",
+	"item.createatomic.dense_alloy": "Dense Alloy",
 	"item.createatomic.neutron_reflector": "Neutron Reflector",
 	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
 	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
@@ -30,6 +30,16 @@
 
 	"effect.createatomic.radiation_poisoning": "Radiation Poisoning",
 	"effect.createatomic.radiation_poisoning.description": "Causes severely reduced movement speed",
+
+	"createatomic.display_source.reactor_status": "Reactor Status",
+	"createatomic.display_source.reactor_temperature": "Reactor Temperature",
+	"createatomic.display_source.reactor_health": "Reactor Hull Integrity",
+	"createatomic.display_source.reactor_water": "Reactor Water Level",
+	"createatomic.display_source.reactor.active": "Active",
+	"createatomic.display_source.reactor.inactive": "Inactive",
+	"createatomic.display_source.reactor.scrammed": "SCRAM",
+
+	"createatomic.tooltip.fuel_rod.depletion": "%s%% depleted",
 
 	"createatomic.tooltip.rhg.heat_output": "Heat: %s",
 	"createatomic.tooltip.rhg.heat.kindled": "Kindled",

@@ -44,7 +44,7 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
         float dialPivotZ = 8f / 16f;
         float progress = te.gauge.getValue(partialTicks);
 
-        // When temperature exceeds 315°C the needle pegs at max and shakes.
+        // When temperature exceeds 315C the needle pegs at max and shakes.
         float shake = 0f;
         if (te.reactorHeat > 315) {
             float excess = (te.reactorHeat - 315f) / 290f;

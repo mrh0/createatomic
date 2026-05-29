@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "createatomic:hull_plate"
+            "items": "createatomic:dense_alloy"
           }
         ]
       },

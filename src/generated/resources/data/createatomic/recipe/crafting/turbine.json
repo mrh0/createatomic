@@ -6,7 +6,7 @@
       "item": "create:copper_sheet"
     },
     "D": {
-      "item": "createatomic:hull_plate"
+      "item": "createatomic:dense_alloy"
     },
     "F": {
       "item": "create:shaft"

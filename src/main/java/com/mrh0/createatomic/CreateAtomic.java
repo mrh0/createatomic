@@ -111,7 +111,7 @@ public class CreateAtomic {
         //CASounds.register(eventBus);
         //CASchedule.register();
         //CADamageTypes.register();
-        //CADisplaySources.register();
+        AtomicDisplaySources.register();
         CatnipServices.PLATFORM.executeOnClientOnly(() -> AtomicPartials::init);
     }
 
@@ -143,6 +143,7 @@ public class CreateAtomic {
         BlockStressValues.RPM.register(AtomicBlocks.TURBINE.get(),
                 new BlockStressValues.GeneratedRpm(256, true));
 
+        AtomicDisplaySources.associateWithBlockEntities();
         LOGGER.info("Create Atomic Initialized!");
     }
 

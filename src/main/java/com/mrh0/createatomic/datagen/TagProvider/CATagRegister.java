@@ -28,6 +28,7 @@ public class CATagRegister {
         public static final TagKey<Item> INGOTS_REFINED_URANIUM = commonTags("ingots", "refined_uranium");
         public static final TagKey<Item> INGOTS_URANIUM = commonTags("ingots", "uranium");
         public static final TagKey<Item> INGOTS_PLUTONIUM = commonTags("ingots", "plutonium");
+        public static final TagKey<Item> INGOTS_LEAD = commonTags("ingots", "lead");
         public static final TagKey<Item> NUGGETS = commonTags("nuggets");
         public static final TagKey<Item> NUGGETS_REFINED_URANIUM = commonTags("nuggets", "refined_uranium");
         public static final TagKey<Item> NUGGETS_URANIUM = commonTags("nuggets", "uranium");

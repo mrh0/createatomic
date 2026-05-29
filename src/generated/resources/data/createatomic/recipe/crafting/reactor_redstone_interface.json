@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "D": {
-      "item": "createatomic:hull_plate"
+      "item": "createatomic:dense_alloy"
     },
     "E": {
       "item": "create:electron_tube"
