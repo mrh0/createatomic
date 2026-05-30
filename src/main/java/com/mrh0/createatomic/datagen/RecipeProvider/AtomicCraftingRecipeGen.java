@@ -63,6 +63,19 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
             .save(output, CreateAtomic.asResource("crafting/refined_uranium_nuggets"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RAW_URANIUM_BLOCK.get())
+            .pattern("PPP")
+            .pattern("PPP")
+            .pattern("PPP")
+            .define('P', CATagRegister.Items.RAW_MATERIALS_URANIUM)
+            .unlockedBy("has_raw_materials_uranium", has(CATagRegister.Items.RAW_MATERIALS_URANIUM))
+            .save(output, CreateAtomic.asResource("crafting/raw_uranium_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.RAW_URANIUM.get(), 9)
+            .requires(AtomicBlocks.RAW_URANIUM_BLOCK.get())
+            .unlockedBy("has_raw_uranium_block", has(AtomicBlocks.RAW_URANIUM_BLOCK.get()))
+            .save(output, CreateAtomic.asResource("crafting/raw_uranium_from_block"));
+
         
         // Ores and Blocks
         SimpleCookingRecipeBuilder

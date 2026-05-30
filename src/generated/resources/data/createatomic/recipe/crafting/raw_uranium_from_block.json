@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createatomic:raw_uranium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "createatomic:raw_uranium"
+  }
+}

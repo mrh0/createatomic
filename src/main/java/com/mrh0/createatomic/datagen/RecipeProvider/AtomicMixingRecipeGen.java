@@ -22,7 +22,7 @@ public class AtomicMixingRecipeGen extends MixingRecipeGen {
         .require(Tags.Items.INGOTS_COPPER)
         .require(ItemTags.COALS)
         .output(AtomicItems.DENSE_ALLOY.get())
-        .requiresHeat(HeatCondition.HEATED)
+        .requiresHeat(HeatCondition.SUPERHEATED)
     );
 
     GeneratedRecipe DENSE_ALLOY_ALT = create(CreateAtomic.asResource("mixing/dense_alloy_alt"), b -> b
@@ -33,7 +33,7 @@ public class AtomicMixingRecipeGen extends MixingRecipeGen {
         .withCondition(new NotCondition(
             new TagEmptyCondition(CATagRegister.Items.INGOTS_LEAD)
         ))
-        .requiresHeat(HeatCondition.HEATED)
+        .requiresHeat(HeatCondition.SUPERHEATED)
     );
 
     public AtomicMixingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

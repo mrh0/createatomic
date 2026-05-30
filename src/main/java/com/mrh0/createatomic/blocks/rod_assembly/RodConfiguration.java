@@ -8,17 +8,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public enum RodConfiguration implements StringRepresentable {
-    None("none"),
-    SmallControlRod("small_control_rod"),
-    LargeControlRod("large_control_rod"),
-    FuelRod("fuel_rod"),
-    DepletedFuelRod("depleted_fuel_rod"),
-    NeutronReflector("neutron_reflector");
+    None            ("none",               0, 0, 0f,   false),
+    SmallControlRod ("small_control_rod",  0, 2, 0f,   true),
+    LargeControlRod ("large_control_rod",  0, 5, 0f,   true),
+    FuelRod         ("fuel_rod",           1, 0, 0.5f, false),
+    DepletedFuelRod ("depleted_fuel_rod",  0, 0, 0f,   false),
+    NeutronReflector("neutron_reflector",  0, 0, 0.5f,   false);
 
-    private String name;
+    private final String name;
+    public final int effectivePower;
+    public final int hullCapacity;
+    public final float adjacencyBonus;
+    private final boolean controlRod;
 
-    private RodConfiguration(String name) {
+    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, boolean isControlRod) {
         this.name = name;
+        this.effectivePower = effectivePower;
+        this.hullCapacity = hullCapacity;
+        this.adjacencyBonus = adjacencyBonus;
+        this.controlRod = isControlRod;
     }
 
     @Override
@@ -50,11 +58,11 @@ public enum RodConfiguration implements StringRepresentable {
 
     public static RodConfiguration fromStack(ItemStack stack) {
         Item item = stack.getItem();
-        if(item == AtomicItems.SMALL_CONTROL_ROD.get()) return SmallControlRod;
-        if(item == AtomicItems.LARGE_CONTROL_ROD.get()) return LargeControlRod;
-        if(item == AtomicItems.FUEL_ROD.get()) return FuelRod;
-        if(item == AtomicItems.DEPLETED_FUEL_ROD.get()) return DepletedFuelRod;
-        if(item == AtomicItems.NEUTRON_REFLECTOR.get()) return NeutronReflector;
+        if (item == AtomicItems.SMALL_CONTROL_ROD.get()) return SmallControlRod;
+        if (item == AtomicItems.LARGE_CONTROL_ROD.get()) return LargeControlRod;
+        if (item == AtomicItems.FUEL_ROD.get()) return FuelRod;
+        if (item == AtomicItems.DEPLETED_FUEL_ROD.get()) return DepletedFuelRod;
+        if (item == AtomicItems.NEUTRON_REFLECTOR.get()) return NeutronReflector;
         return None;
     }
 
@@ -67,14 +75,11 @@ public enum RodConfiguration implements StringRepresentable {
     }
 
     public int getControlLevel() {
-        if(this == LargeControlRod) return 5;
-        if(this == SmallControlRod) return 2;
-        return 0;
+        return hullCapacity;
     }
 
     public int getFuelLevel() {
-        if(this == FuelRod) return 1;
-        return 0;
+        return effectivePower;
     }
 
     public boolean isReflector() {
@@ -82,11 +87,11 @@ public enum RodConfiguration implements StringRepresentable {
     }
 
     public boolean isControlRod() {
-        return this == SmallControlRod || this == LargeControlRod;
+        return controlRod;
     }
 
     // True for any rod type that participates in the reaction and must be locked while running.
     public boolean isLockedWhileRunning() {
-        return this == FuelRod || this == DepletedFuelRod || this == NeutronReflector;
+        return this == FuelRod || this == NeutronReflector;
     }
 }

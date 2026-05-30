@@ -8,6 +8,7 @@ import java.util.Set;
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import com.mrh0.createatomic.blocks.reactor_redstone_interface.ReactorRedstoneInterfaceBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
+import com.mrh0.createatomic.blocks.rod_assembly.RodConfiguration;
 import com.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import com.mrh0.createatomic.blocks.turbine.TurbineBlockEntity;
 import com.mrh0.createatomic.index.AtomicBlockEntities;
@@ -716,25 +717,26 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public Pair<Integer, Integer> getRodLevels(boolean tick) {
         int w = getWidth();
-        // Pass 1: populate grids for fuel rods and neutron reflectors
+        // Pass 1: populate grids
         RodAssemblyBlockEntity[][] grid          = new RodAssemblyBlockEntity[w][w];
-        int[][]                   fuelGrid       = new int[w][w]; // 1 = active fuel rod
-        boolean[][]               reflectorGrid  = new boolean[w][w]; // true = neutron reflector
+        int[][]                    fuelGrid      = new int[w][w];   // effectivePower per slot
+        float[][]                  adjacencyGrid = new float[w][w]; // adjacencyBonus per slot
 
         for (int x = 0; x < w; x++) {
             for (int z = 0; z < w; z++) {
                 BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
                 if (be instanceof RodAssemblyBlockEntity rabe) {
-                    grid[x][z]         = rabe;
-                    fuelGrid[x][z]     = rabe.getFuelLevel();
-                    reflectorGrid[x][z] = rabe.getConfig().isReflector();
+                    RodConfiguration config = rabe.getConfig();
+                    grid[x][z]          = rabe;
+                    fuelGrid[x][z]      = config.effectivePower;
+                    adjacencyGrid[x][z] = config.adjacencyBonus;
                 }
             }
         }
 
         // Pass 2: tally fuel/control with adjacency reactivity bonus.
-        // Each fuel rod gains +50% power per orthogonally adjacent fuel rod OR neutron reflector.
-        //   1 neighbour 1.5x,  2 neighbours 2.0x,  3 neighbours 2.5x, etc.
+        // Any slot with adjacencyBonus > 0 (fuel rods and neutron reflectors share 0.5)
+        // counts as a neighbour for adjacent fuel rods.
         int[] dx = {-1, 1, 0, 0};
         int[] dz = { 0, 0,-1, 1};
 
@@ -747,19 +749,19 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                 RodAssemblyBlockEntity rabe = grid[x][z];
                 if (rabe == null) continue;
 
-                controlLevel += rabe.getControlLevel();
+                controlLevel += rabe.getConfig().hullCapacity;
 
                 int fuel = fuelGrid[x][z];
                 if (fuel > 0) {
                     installedFuel += fuel;
+                    float bonus = adjacencyGrid[x][z];
                     int neighbours = 0;
                     for (int d = 0; d < 4; d++) {
                         int nx = x + dx[d], nz = z + dz[d];
-                        if (nx >= 0 && nx < w && nz >= 0 && nz < w
-                                && (fuelGrid[nx][nz] > 0 || reflectorGrid[nx][nz]))
+                        if (nx >= 0 && nx < w && nz >= 0 && nz < w && adjacencyGrid[nx][nz] > 0)
                             neighbours++;
                     }
-                    effectiveFuel += fuel * (1f + 0.5f * neighbours);
+                    effectiveFuel += fuel * (1f + bonus * neighbours);
                 }
 
                 if (tick) rabe.tickRod();

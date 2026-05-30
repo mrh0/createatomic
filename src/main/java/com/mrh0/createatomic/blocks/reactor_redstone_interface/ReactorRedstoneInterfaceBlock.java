@@ -1,11 +1,13 @@
 package com.mrh0.createatomic.blocks.reactor_redstone_interface;
 
+import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,10 +49,19 @@ public class ReactorRedstoneInterfaceBlock extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockPos attachPos = context.getClickedPos().relative(context.getClickedFace().getOpposite());
+        if (!(context.getLevel().getBlockState(attachPos).getBlock() instanceof ReactorCasingBlock))
+            return null;
         boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
         return defaultBlockState()
                 .setValue(FACING, context.getClickedFace().getOpposite())
                 .setValue(POWERED, powered);
+    }
+
+    @Override
+    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos attachPos = pos.relative(state.getValue(FACING));
+        return level.getBlockState(attachPos).getBlock() instanceof ReactorCasingBlock;
     }
 
     @Override
