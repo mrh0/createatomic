@@ -51,7 +51,6 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();
 
-    // Fully decayed — no heat output, no further transitions.
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_INERT =
             CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_none",
                     p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.NONE, null))
@@ -62,7 +61,6 @@ public class AtomicBlocks {
                     .transform(customItemModel())
                     .register();
 
-    // Partially decayed — smouldering heat, transitions to inert.
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING =
             CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_smouldering",
                     p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.SMOULDERING,
@@ -74,7 +72,6 @@ public class AtomicBlocks {
                     .transform(customItemModel())
                     .register();
 
-    // Freshly placed — full heated output, transitions to smouldering.
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_KINDLED =
             CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_kindled",
                     p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.KINDLED,
