@@ -635,7 +635,6 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         // Net power vs capacity: green = safe (≤ capacity), red = damaging (> capacity)
         int netPowerDisplay = con.cachedEffectivePower - con.cachedControlRodLevel;
-        int sum = con.cachedHullCapacity - netPowerDisplay;
         boolean damaging = netPowerDisplay > con.cachedHullCapacity;
         ChatFormatting powerColour = damaging ? ChatFormatting.RED : ChatFormatting.GREEN;
 

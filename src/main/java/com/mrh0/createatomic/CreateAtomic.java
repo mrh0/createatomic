@@ -13,13 +13,15 @@ import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingRenderer;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyRenderer;
 import com.mrh0.createatomic.blocks.turbine.TurbineRenderer;
 import com.mrh0.createatomic.config.AtomicConfigs;
-import com.mrh0.createatomic.index.*;
 import com.mrh0.createatomic.network.ClientPayloadHandler;
 import com.mrh0.createatomic.network.ObservePacketPayload;
 import com.mrh0.createatomic.network.ReactorPacketPayload;
 import com.mrh0.createatomic.network.ServerPayloadHandler;
+import com.mrh0.createatomic.ponder.AtomicPonderPlugin;
+
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.platform.CatnipServices;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.registries.Registries;
@@ -120,6 +122,7 @@ public class CreateAtomic {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        PonderIndex.addPlugin(new AtomicPonderPlugin());
         event.enqueueWork(() -> {
             BlockEntityRenderers.register(AtomicBlockEntities.REACTOR_CASING.get(), ReactorCasingRenderer::new);
             BlockEntityRenderers.register(AtomicBlockEntities.TURBINE.get(), TurbineRenderer::new);
