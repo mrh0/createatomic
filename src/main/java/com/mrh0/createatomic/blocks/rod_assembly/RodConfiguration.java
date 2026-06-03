@@ -8,25 +8,27 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public enum RodConfiguration implements StringRepresentable {
-    None            ("none",               0, 0, 0f,   false),
-    SmallControlRod ("small_control_rod",  0, 2, 0f,   true),
-    LargeControlRod ("large_control_rod",  0, 5, 0f,   true),
-    FuelRod         ("fuel_rod",           1, 0, 0.5f, false),
-    DepletedFuelRod ("depleted_fuel_rod",  0, 0, 0f,   false),
-    NeutronReflector("neutron_reflector",  0, 0, 0.5f,   false);
+    None            ("none", 0, 0, 0f, false, false),
+    SmallControlRod ("small_control_rod", 0, 2, 0f, true, false),
+    LargeControlRod ("large_control_rod", 0, 5, 0f, true, false),
+    FuelRod         ("fuel_rod", 1, 0, 0.5f, false, false),
+    DepletedFuelRod ("depleted_fuel_rod", 0, 0, 0f, false, true),
+    NeutronReflector("neutron_reflector", 0, 0, 0.5f, false, false);
 
     private final String name;
     public final int effectivePower;
     public final int hullCapacity;
     public final float adjacencyBonus;
     private final boolean controlRod;
+    private final boolean autoEject;
 
-    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, boolean isControlRod) {
+    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, boolean isControlRod, boolean autoEject) {
         this.name = name;
         this.effectivePower = effectivePower;
         this.hullCapacity = hullCapacity;
         this.adjacencyBonus = adjacencyBonus;
         this.controlRod = isControlRod;
+        this.autoEject = autoEject;
     }
 
     @Override
@@ -88,6 +90,10 @@ public enum RodConfiguration implements StringRepresentable {
 
     public boolean isControlRod() {
         return controlRod;
+    }
+
+    public boolean shouldAutoEject() {
+        return autoEject;
     }
 
     // True for any rod type that participates in the reaction and must be locked while running.

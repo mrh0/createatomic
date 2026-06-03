@@ -41,6 +41,42 @@ public class PonderScenes {
 		scene.idle(5);
 		scene.world().showSection(util.select().position(cOut), Direction.DOWN);
 
+		// Pump
+		scene.world().showSection(util.select().fromTo(0, 0, 2, 0, 0, 5), Direction.EAST);
+		scene.world().showSection(util.select().fromTo(0, 1, 2, 2, 2, 5), Direction.EAST);
+
+		// Turbines
+		scene.idle(5);
+		scene.world().showSection(util.select().position(4, 1, 1), Direction.SOUTH);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(3, 1, 1), Direction.SOUTH);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(4, 1, 0), Direction.SOUTH);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(3, 1, 0), Direction.SOUTH);
+
+		// Redstone
+		scene.idle(5);
+		scene.world().showSection(util.select().position(4, 2, 1), Direction.SOUTH);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(3, 2, 1), Direction.SOUTH);
+
+		// Output
+		scene.idle(5);
+		scene.world().showSection(util.select().position(1, 3, 4), Direction.SOUTH);
+		scene.idle(5);
+		scene.world().showSection(util.select().position(1, 4, 4), Direction.DOWN);
+
+		// Input
+		scene.world().showSection(util.select().position(6, 4, 3), Direction.WEST);
+		scene.world().showSection(util.select().position(6, 5, 3), Direction.WEST);
+		scene.world().showSection(util.select().position(6, 5, 4), Direction.WEST);
+
+		// Arms
+		scene.world().showSection(util.select().position(3, 4, 4), Direction.NORTH);
+		scene.world().showSection(util.select().position(4, 4, 4), Direction.NORTH);
+		scene.world().showSection(util.select().position(3, 4, 5), Direction.NORTH);
+
 		scene.markAsFinished();
 	}
 }
