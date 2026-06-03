@@ -47,7 +47,7 @@
 	"createatomic.display_source.reactor.inactive": "Inactive",
 	"createatomic.display_source.reactor.scrammed": "SCRAM",
 
-	"createatomic.tooltip.fuel_rod.depletion": "%s%% depleted",
+	"createatomic.tooltip.fuel_rod.depletion": "Depleted in %s",
 
 	"createatomic.tooltip.rhg.heat_output": "Heat: %s",
 	"createatomic.tooltip.rhg.heat.kindled": "Kindled",

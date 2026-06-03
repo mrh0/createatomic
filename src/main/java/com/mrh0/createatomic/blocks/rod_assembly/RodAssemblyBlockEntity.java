@@ -49,11 +49,14 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         ReactorCasingBlockEntity reactor = findReactor();
         RodConfiguration config = getConfig();
         boolean shouldInsert;
-        if (config.isControlRod()) {
+        if (config.shouldAutoEject()) {
+            // Auto-eject rods (e.g. depleted) are always shown raised and available for removal.
+            shouldInsert = false;
+        } else if (config.isControlRod()) {
             // Up when armed. Down when SCRAMed and reactor is still hot. Up again once cooled.
             shouldInsert = reactor != null && !reactor.isArmed() && reactor.getTemperature() > 25;
         } else {
-            // Fuel/depleted/reflector: down when armed or still hot, up once off and cooled.
+            // Fuel/reflector: down when armed or still hot, up once off and cooled.
             shouldInsert = config.isPopulated() && reactor != null
                     && (reactor.isArmed() || reactor.getTemperature() > 25);
         }
@@ -159,9 +162,15 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
         if (config == RodConfiguration.FuelRod) {
-            int pct = (fuelTicks * 100) / fuelDuration();
+            int duration = fuelDuration();
+            int remainingSeconds = Math.max(0, duration - fuelTicks) / 20;
+            int hours = remainingSeconds / 3600;
+            int minutes = (remainingSeconds % 3600) / 60;
+            int pct = (fuelTicks * 100) / Math.max(1, duration);
+            ChatFormatting color = pct == 0 ? ChatFormatting.GREEN : pct < 75 ? ChatFormatting.YELLOW : ChatFormatting.RED;
             tooltip.add(Component.literal(spacing + " ").append(
-                    Component.literal(pct + "% depleted").withStyle(ChatFormatting.YELLOW)));
+                    Component.translatable("createatomic.tooltip.fuel_rod.depletion",
+                            String.format("%02dh:%02dm", hours, minutes)).withStyle(color)));
         }
         if (config.isLockedWhileRunning() && isReactorActive()) {
             tooltip.add(Component.literal(spacing + " ").append(

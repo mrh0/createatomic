@@ -24,9 +24,13 @@ public class FuelRodItem extends Item {
         if (custom != null) fuelTicks = custom.copyTag().getInt("FuelTicks");
 
         int duration = Math.max(1, AtomicConfigs.server().fuelRodDuration.get());
-        int pct = (fuelTicks * 100) / duration;
+        int remainingSeconds = Math.max(0, duration - fuelTicks) / 20;
+        int hours = remainingSeconds / 3600;
+        int minutes = (remainingSeconds % 3600) / 60;
 
+        int pct = (fuelTicks * 100) / duration;
         ChatFormatting color = pct == 0 ? ChatFormatting.GREEN : pct < 75 ? ChatFormatting.YELLOW : ChatFormatting.RED;
-        tooltip.add(Component.translatable("createatomic.tooltip.fuel_rod.depletion", pct).withStyle(color));
+        tooltip.add(Component.translatable("createatomic.tooltip.fuel_rod.depletion",
+                String.format("%02dh:%02dm", hours, minutes)).withStyle(color));
     }
 }
