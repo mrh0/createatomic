@@ -1,6 +1,7 @@
 package com.mrh0.createatomic.index;
 
 import com.mrh0.createatomic.items.FuelRodItem;
+import com.mrh0.createatomic.items.RodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
 import net.minecraft.world.item.Item;
@@ -35,13 +36,13 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> SMALL_CONTROL_ROD =
-            CreateAtomic.REGISTRATE.item("small_control_rod", Item::new)
+    public static final ItemEntry<RodItem> SMALL_CONTROL_ROD =
+            CreateAtomic.REGISTRATE.item("small_control_rod", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> LARGE_CONTROL_ROD =
-            CreateAtomic.REGISTRATE.item("large_control_rod", Item::new)
+    public static final ItemEntry<RodItem> LARGE_CONTROL_ROD =
+            CreateAtomic.REGISTRATE.item("large_control_rod", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
@@ -75,8 +76,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();*/
 
-    public static final ItemEntry<Item> NEUTRON_REFLECTOR =
-            CreateAtomic.REGISTRATE.item("neutron_reflector", Item::new)
+    public static final ItemEntry<RodItem> NEUTRON_REFLECTOR =
+            CreateAtomic.REGISTRATE.item("neutron_reflector", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

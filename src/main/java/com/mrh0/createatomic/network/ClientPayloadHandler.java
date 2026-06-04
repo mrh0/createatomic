@@ -10,4 +10,9 @@ public class ClientPayloadHandler {
     public static void handleReactorPayload(final ReactorPacketPayload pkt, final IPayloadContext ctx) {
         ReactorPacketPayload.updateClientCache(pkt.pos(), pkt.heat(), pkt.coolant());
     }
+
+    public static void handleRodAssemblyPayload(final RodAssemblyPacketPayload pkt, final IPayloadContext ctx) {
+        RodAssemblyPacketPayload.updateClientCache(pkt.fuelTicks());
+    }
+
 }

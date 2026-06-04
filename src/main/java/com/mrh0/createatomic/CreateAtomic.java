@@ -16,6 +16,7 @@ import com.mrh0.createatomic.config.AtomicConfigs;
 import com.mrh0.createatomic.network.ClientPayloadHandler;
 import com.mrh0.createatomic.network.ObservePacketPayload;
 import com.mrh0.createatomic.network.ReactorPacketPayload;
+import com.mrh0.createatomic.network.RodAssemblyPacketPayload;
 import com.mrh0.createatomic.network.ServerPayloadHandler;
 import com.mrh0.createatomic.ponder.AtomicPonderPlugin;
 
@@ -178,6 +179,15 @@ public class CreateAtomic {
                 new DirectionalPayloadHandler<>(
                         ClientPayloadHandler::handleReactorPayload,
                         ServerPayloadHandler::handleReactorPayload
+                )
+        );
+
+        registrar.playBidirectional(
+                RodAssemblyPacketPayload.TYPE,
+                RodAssemblyPacketPayload.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        ClientPayloadHandler::handleRodAssemblyPayload,
+                        ServerPayloadHandler::handleRodAssemblyPayload
                 )
         );
     }

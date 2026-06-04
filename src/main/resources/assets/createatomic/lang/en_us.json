@@ -47,6 +47,10 @@
 	"createatomic.display_source.reactor.inactive": "Inactive",
 	"createatomic.display_source.reactor.scrammed": "SCRAM",
 
+	"createatomic.tooltip.rod_item.power": "Power: ",
+	"createatomic.tooltip.rod_item.capacity": "Capacity: ",
+	"createatomic.tooltip.rod_item.adjacency": "Adjacency Bonus: ",
+
 	"createatomic.tooltip.fuel_rod.depletion": "Depleted in %s",
 
 	"createatomic.tooltip.rhg.heat_output": "Heat: %s",
@@ -79,6 +83,7 @@
 	"createatomic.tooltip.reactor.safety.safe": "Safe",
 	"createatomic.tooltip.reactor.safety.unsafe": "Unsafe",
 
+	"createatomic.ponder.reactor.header": "Reactor Overview",
 	"createatomic.ponder.reactor.text_1": "The Reactor is a multi-block of Reactor Casings",
 	"createatomic.ponder.reactor.text_2": "Rod Assemblies on top hold the rods that control the reaction",
 	"createatomic.ponder.reactor.text_3": "Fuel Rods generate power proportional to their count and adjacency",

@@ -33,4 +33,6 @@ public class ServerPayloadHandler {
     }
 
     public static void handleReactorPayload(final ReactorPacketPayload pkt, final IPayloadContext ctx) {}
+
+    public static void handleRodAssemblyPayload(final RodAssemblyPacketPayload pkt, final IPayloadContext ctx) {}
 }

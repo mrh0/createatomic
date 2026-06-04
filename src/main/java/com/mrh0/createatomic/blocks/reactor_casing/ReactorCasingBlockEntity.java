@@ -763,7 +763,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                     effectiveFuel += fuel * (1f + bonus * neighbours);
                 }
 
-                if (tick) rabe.tickRod();
+                if (tick && isArmed()) rabe.tickRod(lazyTickRate);
             }
         }
 

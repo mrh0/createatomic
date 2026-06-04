@@ -4,6 +4,7 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.mrh0.createatomic.config.AtomicConfigs;
 import com.mrh0.createatomic.network.IObserveBlockEntity;
 import com.mrh0.createatomic.network.ObservePacketPayload;
+import com.mrh0.createatomic.network.RodAssemblyPacketPayload;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.createmod.catnip.animation.LerpedFloat;
@@ -81,6 +82,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         if (tag.contains("rod"))
             currentRod = ItemStack.parse(registries, tag.getCompound("rod")).orElse(ItemStack.EMPTY);
         fuelTicks = tag.getInt("fuelTicks");
+        if (clientPacket) RodAssemblyPacketPayload.clientFuelTicks = fuelTicks;
     }
 
     public RodConfiguration getConfig() {
@@ -134,11 +136,13 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     }
 
     // Called every lazy tick by the reactor controller to advance fuel consumption.
-    public void tickRod() {
+    // gameTicks is the reactor's lazyTickRate so fuelTicks counts real game ticks,
+    // matching the config unit (fuelRodDuration is in game ticks).
+    public void tickRod(int gameTicks) {
         if (level == null || level.isClientSide()) return;
         if (getConfig() != RodConfiguration.FuelRod) return;
 
-        fuelTicks++;
+        fuelTicks += gameTicks;
         if (fuelTicks >= fuelDuration()) {
             fuelTicks = 0;
             updateRod(RodConfiguration.DepletedFuelRod.asStack());
@@ -147,7 +151,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     @Override
     public void onObserved(ServerPlayer player, ObservePacketPayload pack) {
-        sendData();
+        RodAssemblyPacketPayload.send(fuelTicks, player);
     }
 
     public int getControlLevel() {
@@ -172,14 +176,15 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
         if (config == RodConfiguration.FuelRod) {
             int duration = fuelDuration();
-            int remainingSeconds = Math.max(0, duration - fuelTicks) / 20;
+            int remainingSeconds = Math.max(0, duration - RodAssemblyPacketPayload.clientFuelTicks) / 20;
             int hours = remainingSeconds / 3600;
             int minutes = (remainingSeconds % 3600) / 60;
-            int pct = (fuelTicks * 100) / Math.max(1, duration);
+            int seconds = remainingSeconds % 60;
+            int pct = (RodAssemblyPacketPayload.clientFuelTicks * 100) / Math.max(1, duration);
             ChatFormatting color = pct == 0 ? ChatFormatting.GREEN : pct < 75 ? ChatFormatting.YELLOW : ChatFormatting.RED;
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.translatable("createatomic.tooltip.fuel_rod.depletion",
-                            String.format("%02dh:%02dm", hours, minutes)).withStyle(color)));
+                            String.format("%02dh:%02dm:%02ds", hours, minutes, seconds)).withStyle(color)));
         }
         if (config.isLockedWhileRunning() && isReactorActive()) {
             tooltip.add(Component.literal(spacing + " ").append(
