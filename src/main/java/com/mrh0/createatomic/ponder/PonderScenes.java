@@ -21,16 +21,16 @@ public class PonderScenes {
         scene.showBasePlate();
         scene.idle(10);
 
-        // Rod assembly positions (top of the 2×2 reactor)
-        BlockPos rod00 = new BlockPos(3, 5, 2);
-        BlockPos rod10 = new BlockPos(4, 5, 2);
-        BlockPos rod01 = new BlockPos(3, 5, 3);
-        BlockPos rod11 = new BlockPos(4, 5, 3);
+        // Rod assembly positions
+        BlockPos rod00 = new BlockPos(3, 4, 2);
+        BlockPos rod10 = new BlockPos(4, 4, 2);
+        BlockPos rod01 = new BlockPos(3, 4, 3);
+        BlockPos rod11 = new BlockPos(4, 4, 3);
 
-        // ── Phase 1: Reactor Multiblock ───────────────────────────────────────
+        // Reactor Multiblock
 
         // Build casings one layer at a time
-        for (int y = 1; y <= 4; y++) {
+        for (int y = 1; y <= 3; y++) {
             scene.world().showSection(util.select().fromTo(3, y, 2, 4, y, 3), Direction.DOWN);
             scene.idle(4);
         }
@@ -38,7 +38,7 @@ public class PonderScenes {
 
         scene.overlay().showText(60)
                 .attachKeyFrame()
-                .sharedText("createatomic.ponder.reactor.text_1")
+                .text("createatomic.ponder.reactor.text_1")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(new BlockPos(3, 2, 2)));
         scene.idle(70);
@@ -51,7 +51,7 @@ public class PonderScenes {
         scene.idle(8);
 
         scene.overlay().showText(60)
-                .sharedText("createatomic.ponder.reactor.text_2")
+                .text("createatomic.ponder.reactor.text_2")
                 .placeNearTarget()
                 .pointAt(util.vector().topOf(rod00));
         scene.idle(70);
@@ -84,7 +84,7 @@ public class PonderScenes {
                 util.select().position(rod00).add(util.select().position(rod10)).add(util.select().position(rod01)), 65);
         scene.overlay().showText(60)
                 .colored(PonderPalette.GREEN)
-                .sharedText("createatomic.ponder.reactor.text_3")
+                .text("createatomic.ponder.reactor.text_3")
                 .placeNearTarget()
                 .pointAt(util.vector().topOf(rod00));
         scene.idle(70);
@@ -94,19 +94,19 @@ public class PonderScenes {
         scene.overlay().showOutline(PonderPalette.RED, ctrlSlot, util.select().position(rod11), 65);
         scene.overlay().showText(60)
                 .colored(PonderPalette.RED)
-                .sharedText("createatomic.ponder.reactor.text_4")
+                .text("createatomic.ponder.reactor.text_4")
                 .placeNearTarget()
                 .pointAt(util.vector().topOf(rod11));
         scene.idle(70);
 
         scene.overlay().showText(70)
                 .colored(PonderPalette.RED)
-                .sharedText("createatomic.ponder.reactor.text_5")
+                .text("createatomic.ponder.reactor.text_5")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(new BlockPos(3, 3, 2)));
         scene.idle(80);
 
-        // ── Phase 2: Water, Turbines & Redstone ──────────────────────────────
+        // Water, Turbines & Redstone
         scene.addKeyframe();
 
         // Water / pump system
@@ -116,7 +116,7 @@ public class PonderScenes {
 
         scene.overlay().showText(65)
                 .attachKeyFrame()
-                .sharedText("createatomic.ponder.reactor.text_6")
+                .text("createatomic.ponder.reactor.text_6")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(new BlockPos(1, 1, 4)));
         scene.idle(75);
@@ -132,7 +132,7 @@ public class PonderScenes {
         scene.idle(10);
 
         scene.overlay().showText(65)
-                .sharedText("createatomic.ponder.reactor.text_7")
+                .text("createatomic.ponder.reactor.text_7")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(new BlockPos(3, 1, 0)));
         scene.idle(75);
@@ -145,24 +145,36 @@ public class PonderScenes {
 
         scene.overlay().showText(65)
                 .attachKeyFrame()
-                .sharedText("createatomic.ponder.reactor.text_8")
+                .text("createatomic.ponder.reactor.text_8")
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(4, 2, 1), Direction.NORTH));
         scene.idle(75);
 
         scene.overlay().showText(65)
-                .sharedText("createatomic.ponder.reactor.text_9")
+                .text("createatomic.ponder.reactor.text_9")
                 .placeNearTarget()
                 .pointAt(util.vector().blockSurface(new BlockPos(3, 2, 1), Direction.NORTH));
         scene.idle(75);
 
-        // ── Phase 3: Automated Refueling ─────────────────────────────────────
+        // Automated Refueling
         scene.addKeyframe();
 
         // Output side: chest + funnel
         scene.world().showSection(util.select().position(new BlockPos(1, 3, 4)), Direction.SOUTH);
         scene.idle(5);
         scene.world().showSection(util.select().position(new BlockPos(1, 4, 4)), Direction.DOWN);
+        scene.idle(5);
+
+		// Input side: depot + refuel arm
+        scene.world().showSection(util.select().position(new BlockPos(6, 4, 3)), Direction.WEST);
+        scene.world().showSection(util.select().position(new BlockPos(6, 5, 3)), Direction.WEST);
+        scene.world().showSection(util.select().position(new BlockPos(6, 5, 4)), Direction.WEST);
+        scene.idle(5);
+
+		// Output arm + cog (remove depleted rods)
+        scene.world().showSection(util.select().position(new BlockPos(4, 4, 4)), Direction.NORTH);
+        scene.world().showSection(util.select().position(new BlockPos(3, 4, 5)), Direction.NORTH);
+		scene.world().showSection(util.select().position(new BlockPos(3, 4, 4)), Direction.NORTH);
         scene.idle(5);
 
         // Switch two rod assemblies to depleted to illustrate the need for replacement
@@ -172,17 +184,14 @@ public class PonderScenes {
 
         scene.overlay().showText(65)
                 .attachKeyFrame()
-                .sharedText("createatomic.ponder.reactor.text_10")
+                .text("createatomic.ponder.reactor.text_10")
                 .placeNearTarget()
                 .pointAt(util.vector().topOf(rod00));
         scene.idle(75);
 
-        // Output arm + cog (remove depleted rods)
-        scene.world().showSection(util.select().position(new BlockPos(4, 4, 4)), Direction.NORTH);
-        scene.world().showSection(util.select().position(new BlockPos(3, 4, 5)), Direction.NORTH);
-        scene.idle(8);
 
-        BlockPos outputArmPos = new BlockPos(4, 4, 4);
+
+        BlockPos outputArmPos = new BlockPos(3, 4, 4);
         scene.world().instructArm(outputArmPos, ArmBlockEntity.Phase.MOVE_TO_INPUT, ItemStack.EMPTY, 0);
         scene.idle(22);
         scene.world().modifyBlockEntity(rod10, RodAssemblyBlockEntity.class, be -> be.updateRod(ItemStack.EMPTY));
@@ -193,23 +202,17 @@ public class PonderScenes {
         scene.world().instructArm(outputArmPos, ArmBlockEntity.Phase.SEARCH_INPUTS, ItemStack.EMPTY, -1);
 
         scene.overlay().showText(65)
-                .sharedText("createatomic.ponder.reactor.text_11")
+                .text("createatomic.ponder.reactor.text_11")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(outputArmPos));
         scene.idle(75);
 
-        // Input side: depot + refuel arm
-        scene.world().showSection(util.select().position(new BlockPos(6, 4, 3)), Direction.WEST);
-        scene.world().showSection(util.select().position(new BlockPos(6, 5, 3)), Direction.WEST);
-        scene.world().showSection(util.select().position(new BlockPos(6, 5, 4)), Direction.WEST);
-        scene.idle(5);
-        scene.world().showSection(util.select().position(new BlockPos(3, 4, 4)), Direction.NORTH);
-        scene.idle(8);
+        
 
         scene.world().createItemOnBeltLike(new BlockPos(6, 4, 3), Direction.WEST, fuelRod);
         scene.idle(5);
 
-        BlockPos refuelArmPos = new BlockPos(3, 4, 4);
+        BlockPos refuelArmPos = new BlockPos(4, 4, 4);
         scene.world().instructArm(refuelArmPos, ArmBlockEntity.Phase.MOVE_TO_INPUT, ItemStack.EMPTY, 0);
         scene.idle(22);
         scene.world().removeItemsFromBelt(new BlockPos(6, 4, 3));
@@ -221,7 +224,7 @@ public class PonderScenes {
         scene.world().instructArm(refuelArmPos, ArmBlockEntity.Phase.SEARCH_INPUTS, ItemStack.EMPTY, -1);
 
         scene.overlay().showText(65)
-                .sharedText("createatomic.ponder.reactor.text_12")
+                .text("createatomic.ponder.reactor.text_12")
                 .placeNearTarget()
                 .pointAt(util.vector().centerOf(refuelArmPos));
         scene.idle(75);
