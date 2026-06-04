@@ -36,4 +36,9 @@ public class ReactorSoundManager {
         ReactorLoopingSound sound = SOUNDS.remove(pos);
         if (sound != null) sound.requestStop();
     }
+
+    public static void invalidateAll() {
+        SOUNDS.values().forEach(ReactorLoopingSound::requestStop);
+        SOUNDS.clear();
+    }
 }

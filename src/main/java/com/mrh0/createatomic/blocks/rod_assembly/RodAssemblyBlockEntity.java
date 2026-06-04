@@ -2,6 +2,8 @@ package com.mrh0.createatomic.blocks.rod_assembly;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.mrh0.createatomic.config.AtomicConfigs;
+import com.mrh0.createatomic.network.IObserveBlockEntity;
+import com.mrh0.createatomic.network.ObservePacketPayload;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.createmod.catnip.animation.LerpedFloat;
@@ -14,6 +16,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IObserveBlockEntity {
 
     private static int fuelDuration() { return AtomicConfigs.server().fuelRodDuration.get(); }
 
@@ -142,6 +145,11 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         }
     }
 
+    @Override
+    public void onObserved(ServerPlayer player, ObservePacketPayload pack) {
+        sendData();
+    }
+
     public int getControlLevel() {
         return getConfig().getControlLevel();
     }
@@ -156,6 +164,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        ObservePacketPayload.send(worldPosition, 0);
         RodConfiguration config = getConfig();
         String spacing = "  ";
         tooltip.add(Component.literal(spacing).append(
