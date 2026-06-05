@@ -63,6 +63,19 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
             .save(output, CreateAtomic.asResource("crafting/refined_uranium_nuggets"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY.get())
+            .pattern("PPP")
+            .pattern("PPP")
+            .pattern("PPP")
+            .define('P', CATagRegister.Items.NUGGETS_DENSE_ALLOY)
+            .unlockedBy("has_dense_alloy_nugget", has(AtomicItems.DENSE_ALLOY_NUGGET.get()))
+            .save(output, CreateAtomic.asResource("crafting/dense_alloy_from_nuggets"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY_NUGGET.get(), 9)
+            .requires(CATagRegister.Items.PLATES_DENSE_ALLOY)
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/dense_alloy_nuggets"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RAW_URANIUM_BLOCK.get())
             .pattern("PPP")
             .pattern("PPP")

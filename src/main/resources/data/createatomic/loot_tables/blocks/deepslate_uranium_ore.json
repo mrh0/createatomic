@@ -39,7 +39,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "createatomic:deepslate_uranium_ore"
+              "name": "createatomic:raw_uranium"
             }
           ]
         }

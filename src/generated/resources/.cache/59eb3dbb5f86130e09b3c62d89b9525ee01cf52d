@@ -1,0 +1,4 @@
+// 1.21.1	2026-06-05T15:57:24.404498923	Loot Tables
+84e457d52a6f89b0eec0b5dc83d4c3adb2f05414 data/createatomic/loot_table/blocks/deepslate_uranium_ore.json
+80c20cf9be9592b95f54626cbb4c207735e18f70 data/createatomic/loot_table/blocks/raw_uranium_block.json
+494159a987b8831c567e1a5a717c270f14eea2f4 data/createatomic/loot_table/blocks/uranium_ore.json

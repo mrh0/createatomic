@@ -763,7 +763,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                     effectiveFuel += fuel * (1f + bonus * neighbours);
                 }
 
-                if (tick && isArmed()) rabe.tickRod(lazyTickRate);
+                if (tick && isActive()) rabe.tickRod(lazyTickRate);
             }
         }
 
@@ -954,7 +954,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         return con == null ? 100f : con.reactorHealth;
     }
 
-    /** True when a powered interface is lifting the control rods. False = SCRAM (rods down). */
+    // True when a powered interface is lifting the control rods. False = SCRAM (rods down).
     public boolean isArmed() { return poweredInterfaces > 0; }
 
     public int getTemperature() {

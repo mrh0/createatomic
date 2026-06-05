@@ -2,6 +2,7 @@
   "values": [
     "createatomic:refined_uranium_nugget",
     "createatomic:uranium_nugget",
-    "createatomic:plutonium_nugget"
+    "createatomic:plutonium_nugget",
+    "createatomic:dense_alloy_nugget"
   ]
 }

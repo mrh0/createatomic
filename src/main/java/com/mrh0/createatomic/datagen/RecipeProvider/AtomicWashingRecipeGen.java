@@ -12,9 +12,9 @@ import java.util.concurrent.CompletableFuture;
 public class AtomicWashingRecipeGen extends WashingRecipeGen {
 
     GeneratedRecipe CRUSHED_URANIUM = create(CreateAtomic.MODID, AllItems.CRUSHED_URANIUM::get, b -> b
-        .output(AtomicItems.URANIUM_NUGGET.get(), 7)
+        .output(AtomicItems.URANIUM_NUGGET.get(), 6)
+        .output(AtomicItems.REFINED_URANIUM_NUGGET.get(), 3)
         .output(0.5f, AtomicItems.REFINED_URANIUM_NUGGET.get(), 1)
-        .output(0.25f, AtomicItems.REFINED_URANIUM_NUGGET.get(), 1)
     );
 
     public AtomicWashingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

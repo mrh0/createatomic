@@ -52,18 +52,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         insertAnimation.tickChaser();
         ReactorCasingBlockEntity reactor = findReactor();
         RodConfiguration config = getConfig();
-        boolean shouldInsert;
-        if (config.shouldAutoEject()) {
-            // Auto-eject rods (e.g. depleted) are always shown raised and available for removal.
-            shouldInsert = false;
-        } else if (config.isControlRod()) {
-            // Up when armed. Down when SCRAMed and reactor is still hot. Up again once cooled.
-            shouldInsert = reactor != null && !reactor.isArmed() && reactor.getTemperature() > 25;
-        } else {
-            // Fuel/reflector: down when armed or still hot, up once off and cooled.
-            shouldInsert = config.isPopulated() && reactor != null
-                    && (reactor.isArmed() || reactor.getTemperature() > 25);
-        }
+        boolean shouldInsert = reactor != null && config.shouldInsert(reactor.isActive(), reactor.isArmed());
         insertAnimation.chase(shouldInsert ? 1f : 0f, 0.15f, Chaser.EXP);
     }
 
@@ -100,6 +89,16 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     public boolean isReactorActive() {
         ReactorCasingBlockEntity reactor = findReactor();
         return reactor != null && reactor.isActive();
+    }
+
+    public boolean isLocked() {
+        return isLockedWith(getConfig());
+    }
+
+    public boolean isLockedWith(RodConfiguration config) {
+        ReactorCasingBlockEntity reactor = findReactor();
+        if (reactor == null) return false;
+        return config.shouldInsert(reactor.isActive(), reactor.isArmed());
     }
 
     public ItemStack getCurrentRod() {
@@ -186,7 +185,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
                     Component.translatable("createatomic.tooltip.fuel_rod.depletion",
                             String.format("%02dh:%02dm:%02ds", hours, minutes, seconds)).withStyle(color)));
         }
-        if (config.isLockedWhileRunning() && isReactorActive()) {
+        if (isLocked()) {
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.translatable("createatomic.tooltip.rod_assembly.locked").withStyle(ChatFormatting.RED)));
         }

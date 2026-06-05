@@ -61,6 +61,11 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
+    public static final ItemEntry<Item> DENSE_ALLOY_NUGGET =
+            CreateAtomic.REGISTRATE.item("dense_alloy_nugget", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
     /*public static final ItemEntry<Item> DENSE_ALLOY =
             CreateAtomic.REGISTRATE.item("dense_alloy", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))

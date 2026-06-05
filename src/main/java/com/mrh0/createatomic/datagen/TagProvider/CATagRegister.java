@@ -12,7 +12,6 @@ import net.minecraft.world.level.material.Fluid;
 
 public class CATagRegister {
     public static class Items {
-        // Common tags (c: namespace)
         public static final TagKey<Item> ORES = commonTags("ores");
         public static final TagKey<Item> ORES_URANIUM = commonTags("ores", "uranium");
         public static final TagKey<Item> ORES_IN_GROUND_STONE = commonTags("ores_in_ground", "stone");
@@ -38,6 +37,8 @@ public class CATagRegister {
         public static final TagKey<Item> PLATES_COPPER = commonTags("plates", "copper");
         public static final TagKey<Item> PLATES_LEAD = commonTags("plates", "lead");
         public static final TagKey<Item> PLATES_GRAPHITE = commonTags("plates", "graphite");
+        public static final TagKey<Item> PLATES_DENSE_ALLOY = commonTags("plates", "dense_alloy");
+        public static final TagKey<Item> NUGGETS_DENSE_ALLOY = commonTags("nuggets", "dense_alloy");
         public static final TagKey<Item> DUSTS = commonTags("dusts");
         public static final TagKey<Item> DUSTS_GRAPHITE = commonTags("dusts", "graphite");
 

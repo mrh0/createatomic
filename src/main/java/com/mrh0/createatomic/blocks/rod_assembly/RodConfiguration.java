@@ -8,27 +8,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public enum RodConfiguration implements StringRepresentable {
-    None            ("none", 0, 0, 0f, false, false),
-    SmallControlRod ("small_control_rod", 0, 2, 0f, true, false),
-    LargeControlRod ("large_control_rod", 0, 5, 0f, true, false),
-    FuelRod         ("fuel_rod", 1, 0, 0.5f, false, false),
-    DepletedFuelRod ("depleted_fuel_rod", 0, 0, 0f, false, true),
-    NeutronReflector("neutron_reflector", 0, 0, 0.5f, false, false);
+    None            ("none", 0, 0, 0f, RodInsertionBehaviour.NEVER),
+    SmallControlRod ("small_control_rod", 0, 2, 0f, RodInsertionBehaviour.SCRAM),
+    LargeControlRod ("large_control_rod", 0, 5, 0f, RodInsertionBehaviour.SCRAM),
+    FuelRod         ("fuel_rod", 1, 0, 0.5f, RodInsertionBehaviour.ACTIVE),
+    DepletedFuelRod ("depleted_fuel_rod", 0, 0, 0f, RodInsertionBehaviour.NEVER),
+    NeutronReflector("neutron_reflector", 0, 0, 0.5f, RodInsertionBehaviour.ARMED);
 
     private final String name;
     public final int effectivePower;
     public final int hullCapacity;
     public final float adjacencyBonus;
-    private final boolean controlRod;
-    private final boolean autoEject;
+    private final RodInsertionBehaviour insertionBehaviour;
 
-    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, boolean isControlRod, boolean autoEject) {
+    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, RodInsertionBehaviour insertionBehaviour) {
         this.name = name;
         this.effectivePower = effectivePower;
         this.hullCapacity = hullCapacity;
         this.adjacencyBonus = adjacencyBonus;
-        this.controlRod = isControlRod;
-        this.autoEject = autoEject;
+        this.insertionBehaviour = insertionBehaviour;
     }
 
     @Override
@@ -84,20 +82,7 @@ public enum RodConfiguration implements StringRepresentable {
         return effectivePower;
     }
 
-    public boolean isReflector() {
-        return this == NeutronReflector;
-    }
-
-    public boolean isControlRod() {
-        return controlRod;
-    }
-
-    public boolean shouldAutoEject() {
-        return autoEject;
-    }
-
-    // True for any rod type that participates in the reaction and must be locked while running.
-    public boolean isLockedWhileRunning() {
-        return this == FuelRod || this == NeutronReflector;
+    public boolean shouldInsert(boolean active, boolean armed) {
+        return RodInsertionBehaviour.shouldInsert(insertionBehaviour, active, armed);
     }
 }

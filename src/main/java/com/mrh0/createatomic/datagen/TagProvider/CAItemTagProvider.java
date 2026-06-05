@@ -18,7 +18,6 @@ public class CAItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        // Mirror block tags onto their item equivalents
         copy(CATagRegister.Blocks.ORES, CATagRegister.Items.ORES);
         copy(CATagRegister.Blocks.ORES_URANIUM, CATagRegister.Items.ORES_URANIUM);
         copy(CATagRegister.Blocks.ORES_IN_GROUND_STONE, CATagRegister.Items.ORES_IN_GROUND_STONE);
@@ -42,6 +41,8 @@ public class CAItemTagProvider extends ItemTagsProvider {
         tag(CATagRegister.Items.PLATES)
                 //.add(AtomicItems.GRAPHITE_SHEET.get())
                 .add(AtomicItems.DENSE_ALLOY.get());
+        tag(CATagRegister.Items.PLATES_DENSE_ALLOY)
+                .add(AtomicItems.DENSE_ALLOY.get());
         //tag(CATagRegister.Items.PLATES_GRAPHITE)
                 //.add(AtomicItems.GRAPHITE_SHEET.get());
 
@@ -61,13 +62,16 @@ public class CAItemTagProvider extends ItemTagsProvider {
         tag(CATagRegister.Items.NUGGETS)
                 .add(AtomicItems.REFINED_URANIUM_NUGGET.get())
                 .add(AtomicItems.URANIUM_NUGGET.get())
-                .add(AtomicItems.PLUTONIUM_NUGGET.get());
+                .add(AtomicItems.PLUTONIUM_NUGGET.get())
+                .add(AtomicItems.DENSE_ALLOY_NUGGET.get());
         tag(CATagRegister.Items.NUGGETS_REFINED_URANIUM)
                 .add(AtomicItems.REFINED_URANIUM_NUGGET.get());
         tag(CATagRegister.Items.NUGGETS_URANIUM)
                 .add(AtomicItems.URANIUM_NUGGET.get());
         tag(CATagRegister.Items.NUGGETS_PLUTONIUM)
                 .add(AtomicItems.PLUTONIUM_NUGGET.get());
+        tag(CATagRegister.Items.NUGGETS_DENSE_ALLOY)
+                .add(AtomicItems.DENSE_ALLOY_NUGGET.get());
 
         // Mod-specific reactor tags (createatomic: namespace)
         tag(CATagRegister.Items.CONTROL_RODS)

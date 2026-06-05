@@ -83,7 +83,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
             return InteractionResultHolder.pass(stack);
 
         RodConfiguration incoming = RodConfiguration.fromStack(stack);
-        if (incoming.isLockedWhileRunning() && rabe.isReactorActive())
+        if (rabe.isLockedWith(incoming))
             return InteractionResultHolder.pass(stack);
 
         ItemStack remainder = stack.copy();
@@ -103,7 +103,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (!config.isPopulated())
             return ItemStack.EMPTY;
 
-        if (config.isLockedWhileRunning() && rabe.isReactorActive())
+        if (rabe.isLocked())
             return ItemStack.EMPTY;
 
         ItemStack rod = rabe.getRodWithDepletion();
@@ -127,7 +127,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (stack.isEmpty()) {
             if (!currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            if (currentConfig.isLockedWhileRunning() && rabe.isReactorActive()) {
+            if (rabe.isLocked()) {
                 player.displayClientMessage(
                         Component.translatable("createatomic.message.rod_locked").withStyle(ChatFormatting.RED), true);
                 return ItemInteractionResult.FAIL;
@@ -142,7 +142,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
             if (currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             RodConfiguration incoming = RodConfiguration.fromStack(stack);
-            if (incoming.isLockedWhileRunning() && rabe.isReactorActive()) {
+            if (rabe.isLockedWith(incoming)) {
                 player.displayClientMessage(
                         Component.translatable("createatomic.message.rod_locked").withStyle(ChatFormatting.RED), true);
                 return ItemInteractionResult.FAIL;

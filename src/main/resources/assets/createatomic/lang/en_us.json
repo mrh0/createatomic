@@ -11,6 +11,7 @@
 	"item.createatomic.refined_uranium_rod": "Uranium Fuel Rod",
 	"item.createatomic.depleted_uranium_rod": "Depleted Uranium Fuel Rod",
 	"item.createatomic.dense_alloy": "Dense Alloy",
+	"item.createatomic.dense_alloy_nugget": "Dense Alloy Nugget",
 	"item.createatomic.neutron_reflector": "Neutron Reflector",
 	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
 	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
