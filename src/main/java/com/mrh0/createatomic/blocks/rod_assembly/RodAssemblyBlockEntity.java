@@ -150,6 +150,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     @Override
     public void onObserved(ServerPlayer player, ObservePacketPayload pack) {
+        System.out.println("RodAssembly observed: " + worldPosition + ", sending fuelTicks=" + fuelTicks);
         RodAssemblyPacketPayload.send(fuelTicks, player);
     }
 

@@ -27,7 +27,6 @@ public class ReactorCasingRenderer extends SafeBlockEntityRenderer<ReactorCasing
                               int light, int overlay) {
         if (!be.isController()) return;
         renderDial(be, partialTicks, ms, buffer, light, overlay);
-        be.observe();
     }
 
     protected void renderDial(ReactorCasingBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,

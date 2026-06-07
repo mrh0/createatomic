@@ -942,10 +942,12 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         return !hasMeltdown && isActive();
     }
 
+    /*
     public void observe() {
         if (level == null || !level.isClientSide()) return;
         ObservePacketPayload.send(worldPosition, 0);
     }
+    */
 
     public boolean isActive() { return reactorHeat > 25; }
 
