@@ -88,7 +88,7 @@
 	"createatomic.ponder.reactor.text_1": "The Reactor is a multi-block of Reactor Casings",
 	"createatomic.ponder.reactor.text_2": "Rod Assemblies on top hold the rods that control the reaction",
 	"createatomic.ponder.reactor.text_3": "Fuel Rods generate power proportional to their count and adjacency",
-	"createatomic.ponder.reactor.text_4": "Control Rods absorb power and increase the hull's safe capacity",
+	"createatomic.ponder.reactor.text_4": "Control Rods absorb power and is used to stop the reaction",
 	"createatomic.ponder.reactor.text_5": "If power exceeds hull capacity the reactor takes damage — keep them balanced!",
 	"createatomic.ponder.reactor.text_6": "The reactor consumes water — pump it into the casing to keep it cooled",
 	"createatomic.ponder.reactor.text_7": "Steam Turbines bolted to the reactor face convert heat into Rotational Force",

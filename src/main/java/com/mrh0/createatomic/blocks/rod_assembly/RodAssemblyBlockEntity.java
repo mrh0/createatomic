@@ -169,7 +169,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         ObservePacketPayload.send(worldPosition, 0);
         RodConfiguration config = getConfig();
-        String spacing = "  ";
+        String spacing = "    ";
         tooltip.add(Component.literal(spacing).append(
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));

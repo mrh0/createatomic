@@ -607,6 +607,12 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     }
 
     // Reactor Implementation
+    public void safeUnsafeTooltip(List<Component> tooltip, boolean isSafe) {
+        String s = "     ";
+        tooltip.add(Component.literal(s).append(Component.translatable(isSafe
+                ? "createatomic.tooltip.reactor.safety.safe"
+                : "createatomic.tooltip.reactor.safety.unsafe").withStyle(isSafe ? ChatFormatting.GREEN : ChatFormatting.RED)));
+    }
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -619,7 +625,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
 
-        // SCRAM state (interface powered = control rods forcibly inserted)
+        // SCRAM state
         if (con.cachedScrammed) {
             tooltip.add(Component.literal(s).append(
                     Component.translatable("createatomic.tooltip.reactor.scrammed").withStyle(ChatFormatting.RED)));
@@ -633,7 +639,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                         : "createatomic.tooltip.reactor.inactive")
                         .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)));
 
-        // Net power vs capacity: green = safe (≤ capacity), red = damaging (> capacity)
+        // Net power vs capacity
         int netPowerDisplay = con.cachedEffectivePower - con.cachedControlRodLevel;
         boolean damaging = netPowerDisplay > con.cachedHullCapacity;
         ChatFormatting powerColour = damaging ? ChatFormatting.RED : ChatFormatting.GREEN;
@@ -654,8 +660,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(effective + " [" + String.format("%.1f", con.cachedReactivityFactor) + "x]")
                         .withStyle(ChatFormatting.YELLOW)));
-        tooltip.add(Component.literal(s + " ").append(
-                Component.translatable(effective <= con.cachedHullCapacity ? "createatomic.tooltip.reactor.safety.safe" : "createatomic.tooltip.reactor.safety.unsafe")).withStyle(effective <= con.cachedHullCapacity ? ChatFormatting.GREEN : ChatFormatting.RED));
+
+        safeUnsafeTooltip(tooltip, effective <= con.cachedHullCapacity);
 
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.control_rods").withStyle(ChatFormatting.GRAY)));
@@ -663,16 +669,16 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                 Component.literal(String.valueOf(con.cachedControlRodLevel))
                         .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY)));
 
-        tooltip.add(Component.literal(s + " ").append(
-                Component.translatable(effective <= con.cachedControlRodLevel ? "createatomic.tooltip.reactor.safety.safe" : "createatomic.tooltip.reactor.safety.unsafe")).withStyle(effective <= con.cachedHullCapacity ? ChatFormatting.GREEN : ChatFormatting.RED));
+        safeUnsafeTooltip(tooltip, effective <= con.cachedControlRodLevel && effective <= con.cachedHullCapacity);
 
         // Temperature (display-only)
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(con.reactorHeat + "°C").withStyle(con.reactorHeat > 315 ? ChatFormatting.RED : ChatFormatting.AQUA)));
+        safeUnsafeTooltip(tooltip, con.reactorHeat <= 315);
 
-        // Hull integrity - colour-coded by damage level
+        // Hull integrity
         int hp = (int) con.reactorHealth;
         ChatFormatting hpColour = hp > 75 ? ChatFormatting.GREEN : hp > 40 ? ChatFormatting.YELLOW : ChatFormatting.RED;
         tooltip.add(Component.literal(s).append(
@@ -689,6 +695,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(waterMb + " / " + waterCap + " mB")
                         .withStyle(waterLow ? ChatFormatting.RED : ChatFormatting.AQUA)));
+        safeUnsafeTooltip(tooltip, waterMb > 0);
 
         // Turbines (shown only when at least one is connected)
         if (con.cachedTurbineCount > 0) {
@@ -698,7 +705,6 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                     Component.literal(con.cachedTurbineCount + "× @ " + String.format("%.0f", con.turbineTargetRpm) + " RPM")
                             .withStyle(ChatFormatting.AQUA)));
         }
-
         
         return IHaveGoggleInformation.super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
@@ -839,8 +845,6 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         cachedHullCapacityDebuff = baseCapacity - hullCapacity;
         cachedHullCapacity = hullCapacity;
 
-        // Armed (signal ON): control rods lifted/ignored → net power = full effective power.
-        // Not armed (SCRAM): virtual max control rods inserted → net power = 0.
         int effectiveControl = isArmed() ? 0 : Integer.MAX_VALUE / 2;
         int netPower = Math.max(0, effectivePower - effectiveControl);
 
@@ -850,7 +854,6 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         boolean isRunning = netPower > 0;
 
-        // 25°C idle → 315°C at capacity → 895°C at 3× overload
         if (isRunning) {
             reactorHeat = (int)(25 + 290 * Math.min(3.0, (double) netPower / Math.max(1, hullCapacity)));
         } else {
