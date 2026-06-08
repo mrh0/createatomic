@@ -23,7 +23,5 @@ public class AtomicPartials {
         return PartialModel.of(ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "entity/" + path));
     }
 
-    public static void init() {
-        // init static fields
-    }
+    public static void init() {}
 }

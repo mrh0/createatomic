@@ -31,7 +31,6 @@ public record ObservePacketPayload(BlockPos pos, int node) implements CustomPack
 	}
 
 	public static boolean send(BlockPos pos, int node) {
-		System.out.println("Attempting to send ObservePacketPayload for " + pos + ", node " + node + ", cooldown=" + cooldown);
 		if (cooldown > 0) return false;
 		cooldown = 10;
 		PacketDistributor.sendToServer(new ObservePacketPayload(pos, node));
