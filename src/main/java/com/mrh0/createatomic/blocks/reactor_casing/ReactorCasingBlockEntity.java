@@ -840,8 +840,11 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         cachedHullCapacityDebuff = baseCapacity - hullCapacity;
         cachedHullCapacity = hullCapacity;
 
+        // Fuel rods only feed the reactor when armed (signal present) or already running.
+        // This prevents a cold reactor from self-starting without a redstone signal.
+        int fuelPower = (isArmed() || isActive()) ? effectivePower : 0;
         int effectiveControl = isArmed() ? 0 : controlLevel;
-        int netPower = Math.max(0, effectivePower - effectiveControl);
+        int netPower = Math.max(0, fuelPower - effectiveControl);
 
         // When meltdowns are disabled, a reactor at 0% health is forced offline until repaired.
         boolean meltdownsEnabled = AtomicConfigs.server().meltdownEnabled.get();
