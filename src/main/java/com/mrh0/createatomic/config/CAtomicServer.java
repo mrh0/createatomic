@@ -27,7 +27,7 @@ public class CAtomicServer extends ConfigBase {
     public final ConfigFloat rhgDecayDays = f(2f, 0.01f, 3650.0f, "rhgDecayDays",
             "Average real-world days (24 hours at 20 TPS) between each decay step of the Radioisotope Heat Generator.",
             "Each step: heated -> smouldering -> inert.",
-            "1.0 = on average 24 real hours (~1,728,000 ticks) per step.");
+            "1.0 = on average (random) 24 real hours (~1,728,000 ticks) per step.");
 
     @Override
     public String getName() {
