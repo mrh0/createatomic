@@ -17,7 +17,7 @@ Placed on the **top face** of the reactor. Each slot accepts one rod item. Rods 
 
 | Rod | Effect |
 |---|---|
-| Uranium Fuel Rod | +1 fuel unit per rod. Depletes over ~60 min → becomes Depleted Rod |
+| Uranium Fuel Rod | +1 fuel unit per rod. Depletes over ~120 min → becomes Depleted Rod |
 | Depleted Fuel Rod | No effect, occupies slot |
 | Small Control Rod | -2 control units |
 | Large Control Rod | -5 control units |
@@ -36,7 +36,7 @@ Placed on any **face of a reactor casing**. Controls whether the reactor can run
 | Interface state | Reactor behaviour | Control rod animation |
 |---|---|---|
 | No interface present | Always SCRAM — reactor cannot run | Rods down |
-| Interface attached, **no signal** | SCRAM — reactor cannot run | Rods down |
+| Interface attached, **no signal** | SCRAM — reactor inserts control rods | Rods down |
 | Interface attached, **signal ON** | Reactor runs; control rods lifted (ignored) | Rods up |
 
 **"Reactor SCRAMed!"** appears in the goggle tooltip whenever no signal is active.
@@ -87,4 +87,3 @@ The reactor is **active** when temperature > 25°C. This controls:
 - Fuel rod lock (active = locked, cannot insert/remove)
 - Hull regen (active = no regen)
 - Looping ambient sound
-- Gauge needle position and shake above 315°C
