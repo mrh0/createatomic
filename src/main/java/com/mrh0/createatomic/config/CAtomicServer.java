@@ -6,7 +6,7 @@ public class CAtomicServer extends ConfigBase {
 
     public final ConfigGroup reactor = group(0, "reactor", "Reactor settings");
 
-    public final ConfigInt fuelRodDuration = i(72000, 1, Integer.MAX_VALUE, "fuelRodDuration",
+    public final ConfigInt fuelRodDuration = i(72000 * 2, 1, Integer.MAX_VALUE, "fuelRodDuration",
             "How many ticks a uranium fuel rod lasts before becoming depleted.",
             "72000 = 60 minutes at 20 TPS.");
 
