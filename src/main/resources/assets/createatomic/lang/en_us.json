@@ -68,7 +68,7 @@
 	"createatomic.tooltip.rod_assembly.locked": "Locked — reactor is running",
 	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
 
-	"createatomic.tooltip.reactor.scrammed": "⚠ Reactor SCRAM!",
+	"createatomic.tooltip.reactor.scrammed": " (SCRAM)",
 	"createatomic.tooltip.reactor.info": "Reactor Status",
 	"createatomic.tooltip.reactor.active": "● Active",
 	"createatomic.tooltip.reactor.inactive": "○ Inactive",

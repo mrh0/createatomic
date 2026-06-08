@@ -625,19 +625,22 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
 
-        // SCRAM state
-        if (con.cachedScrammed) {
-            tooltip.add(Component.literal(s).append(
-                    Component.translatable("createatomic.tooltip.reactor.scrammed").withStyle(ChatFormatting.RED)));
-        }
-
         // Active / inactive status
         boolean active = con.isActive();
         tooltip.add(Component.literal(s).append(
                 Component.translatable(active
                         ? "createatomic.tooltip.reactor.active"
                         : "createatomic.tooltip.reactor.inactive")
-                        .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY)));
+                        .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.DARK_GRAY))
+                        .append(con.cachedScrammed ? Component.translatable("createatomic.tooltip.reactor.scrammed").withStyle(ChatFormatting.RED) : Component.empty()));
+
+        // Hull integrity
+        int hp = (int) con.reactorHealth;
+        ChatFormatting hpColour = hp > 75 ? ChatFormatting.GREEN : hp > 40 ? ChatFormatting.YELLOW : ChatFormatting.RED;
+        tooltip.add(Component.literal(s).append(
+                Component.translatable("createatomic.tooltip.reactor.health").withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal(s + " ").append(
+                Component.literal(hp + "%").withStyle(hpColour)));
 
         // Net power vs capacity
         int netPowerDisplay = con.cachedEffectivePower - con.cachedControlRodLevel;
@@ -677,14 +680,6 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         tooltip.add(Component.literal(s + " ").append(
                 Component.literal(con.reactorHeat + "°C").withStyle(con.reactorHeat > 315 ? ChatFormatting.RED : ChatFormatting.AQUA)));
         safeUnsafeTooltip(tooltip, con.reactorHeat <= 315);
-
-        // Hull integrity
-        int hp = (int) con.reactorHealth;
-        ChatFormatting hpColour = hp > 75 ? ChatFormatting.GREEN : hp > 40 ? ChatFormatting.YELLOW : ChatFormatting.RED;
-        tooltip.add(Component.literal(s).append(
-                Component.translatable("createatomic.tooltip.reactor.health").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
-                Component.literal(hp + "%").withStyle(hpColour)));
 
         // Water content
         int waterMb  = con.tankInventory.getFluidAmount();
@@ -845,7 +840,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         cachedHullCapacityDebuff = baseCapacity - hullCapacity;
         cachedHullCapacity = hullCapacity;
 
-        int effectiveControl = isArmed() ? 0 : Integer.MAX_VALUE / 2;
+        int effectiveControl = isArmed() ? 0 : controlLevel;
         int netPower = Math.max(0, effectivePower - effectiveControl);
 
         // When meltdowns are disabled, a reactor at 0% health is forced offline until repaired.
