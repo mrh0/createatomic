@@ -1,10 +1,10 @@
 package com.mrh0.createatomic.blocks.reactor_debris;
 
 import com.mrh0.createatomic.config.AtomicConfigs;
+import com.mrh0.createatomic.index.AtomicEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
@@ -30,16 +30,7 @@ public class ReactorDebrisBlock extends Block {
 
         for (LivingEntity entity : entities) {
             if (entity instanceof Player player && player.isCreative()) continue;
-            // Hunger (radiation sickness) always applied
-            entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20*60, 1, false, true));
-
-            // Nausea 30% chance per tick
-            if (random.nextFloat() < 0.3f)
-                entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20*15, 0, false, true));
-
-            // Blindness 10% chance per tick
-            if (random.nextFloat() < 0.1f)
-                entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20*10, 0, false, true));
+            entity.addEffect(new MobEffectInstance(AtomicEffects.RADIOACTIVITY, 20 * 15, 0, false, true));
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.mrh0.createatomic.index;
 
 import com.mrh0.createatomic.items.FuelRodItem;
+import com.mrh0.createatomic.items.HazmatArmorItem;
 import com.mrh0.createatomic.items.RodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 
 public class AtomicItems {
@@ -93,6 +95,30 @@ public class AtomicItems {
 
     public static final ItemEntry<Item> PLUTONIUM_NUGGET =
             CreateAtomic.REGISTRATE.item("plutonium_nugget", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<HazmatArmorItem> HAZMAT_HELMET =
+            CreateAtomic.REGISTRATE.item("hazmat_helmet",
+                    props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.HELMET, props))
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<HazmatArmorItem> HAZMAT_CHESTPLATE =
+            CreateAtomic.REGISTRATE.item("hazmat_chestplate",
+                    props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.CHESTPLATE, props))
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<HazmatArmorItem> HAZMAT_LEGGINGS =
+            CreateAtomic.REGISTRATE.item("hazmat_leggings",
+                    props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.LEGGINGS, props))
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<HazmatArmorItem> HAZMAT_BOOTS =
+            CreateAtomic.REGISTRATE.item("hazmat_boots",
+                    props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.BOOTS, props))
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

@@ -1,10 +1,14 @@
-// 1.21.1	2026-06-05T15:08:45.90313118	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-2bd28324522682e2359d3a04f0888f3247062465 assets/createatomic/lang/en_ud.json
-18ae4739a743230d2d880d7151b9bb69cf3b4946 assets/createatomic/lang/en_us.json
+// 1.21.1	2026-06-11T23:39:04.906660981	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+95bd3773215cbad45c24044dfdda3ded22115c41 assets/createatomic/lang/en_ud.json
+e11ac98453028f8f3ac48c2fb5087cdb534e00bb assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
 20fa2b14bc6a7a9b5d9813ef95460907b52872a0 assets/createatomic/models/item/dense_alloy_nugget.json
 9decd22979162fefb7f0d2a89a1f194763193278 assets/createatomic/models/item/depleted_uranium_rod.json
+ec5f3032192c476ea3cb4525c52a161e85c67a37 assets/createatomic/models/item/hazmat_boots.json
+8b8bc9730d204b556cbe1fd5f96e1f0b459585f1 assets/createatomic/models/item/hazmat_chestplate.json
+fed88d41e4d78e2d4c3bebb2fd0f4765221f258e assets/createatomic/models/item/hazmat_helmet.json
+6e4ac6fabee7174f273db30d0c6c15e93544a281 assets/createatomic/models/item/hazmat_leggings.json
 4f504fb15028244995700ae6e0f760bcd77ba99e assets/createatomic/models/item/large_control_rod.json
 7aa16f4722e4287ad695be4c234a739c57b39f2a assets/createatomic/models/item/neutron_reflector.json
 c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json

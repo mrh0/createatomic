@@ -28,6 +28,13 @@
 	"block.createatomic.rod_assembly.tooltip": "ROD_ASSEMBLY",
 	"block.createatomic.rod_assembly.tooltip.summary": "Interface for inserting Fuel Rods, Control Rods, and other components into the Reactor. Placed on top of a _Reactor Casing_ multi-block.",
 	"block.createatomic.reactor_debris": "Reactor Debris",
+
+	"effect.createatomic.radioactivity": "Radioactivity",
+
+	"item.createatomic.hazmat_helmet": "Hazmat Helmet",
+	"item.createatomic.hazmat_chestplate": "Hazmat Suit",
+	"item.createatomic.hazmat_leggings": "Hazmat Leggings",
+	"item.createatomic.hazmat_boots": "Hazmat Boots",
 	"block.createatomic.reactor_debris.tooltip": "DEBRIS",
 	"block.createatomic.reactor_debris.tooltip.summary": "The debris from a reactor meltdown. _DANGEOUS!_ Stay away!",
 	"block.createatomic.steam_turbine": "Steam Turbine",

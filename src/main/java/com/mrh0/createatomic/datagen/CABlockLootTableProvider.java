@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,8 @@ public class CABlockLootTableProvider extends BlockLootSubProvider {
         this.add(AtomicBlocks.URANIUM_ORE.get(), block -> this.createOreDrop(block, AtomicItems.RAW_URANIUM.get()));
         this.add(AtomicBlocks.DEEPSLATE_URANIUM_ORE.get(), block -> this.createOreDrop(block, AtomicItems.RAW_URANIUM.get()));
         this.dropSelf(AtomicBlocks.RAW_URANIUM_BLOCK.get());
+        this.add(AtomicBlocks.REACTOR_DEBRIS.get(), block ->
+                this.createSingleItemTable(AtomicItems.DENSE_ALLOY_NUGGET.get(), UniformGenerator.between(1, 3)));
     }
 
     @Override
@@ -27,7 +30,8 @@ public class CABlockLootTableProvider extends BlockLootSubProvider {
         return List.of(
             AtomicBlocks.URANIUM_ORE.get(),
             AtomicBlocks.DEEPSLATE_URANIUM_ORE.get(),
-            AtomicBlocks.RAW_URANIUM_BLOCK.get()
+            AtomicBlocks.RAW_URANIUM_BLOCK.get(),
+            AtomicBlocks.REACTOR_DEBRIS.get()
         );
     }
 }

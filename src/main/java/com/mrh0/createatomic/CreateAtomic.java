@@ -109,7 +109,8 @@ public class CreateAtomic {
         AtomicSounds.register(eventBus);
         CREATIVE_MODE_TABS.register(eventBus);
         //CAFluids.register();
-        //CAEffects.register(eventBus);
+        AtomicEffects.register(eventBus);
+        AtomicArmorMaterials.register(eventBus);
         // AtomicRecipes.register(eventBus);
         //CASounds.register(eventBus);
         //CASchedule.register();
