@@ -2,11 +2,15 @@ package com.mrh0.createatomic.blocks.rod_assembly;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
+import com.mrh0.createatomic.Utility;
+import com.mrh0.createatomic.config.AtomicConfigs;
 import com.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ItemInteractionResult;
@@ -186,5 +190,15 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
     @Override
     public BlockEntityType<? extends RodAssemblyBlockEntity> getBlockEntityType() {
         return AtomicBlockEntities.ROD_ASSEMBLY.get();
+    }
+
+    private static final int RADIUS = 16;
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!AtomicConfigs.server().blockRadiationEnabled.get()) return;
+        if (!(level.getBlockEntity(pos) instanceof RodAssemblyBlockEntity be)) return;
+        if (be.getConfig() != RodConfiguration.FuelRod) return;
+        Utility.applyRadiationInRadius(level, pos, RADIUS, 0);
     }
 }

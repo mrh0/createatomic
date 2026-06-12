@@ -143,10 +143,8 @@ public class CreateAtomic {
         BoilerHeater.REGISTRY.register(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get(), (level, pos, state) -> 0);
         // BoilerHeater.REGISTRY.register(AtomicBlocks.RAW_URANIUM_BLOCK.get(), (level, pos, state) -> 0);
 
-        // Steam turbine: 2 SU capacity per RPM (1/4 of original 8).
-        // Balance: 2 turbines are required to fully absorb 1 effective power.
-        BlockStressValues.CAPACITIES.register(AtomicBlocks.TURBINE.get(), () -> 2.0);
-        // Inform Create's tooltip system that the turbine can generate up to 256 RPM
+        BlockStressValues.CAPACITIES.register(AtomicBlocks.TURBINE.get(),
+                () -> (double) AtomicConfigs.server().turbineCapacity.get());
         BlockStressValues.RPM.register(AtomicBlocks.TURBINE.get(),
                 new BlockStressValues.GeneratedRpm(256, true));
 

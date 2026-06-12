@@ -15,9 +15,6 @@ import com.mrh0.createatomic.blocks.reactor_redstone_interface.ReactorRedstoneIn
 import com.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CakeBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.PushReaction;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
@@ -94,7 +91,7 @@ public class AtomicBlocks {
 
     public static final BlockEntry<RodAssemblyBlock> ROD_ASSEMBLY = CreateAtomic.REGISTRATE.block("rod_assembly", RodAssemblyBlock::new)
             .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(DyeColor.GRAY))
+            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks())
             .blockstate((ctx, prov) -> {})
             .item(RodAssemblyBlockItem::new)
             .transform(customItemModel())
