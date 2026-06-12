@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "createatomic:dense_alloy"
+    },
+    "Y": {
+      "tag": "c:dyes/yellow"
+    }
+  },
+  "pattern": [
+    "YDY",
+    "D D",
+    "Y Y"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:hazmat_leggings"
+  }
+}

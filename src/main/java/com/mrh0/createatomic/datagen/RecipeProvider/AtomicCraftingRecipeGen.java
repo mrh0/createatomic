@@ -9,8 +9,10 @@ import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.concurrent.CompletableFuture;
@@ -227,5 +229,41 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .requires(AtomicItems.DENSE_ALLOY.get())
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
             .save(output, CreateAtomic.asResource("crafting/neutron_reflector"));
+
+        // Hazmat Armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AtomicItems.HAZMAT_HELMET.get())
+            .pattern("YDY")
+            .pattern("DGD")
+            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('Y', Tags.Items.DYES_YELLOW)
+            .define('G', AllItems.GOGGLES.get())
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/hazmat_helmet"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AtomicItems.HAZMAT_CHESTPLATE.get())
+            .pattern("D D")
+            .pattern("YDY")
+            .pattern("YDY")
+            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('Y', Tags.Items.DYES_YELLOW)
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/hazmat_chestplate"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AtomicItems.HAZMAT_LEGGINGS.get())
+            .pattern("YDY")
+            .pattern("D D")
+            .pattern("Y Y")
+            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('Y', Tags.Items.DYES_YELLOW)
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/hazmat_leggings"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AtomicItems.HAZMAT_BOOTS.get())
+            .pattern("Y Y")
+            .pattern("D D")
+            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('Y', Tags.Items.DYES_YELLOW)
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/hazmat_boots"));
     }
 }

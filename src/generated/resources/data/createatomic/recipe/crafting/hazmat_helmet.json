@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "createatomic:dense_alloy"
+    },
+    "G": {
+      "item": "create:goggles"
+    },
+    "Y": {
+      "tag": "c:dyes/yellow"
+    }
+  },
+  "pattern": [
+    "YDY",
+    "DGD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:hazmat_helmet"
+  }
+}

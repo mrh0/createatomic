@@ -23,8 +23,8 @@ public class AtomicArmorMaterials {
             ARMOR_MATERIALS.register("hazmat_suit", () -> new ArmorMaterial(
                     Util.make(new EnumMap<>(ArmorItem.Type.class), m -> {
                         m.put(ArmorItem.Type.BOOTS, 2);
-                        m.put(ArmorItem.Type.LEGGINGS, 4);
-                        m.put(ArmorItem.Type.CHESTPLATE, 5);
+                        m.put(ArmorItem.Type.LEGGINGS, 3);
+                        m.put(ArmorItem.Type.CHESTPLATE, 4);
                         m.put(ArmorItem.Type.HELMET, 2);
                     }),
                     5,

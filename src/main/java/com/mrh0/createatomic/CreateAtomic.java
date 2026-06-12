@@ -1,6 +1,7 @@
 package com.mrh0.createatomic;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.simibubi.create.content.equipment.goggles.GogglesItem;
 import com.mrh0.createatomic.index.*;
 import com.simibubi.create.api.boiler.BoilerHeater;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -120,7 +121,8 @@ public class CreateAtomic {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // BlockStressValues.CAPACITIES.registerProvider(MODID, AllConfigs.server().kinetics.stressValues);
+        GogglesItem.addIsWearingPredicate(player ->
+                player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).getItem() instanceof com.mrh0.createatomic.items.HazmatArmorItem);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

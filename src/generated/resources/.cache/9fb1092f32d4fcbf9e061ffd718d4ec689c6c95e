@@ -1,4 +1,8 @@
-// 1.21.1	2026-06-05T15:08:45.904205331	Recipes
+// 1.21.1	2026-06-12T20:04:26.809846964	Recipes
+d705d4ca72f4180d7b308819c01b6b1f023ffdfb data/createatomic/advancement/recipes/combat/crafting/hazmat_boots.json
+56315b05b726b473cc7a31bbffed3f64a8698bbd data/createatomic/advancement/recipes/combat/crafting/hazmat_chestplate.json
+598fa18294dd3a1f2f984d6fff9e26aeb1f39670 data/createatomic/advancement/recipes/combat/crafting/hazmat_helmet.json
+54ccc8f6d9467ce9755ad3bc81c63d71da54fd30 data/createatomic/advancement/recipes/combat/crafting/hazmat_leggings.json
 9da2f4a6ac8ff708d0d093a377f9ffc83ddf8ac0 data/createatomic/advancement/recipes/misc/blasting/uranium_from_crushed_uranium.json
 9e47a900e9d0dbc644e0bed58375e71b5016eee2 data/createatomic/advancement/recipes/misc/blasting/uranium_from_deepslate_uranium_ore.json
 0df1a6ee42508acf2fe1e72f3e018389d9228bb3 data/createatomic/advancement/recipes/misc/blasting/uranium_from_raw_uranium.json
@@ -33,6 +37,10 @@ d070bccdc7e300542c4f2c0662eeb3660576fb02 data/createatomic/advancement/recipes/m
 24ff99f6cab1dbdc1bdcb4c096fe2514eb02897f data/createatomic/recipe/crafting/dense_alloy_from_nuggets.json
 ff778fbc5fe8377c903df784188999a3577d1c25 data/createatomic/recipe/crafting/dense_alloy_nuggets.json
 df2e6295641c883caf914417ec17e0254882151e data/createatomic/recipe/crafting/fuel_rod.json
+bf24871a312c538c9280016a29c0f67b426f16ab data/createatomic/recipe/crafting/hazmat_boots.json
+ba28d3cdaee18a103dbf3728a53880ade9d5e699 data/createatomic/recipe/crafting/hazmat_chestplate.json
+c81361ef8279bffb060251fc101069b83bdf73bc data/createatomic/recipe/crafting/hazmat_helmet.json
+099c73b44fc20232ab02a965d476667c4110a64f data/createatomic/recipe/crafting/hazmat_leggings.json
 372c3fe491132a67bc142bc6b8d08eb0265c09d3 data/createatomic/recipe/crafting/large_control_rod.json
 9287a4a0a0f7bfbe89c7aaa52f4c88c300a9ffd5 data/createatomic/recipe/crafting/neutron_reflector.json
 e6c50acce68dc65d5b66b0e0298ed92504fe27af data/createatomic/recipe/crafting/plutonium_ingot.json
