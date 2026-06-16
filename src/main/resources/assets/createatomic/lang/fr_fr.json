@@ -39,6 +39,12 @@
 
 	"effect.createatomic.radiation_poisoning": "Fièvre radioactive",
 	"effect.createatomic.radiation_poisoning.description": "Ralentit fortement la vitesse de déplacement.",
+	"effect.createatomic.radioactivity": "Radioactivité",
+
+	"item.createatomic.hazmat_helmet": "Casque Hazmat",
+	"item.createatomic.hazmat_chestplate": "Veste Hazmat",
+	"item.createatomic.hazmat_leggings": "Pantalon Hazmat",
+	"item.createatomic.hazmat_boots": "Bottes Hazmat",
 
 	"createatomic.display_source.reactor_status": "Statut du réacteur",
 	"createatomic.display_source.reactor_temperature": "Température du réacteur",
