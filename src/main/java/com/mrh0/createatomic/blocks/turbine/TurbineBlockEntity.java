@@ -86,13 +86,13 @@ public class TurbineBlockEntity extends GeneratingKineticBlockEntity {
 
         if (reactor == null) {
             tooltip.add(Component.literal(s).append(
-                    Component.literal("No reactor connected").withStyle(ChatFormatting.DARK_RED)));
+                    Component.translatable("createatomic.tooltip.turbine.no_reactor").withStyle(ChatFormatting.DARK_RED)));
         } else if (generatedRpm < 0.5f) {
             tooltip.add(Component.literal(s).append(
-                    Component.literal("Reactor has no net power output").withStyle(ChatFormatting.DARK_GRAY)));
+                    Component.translatable("createatomic.tooltip.turbine.no_output").withStyle(ChatFormatting.DARK_GRAY)));
         } else {
             tooltip.add(Component.literal(s).append(
-                    Component.literal(String.format("%.0f RPM", generatedRpm)).withStyle(ChatFormatting.GREEN)));
+                    Component.translatable("createatomic.tooltip.turbine.rpm", String.format("%.0f", generatedRpm)).withStyle(ChatFormatting.GREEN)));
         }
         return true;
     }
