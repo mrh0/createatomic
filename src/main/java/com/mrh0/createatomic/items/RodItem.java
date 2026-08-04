@@ -24,6 +24,9 @@ public class RodItem extends Item {
         if (config.hullCapacity > 0)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.capacity").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal("+" + config.hullCapacity).withStyle(ChatFormatting.AQUA)));
+        if (config.hullCapacity < 0)
+            tooltip.add(Component.translatable("createatomic.tooltip.rod_item.capacity").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal("+" + config.hullCapacity).withStyle(ChatFormatting.RED)));
         if (config.adjacencyBonus > 0)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.adjacency").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(String.format("+%.0f%%", config.adjacencyBonus * 100)).withStyle(ChatFormatting.YELLOW)));

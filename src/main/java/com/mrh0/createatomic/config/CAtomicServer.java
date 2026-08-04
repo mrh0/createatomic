@@ -10,6 +10,10 @@ public class CAtomicServer extends ConfigBase {
             "How many ticks a uranium fuel rod lasts before becoming depleted.",
             "72000 = 60 minutes at 20 TPS.");
 
+    public final ConfigInt plutoniumFuelRodDuration = i(72000 * 2 * 3, 1, Integer.MAX_VALUE, "plutoniumFuelRodDuration",
+            "How many ticks a plutonium fuel rod lasts before becoming depleted.",
+            "Default is 3x the uranium fuel rod duration.");
+
     public final ConfigBool meltdownEnabled = b(true, "meltdownEnabled",
             "Whether reactors can melt down. When false, a reactor at 0% hull integrity",
             "shuts down instead of exploding, and slowly self-repairs when cooled.");

@@ -1,7 +1,8 @@
 package com.mrh0.createatomic.items;
 
 import com.mrh0.createatomic.Utility;
-import com.mrh0.createatomic.config.AtomicConfigs;
+import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
+import com.mrh0.createatomic.blocks.rod_assembly.RodConfiguration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -29,6 +30,18 @@ public class FuelRodItem extends RodItem {
             Utility.applyRadiationToEntity(player, 0);
     }
 
+    public static int getFuelTicks(ItemStack stack) {
+        CustomData custom = stack.get(DataComponents.CUSTOM_DATA);
+        if (custom == null) return 0;
+        return custom.copyTag().getInt("FuelTicks");
+    }
+
+    public int getRemainingFuelTicks(ItemStack stack) {
+        int fuelTicks = getFuelTicks(stack);
+        int duration = RodAssemblyBlockEntity.fuelDuration(RodConfiguration.fromStack(stack));
+        return Math.max(0, duration - fuelTicks);
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
@@ -36,7 +49,7 @@ public class FuelRodItem extends RodItem {
         CustomData custom = stack.get(DataComponents.CUSTOM_DATA);
         if (custom != null) fuelTicks = custom.copyTag().getInt("FuelTicks");
 
-        int duration = Math.max(1, AtomicConfigs.server().fuelRodDuration.get());
+        int duration = RodAssemblyBlockEntity.fuelDuration(RodConfiguration.fromStack(stack));
         int remainingSeconds = Math.max(0, duration - fuelTicks) / 20;
         int hours = remainingSeconds / 3600;
         int minutes = (remainingSeconds % 3600) / 60;

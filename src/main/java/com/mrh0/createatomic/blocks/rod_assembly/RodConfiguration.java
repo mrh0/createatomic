@@ -13,7 +13,7 @@ public enum RodConfiguration implements StringRepresentable {
     LargeControlRod        ("large_control_rod",       0, 5,  0f,   0f,   RodInsertionBehaviour.SCRAM),
     FuelRod                ("fuel_rod",                1, 0,  0.5f, 0f,   RodInsertionBehaviour.ACTIVE),
     DepletedFuelRod        ("depleted_fuel_rod",       0, 0,  0f,   0f,   RodInsertionBehaviour.NEVER),
-    PlutoniumFuelRod       ("plutonium_fuel_rod",      1, -2, 0.5f, 0.2f, RodInsertionBehaviour.ACTIVE),
+    PlutoniumFuelRod       ("plutonium_fuel_rod",      1, -2, 0.5f, 0.25f, RodInsertionBehaviour.ACTIVE),
     DepletedPlutoniumFuelRod("depleted_plutonium_fuel_rod", 0, 0, 0f, 0f, RodInsertionBehaviour.NEVER),
     NeutronReflector       ("neutron_reflector",       0, 0,  0.5f, 0.1f, RodInsertionBehaviour.ARMED);
 

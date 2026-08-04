@@ -28,7 +28,11 @@ import java.util.List;
 
 public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IObserveBlockEntity {
 
-    private static int fuelDuration() { return AtomicConfigs.server().fuelRodDuration.get(); }
+    public static int fuelDuration(RodConfiguration config) {
+        return Math.max(1, config == RodConfiguration.PlutoniumFuelRod
+                ? AtomicConfigs.server().plutoniumFuelRodDuration.get()
+                : AtomicConfigs.server().fuelRodDuration.get());
+    }
 
     private ItemStack currentRod = ItemStack.EMPTY;
     private int fuelTicks = 0;
@@ -145,7 +149,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         if (!config.isFuelRod()) return;
 
         fuelTicks += Math.round(gameTicks * (1f + consumptionBonus));
-        if (fuelTicks >= fuelDuration()) {
+        if (fuelTicks >= fuelDuration(config)) {
             fuelTicks = 0;
             updateRod(config.depleteInto().asStack());
         }
@@ -191,7 +195,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
         if (config.isFuelRod()) {
-            int duration = fuelDuration();
+            int duration = fuelDuration(config);
             int remainingSeconds = Math.max(0, duration - RodAssemblyPacketPayload.clientFuelTicks) / 20;
             int hours = remainingSeconds / 3600;
             int minutes = (remainingSeconds % 3600) / 60;
