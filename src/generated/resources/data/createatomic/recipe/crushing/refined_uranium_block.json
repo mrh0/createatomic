@@ -1,0 +1,15 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "createatomic:refined_uranium_block"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "count": 9,
+      "id": "createatomic:refined_uranium_ingot"
+    }
+  ]
+}

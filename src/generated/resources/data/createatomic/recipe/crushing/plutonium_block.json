@@ -1,0 +1,15 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "createatomic:plutonium_block"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "count": 9,
+      "id": "createatomic:plutonium_ingot"
+    }
+  ]
+}

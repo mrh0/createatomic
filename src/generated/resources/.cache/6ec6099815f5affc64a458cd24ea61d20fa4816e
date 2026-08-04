@@ -1,9 +1,11 @@
-// 1.21.1	2026-06-11T23:39:04.906660981	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-95bd3773215cbad45c24044dfdda3ded22115c41 assets/createatomic/lang/en_ud.json
-e11ac98453028f8f3ac48c2fb5087cdb534e00bb assets/createatomic/lang/en_us.json
+// 1.21.1	2026-08-04T02:03:15.307555491	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+93f527f799c2dba9b838204dd6d602755cbf9f5d assets/createatomic/lang/en_ud.json
+ea72fc7cedb45788ff4dd5e51cbe9d75d59b47a8 assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
+2f62fb55dcfa91076789b21fe5c7dab43b12163f assets/createatomic/models/item/dense_alloy_block.json
 20fa2b14bc6a7a9b5d9813ef95460907b52872a0 assets/createatomic/models/item/dense_alloy_nugget.json
+86968474091eab6880f813269832cc0ad8bde014 assets/createatomic/models/item/depleted_plutonium_rod.json
 9decd22979162fefb7f0d2a89a1f194763193278 assets/createatomic/models/item/depleted_uranium_rod.json
 ec5f3032192c476ea3cb4525c52a161e85c67a37 assets/createatomic/models/item/hazmat_boots.json
 8b8bc9730d204b556cbe1fd5f96e1f0b459585f1 assets/createatomic/models/item/hazmat_chestplate.json
@@ -11,8 +13,10 @@ fed88d41e4d78e2d4c3bebb2fd0f4765221f258e assets/createatomic/models/item/hazmat_
 6e4ac6fabee7174f273db30d0c6c15e93544a281 assets/createatomic/models/item/hazmat_leggings.json
 4f504fb15028244995700ae6e0f760bcd77ba99e assets/createatomic/models/item/large_control_rod.json
 7aa16f4722e4287ad695be4c234a739c57b39f2a assets/createatomic/models/item/neutron_reflector.json
+bf064ab5567c9d4e43487acd98ab004f75753161 assets/createatomic/models/item/plutonium_block.json
 c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json
 b53e109017e3cbafb9b4c6358c106236f1690098 assets/createatomic/models/item/plutonium_nugget.json
+3b7b09bf40b83645e8eda4b6b43307959957c999 assets/createatomic/models/item/plutonium_rod.json
 104b6c4cded2628b8b11ba16c58854537e1920d1 assets/createatomic/models/item/radioisotope_heat_generator_kindled.json
 4de4b676b5b1b430c52ed3826f49d37632cb2e79 assets/createatomic/models/item/radioisotope_heat_generator_none.json
 e8fe5c233ab0ee73279e9904847eec4a7776526b assets/createatomic/models/item/radioisotope_heat_generator_smouldering.json
@@ -21,16 +25,20 @@ e8fe5c233ab0ee73279e9904847eec4a7776526b assets/createatomic/models/item/radiois
 be0414b02be53550b4ab363e28228cb41f261e4b assets/createatomic/models/item/reactor_casing.json
 f97b13aca420cdf75c2f30ae0f02a5663ddb01d0 assets/createatomic/models/item/reactor_debris.json
 5f8d8453124daddd1911a9fe85adac40c941f39a assets/createatomic/models/item/reactor_redstone_interface.json
+a7cb350465cee447e3652cd6f04ae4a9d4123105 assets/createatomic/models/item/refined_uranium_block.json
 edd02c5f2ffe21d11cfded0ac1df98bbb11da7ca assets/createatomic/models/item/refined_uranium_ingot.json
 7be5c5255265bbf42f681c88f430cff6b271182b assets/createatomic/models/item/refined_uranium_nugget.json
 0cac3ac8789844d11632e30544d9a1fdf1d3bb9c assets/createatomic/models/item/refined_uranium_rod.json
 8836b44fd0b984e1c8606b8710b3b38035f4f02d assets/createatomic/models/item/rod_assembly.json
 2aea4cbb26b1a3fc6b07351439b7956c2f34b709 assets/createatomic/models/item/small_control_rod.json
 3dc214cf59e09644a23d005f34dc30a2d19aa0d1 assets/createatomic/models/item/steam_turbine.json
+1c65183cda3ca401878be1b1106b0edc7129eca5 assets/createatomic/models/item/uranium_block.json
 17a34ea502e71c1a24d7ff6f874c031f60a22001 assets/createatomic/models/item/uranium_ingot.json
 a8a53949b33ccbf824e840af138f87cf6c3ce667 assets/createatomic/models/item/uranium_nugget.json
 86601cc7d90014b54a8edc047a9aab7056c1773e assets/createatomic/models/item/uranium_ore.json
 4f8c522b6a82dcf18c5c5de41020a5a2ad054043 data/createatomic/loot_table/blocks/deepslate_uranium_ore.json
+d22b718cf302abd18822bdbf2c2195131808516a data/createatomic/loot_table/blocks/dense_alloy_block.json
+c01a8b14d5438f1da1b07addb94644f451c2621d data/createatomic/loot_table/blocks/plutonium_block.json
 f312c93734d8143d22a8cc7d877e79f35ec278ae data/createatomic/loot_table/blocks/radioisotope_heat_generator_kindled.json
 cf528965676ce0515abb1fb0cc8710be1a171b8a data/createatomic/loot_table/blocks/radioisotope_heat_generator_none.json
 cf9063bbad18a31161c3426f393e4d142512db74 data/createatomic/loot_table/blocks/radioisotope_heat_generator_smouldering.json
@@ -38,6 +46,8 @@ cf9063bbad18a31161c3426f393e4d142512db74 data/createatomic/loot_table/blocks/rad
 8a896e8f024c45acec1229eaecbc04cb6c3e89aa data/createatomic/loot_table/blocks/reactor_casing.json
 94f168a8883f20a0b2bee398e13690aa36207afc data/createatomic/loot_table/blocks/reactor_debris.json
 0766f5a2f5815eba8ac0467f00bd552b355143f8 data/createatomic/loot_table/blocks/reactor_redstone_interface.json
+d18eba6ad6e61cffc7d83b2682e1f52010dc1c2a data/createatomic/loot_table/blocks/refined_uranium_block.json
 4e06392e57c00a2686320a1a1ddbb4de32a0c1b7 data/createatomic/loot_table/blocks/rod_assembly.json
 76546f9cbe0c28a77859f0a6067ec5530b39cf05 data/createatomic/loot_table/blocks/steam_turbine.json
+76a75246098d5942a7aa61e4b013a2f19a584dd1 data/createatomic/loot_table/blocks/uranium_block.json
 9c71fce2cee11435e310d870e6de0a959d2cbc96 data/createatomic/loot_table/blocks/uranium_ore.json

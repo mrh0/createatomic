@@ -1,10 +1,14 @@
-// 1.21.1	2026-05-28T22:40:32.754770951	Tags for minecraft:block mod id createatomic
+// 1.21.1	2026-08-04T02:03:15.308423443	Tags for minecraft:block mod id createatomic
 8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/block/ores.json
 8b8cd395607d6dabd0bf9418ffd8e7feffb99848 data/c/tags/block/ores/uranium.json
 ae9ec5367ac802494ade6372e2dd86d728e1de6d data/c/tags/block/ores_in_ground/deepslate.json
 8dee193204cd5f5bacc16044eee1fa892097492c data/c/tags/block/ores_in_ground/stone.json
-4582bfd908d163c29259ee813b4e4400ee7e7b30 data/c/tags/block/storage_blocks.json
+87eb5cb1c3010829d8059dc702c8210964100145 data/c/tags/block/storage_blocks.json
+66ded2e5653df9396884c9bbf21bfe96c0511108 data/c/tags/block/storage_blocks/dense_alloy.json
+cfbaf2bf716169a7802a6138b83c7a02ce6e64ec data/c/tags/block/storage_blocks/plutonium.json
 4582bfd908d163c29259ee813b4e4400ee7e7b30 data/c/tags/block/storage_blocks/raw_uranium.json
-2c1f2581373e3844075b01aef1728cc9476e0e95 data/minecraft/tags/block/mineable/pickaxe.json
-c349fb7d116f5f5ecde4e9055cd65d3168ca6166 data/minecraft/tags/block/needs_iron_tool.json
+81e6af4cb9d89cdf904f0912181f6701ff7231c8 data/c/tags/block/storage_blocks/refined_uranium.json
+7bc3602d5a73147fe36db4a3c520145a714d5392 data/c/tags/block/storage_blocks/uranium.json
+a626d9ff0db6f88451bdb497bab100f149d15802 data/minecraft/tags/block/mineable/pickaxe.json
+5bf2ed4aa173896e41668edb0dac404d69d43bce data/minecraft/tags/block/needs_iron_tool.json
 2b9f91c4e11ee8e29775abe4336393ec0ba02360 data/minecraft/tags/block/needs_stone_tool.json

@@ -20,6 +20,10 @@ public class CABlockLootTableProvider extends BlockLootSubProvider {
     protected void generate() {
         this.add(AtomicBlocks.URANIUM_ORE.get(), block -> this.createOreDrop(block, AtomicItems.RAW_URANIUM.get()));
         this.add(AtomicBlocks.DEEPSLATE_URANIUM_ORE.get(), block -> this.createOreDrop(block, AtomicItems.RAW_URANIUM.get()));
+        this.dropSelf(AtomicBlocks.PLUTONIUM_BLOCK.get());
+        this.dropSelf(AtomicBlocks.URANIUM_BLOCK.get());
+        this.dropSelf(AtomicBlocks.REFINED_URANIUM_BLOCK.get());
+        this.dropSelf(AtomicBlocks.DENSE_ALLOY_BLOCK.get());
         this.dropSelf(AtomicBlocks.RAW_URANIUM_BLOCK.get());
         this.add(AtomicBlocks.REACTOR_DEBRIS.get(), block ->
                 this.createSingleItemTable(AtomicItems.DENSE_ALLOY_NUGGET.get(), UniformGenerator.between(1, 3)));
@@ -30,6 +34,10 @@ public class CABlockLootTableProvider extends BlockLootSubProvider {
         return List.of(
             AtomicBlocks.URANIUM_ORE.get(),
             AtomicBlocks.DEEPSLATE_URANIUM_ORE.get(),
+            AtomicBlocks.PLUTONIUM_BLOCK.get(),
+            AtomicBlocks.URANIUM_BLOCK.get(),
+            AtomicBlocks.REFINED_URANIUM_BLOCK.get(),
+            AtomicBlocks.DENSE_ALLOY_BLOCK.get(),
             AtomicBlocks.RAW_URANIUM_BLOCK.get(),
             AtomicBlocks.REACTOR_DEBRIS.get()
         );

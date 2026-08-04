@@ -1,5 +1,9 @@
-// 1.21.1	2026-06-12T19:41:32.011762893	Loot Tables
+// 1.21.1	2026-08-04T02:03:15.30886769	Loot Tables
 84e457d52a6f89b0eec0b5dc83d4c3adb2f05414 data/createatomic/loot_table/blocks/deepslate_uranium_ore.json
+d22b718cf302abd18822bdbf2c2195131808516a data/createatomic/loot_table/blocks/dense_alloy_block.json
+c01a8b14d5438f1da1b07addb94644f451c2621d data/createatomic/loot_table/blocks/plutonium_block.json
 80c20cf9be9592b95f54626cbb4c207735e18f70 data/createatomic/loot_table/blocks/raw_uranium_block.json
 994de940df820a83196af70c275071844cdf0d20 data/createatomic/loot_table/blocks/reactor_debris.json
+d18eba6ad6e61cffc7d83b2682e1f52010dc1c2a data/createatomic/loot_table/blocks/refined_uranium_block.json
+76a75246098d5942a7aa61e4b013a2f19a584dd1 data/createatomic/loot_table/blocks/uranium_block.json
 494159a987b8831c567e1a5a717c270f14eea2f4 data/createatomic/loot_table/blocks/uranium_ore.json

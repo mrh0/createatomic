@@ -1,0 +1,23 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "createatomic:plutonium_rod"
+    }
+  ],
+  "processing_time": 350,
+  "results": [
+    {
+      "count": 4,
+      "id": "createatomic:plutonium_nugget"
+    },
+    {
+      "count": 5,
+      "id": "createatomic:dense_alloy_nugget"
+    },
+    {
+      "chance": 0.5,
+      "id": "createatomic:plutonium_nugget"
+    }
+  ]
+}

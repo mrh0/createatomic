@@ -20,6 +20,10 @@ public class CABlockTagProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         // All blocks are mineable with a pickaxe
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(AtomicBlocks.PLUTONIUM_BLOCK.get())
+                .add(AtomicBlocks.URANIUM_BLOCK.get())
+                .add(AtomicBlocks.REFINED_URANIUM_BLOCK.get())
+                .add(AtomicBlocks.DENSE_ALLOY_BLOCK.get())
                 .add(AtomicBlocks.RAW_URANIUM_BLOCK.get())
                 .add(AtomicBlocks.URANIUM_ORE.get())
                 .add(AtomicBlocks.DEEPSLATE_URANIUM_ORE.get())
@@ -34,7 +38,11 @@ public class CABlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(AtomicBlocks.URANIUM_ORE.get())
                 .add(AtomicBlocks.DEEPSLATE_URANIUM_ORE.get())
-                .add(AtomicBlocks.RAW_URANIUM_BLOCK.get());
+                .add(AtomicBlocks.RAW_URANIUM_BLOCK.get())
+                .add(AtomicBlocks.PLUTONIUM_BLOCK.get())
+                .add(AtomicBlocks.URANIUM_BLOCK.get())
+                .add(AtomicBlocks.REFINED_URANIUM_BLOCK.get())
+                .add(AtomicBlocks.DENSE_ALLOY_BLOCK.get());
 
         // Machine blocks require stone-tier tool
         tag(BlockTags.NEEDS_STONE_TOOL)
@@ -62,9 +70,25 @@ public class CABlockTagProvider extends BlockTagsProvider {
 
         // Storage blocks
         tag(CATagRegister.Blocks.STORAGE_BLOCKS)
-                .add(AtomicBlocks.RAW_URANIUM_BLOCK.get());
+                .add(AtomicBlocks.RAW_URANIUM_BLOCK.get())
+                .add(AtomicBlocks.PLUTONIUM_BLOCK.get())
+                .add(AtomicBlocks.URANIUM_BLOCK.get())
+                .add(AtomicBlocks.REFINED_URANIUM_BLOCK.get())
+                .add(AtomicBlocks.DENSE_ALLOY_BLOCK.get());
 
         tag(CATagRegister.Blocks.STORAGE_BLOCKS_RAW_URANIUM)
                 .add(AtomicBlocks.RAW_URANIUM_BLOCK.get());
+
+        tag(CATagRegister.Blocks.STORAGE_BLOCKS_PLUTONIUM)
+                .add(AtomicBlocks.PLUTONIUM_BLOCK.get());
+
+        tag(CATagRegister.Blocks.STORAGE_BLOCKS_URANIUM)
+                .add(AtomicBlocks.URANIUM_BLOCK.get());
+
+        tag(CATagRegister.Blocks.STORAGE_BLOCKS_REFINED_URANIUM)
+                .add(AtomicBlocks.REFINED_URANIUM_BLOCK.get());
+
+        tag(CATagRegister.Blocks.STORAGE_BLOCKS_DENSE_ALLOY)
+                .add(AtomicBlocks.DENSE_ALLOY_BLOCK.get());
     }
 }

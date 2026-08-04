@@ -24,6 +24,38 @@ public class AtomicBlocks {
         CreateAtomic.REGISTRATE.setCreativeTab(CreateAtomic.MAIN_TAB);
     }
 
+    public static final BlockEntry<Block> PLUTONIUM_BLOCK = CreateAtomic.REGISTRATE.block("plutonium_block", Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.PURPLE).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<Block> URANIUM_BLOCK = CreateAtomic.REGISTRATE.block("uranium_block", Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GREEN).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<Block> REFINED_URANIUM_BLOCK = CreateAtomic.REGISTRATE.block("refined_uranium_block", Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.LIME).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<Block> DENSE_ALLOY_BLOCK = CreateAtomic.REGISTRATE.block("dense_alloy_block", Block::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
+
     public static final BlockEntry<Block> RAW_URANIUM_BLOCK = CreateAtomic.REGISTRATE.block("raw_uranium_block", Block::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GREEN).lightLevel((state) -> 2))

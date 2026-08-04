@@ -9,11 +9,13 @@ public class AtomicPartials {
     public static final PartialModel REACTOR_DIAL = block("reactor/dial");
     public static final PartialModel TURBINE_BLADE = block("turbine/blades");
 
-    public static final PartialModel ROD_FUEL          = block("rod_assembly/rod_fuel");
-    public static final PartialModel ROD_DEPLETED      = block("rod_assembly/rod_fuel_depleted");
-    public static final PartialModel ROD_CONTROL_SMALL = block("rod_assembly/rod_control_small");
-    public static final PartialModel ROD_CONTROL_LARGE = block("rod_assembly/rod_control_large");
-    public static final PartialModel ROD_REFLECTOR     = block("rod_assembly/rod_reflector");
+    public static final PartialModel ROD_FUEL              = block("rod_assembly/rod_fuel");
+    public static final PartialModel ROD_DEPLETED          = block("rod_assembly/rod_fuel_depleted");
+    public static final PartialModel ROD_PLUTONIUM_FUEL    = block("rod_assembly/rod_plutonium_fuel");
+    public static final PartialModel ROD_DEPLETED_PLUTONIUM = block("rod_assembly/rod_plutonium_fuel_depleted");
+    public static final PartialModel ROD_CONTROL_SMALL     = block("rod_assembly/rod_control_small");
+    public static final PartialModel ROD_CONTROL_LARGE     = block("rod_assembly/rod_control_large");
+    public static final PartialModel ROD_REFLECTOR         = block("rod_assembly/rod_reflector");
 
     private static PartialModel block(String path) {
         return PartialModel.of(ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/" + path));

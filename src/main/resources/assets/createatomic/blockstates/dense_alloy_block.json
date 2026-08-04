@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "createatomic:block/dense_alloy_block/block" }
+    }
+}

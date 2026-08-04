@@ -2,6 +2,10 @@
   "values": [
     "createatomic:uranium_ore",
     "createatomic:deepslate_uranium_ore",
-    "createatomic:raw_uranium_block"
+    "createatomic:raw_uranium_block",
+    "createatomic:plutonium_block",
+    "createatomic:uranium_block",
+    "createatomic:refined_uranium_block",
+    "createatomic:dense_alloy_block"
   ]
 }

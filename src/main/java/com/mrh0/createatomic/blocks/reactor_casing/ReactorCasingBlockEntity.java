@@ -717,29 +717,21 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
     public Pair<Integer, Integer> getRodLevels(boolean tick) {
         int w = getWidth();
-        // Pass 1: populate grids
-        RodAssemblyBlockEntity[][] grid          = new RodAssemblyBlockEntity[w][w];
-        int[][]                    fuelGrid      = new int[w][w];   // effectivePower per slot
-        float[][]                  adjacencyGrid = new float[w][w]; // adjacencyBonus per slot
-
-        for (int x = 0; x < w; x++) {
-            for (int z = 0; z < w; z++) {
-                BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
-                if (be instanceof RodAssemblyBlockEntity rabe) {
-                    RodConfiguration config = rabe.getConfig();
-                    grid[x][z]          = rabe;
-                    fuelGrid[x][z]      = config.effectivePower;
-                    adjacencyGrid[x][z] = config.adjacencyBonus;
-                }
-            }
-        }
-
-        // Pass 2: tally fuel/control with adjacency reactivity bonus.
-        // Any slot with adjacencyBonus > 0 (fuel rods and neutron reflectors share 0.5)
-        // counts as a neighbour for adjacent fuel rods.
         int[] dx = {-1, 1, 0, 0};
         int[] dz = { 0, 0,-1, 1};
 
+        // Pass 1: resolve block entities into a grid
+        RodAssemblyBlockEntity[][] grid = new RodAssemblyBlockEntity[w][w];
+        for (int x = 0; x < w; x++)
+            for (int z = 0; z < w; z++) {
+                BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
+                if (be instanceof RodAssemblyBlockEntity rabe)
+                    grid[x][z] = rabe;
+            }
+
+        // Pass 2: tally fuel/control, using the grid directly for all adjacency queries.
+        // Both adjacencyBonus (reactivity multiplier) and adjacentFuelConsumptionBonus
+        // are read from the same neighbour config object in one shared loop.
         float effectiveFuel = 0f;
         int installedFuel   = 0;
         int controlLevel    = 0;
@@ -749,22 +741,24 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                 RodAssemblyBlockEntity rabe = grid[x][z];
                 if (rabe == null) continue;
 
-                controlLevel += rabe.getConfig().hullCapacity;
+                RodConfiguration config = rabe.getConfig();
+                controlLevel += config.hullCapacity;
 
-                int fuel = fuelGrid[x][z];
-                if (fuel > 0) {
-                    installedFuel += fuel;
-                    float bonus = adjacencyGrid[x][z];
+                if (config.effectivePower > 0) {
+                    installedFuel += config.effectivePower;
                     int neighbours = 0;
+                    float consumptionBonus = 0f;
                     for (int d = 0; d < 4; d++) {
                         int nx = x + dx[d], nz = z + dz[d];
-                        if (nx >= 0 && nx < w && nz >= 0 && nz < w && adjacencyGrid[nx][nz] > 0)
-                            neighbours++;
+                        if (nx >= 0 && nx < w && nz >= 0 && nz < w && grid[nx][nz] != null) {
+                            RodConfiguration nc = grid[nx][nz].getConfig();
+                            if (nc.adjacencyBonus > 0) neighbours++;
+                            consumptionBonus += nc.adjacentFuelConsumptionBonus;
+                        }
                     }
-                    effectiveFuel += fuel * (1f + bonus * neighbours);
+                    effectiveFuel += config.effectivePower * (1f + config.adjacencyBonus * neighbours);
+                    if (tick && isActive()) rabe.tickRod(lazyTickRate, consumptionBonus);
                 }
-
-                if (tick && isActive()) rabe.tickRod(lazyTickRate);
             }
         }
 

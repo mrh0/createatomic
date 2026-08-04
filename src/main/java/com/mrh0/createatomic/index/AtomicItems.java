@@ -83,6 +83,16 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();*/
 
+    public static final ItemEntry<FuelRodItem> PLUTONIUM_FUEL_ROD =
+            CreateAtomic.REGISTRATE.item("plutonium_rod", FuelRodItem::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<Item> DEPLETED_PLUTONIUM_FUEL_ROD =
+            CreateAtomic.REGISTRATE.item("depleted_plutonium_rod", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
     public static final ItemEntry<RodItem> NEUTRON_REFLECTOR =
             CreateAtomic.REGISTRATE.item("neutron_reflector", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))

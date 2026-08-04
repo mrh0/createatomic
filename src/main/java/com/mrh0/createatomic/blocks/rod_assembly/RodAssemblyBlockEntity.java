@@ -126,7 +126,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         RodConfiguration config = getConfig();
         ItemStack rod = config.asStack();
         if (rod.isEmpty()) return ItemStack.EMPTY;
-        if (config == RodConfiguration.FuelRod && fuelTicks > 0) {
+        if (config.isFuelRod() && fuelTicks > 0) {
             CompoundTag tag = new CompoundTag();
             tag.putInt("FuelTicks", fuelTicks);
             rod.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
@@ -137,15 +137,32 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     // Called every lazy tick by the reactor controller to advance fuel consumption.
     // gameTicks is the reactor's lazyTickRate so fuelTicks counts real game ticks,
     // matching the config unit (fuelRodDuration is in game ticks).
-    public void tickRod(int gameTicks) {
+    // consumptionBonus is the sum of adjacentFuelConsumptionBonus from all neighbours
+    // (e.g. 0.2 = 20% faster depletion).
+    public void tickRod(int gameTicks, float consumptionBonus) {
         if (level == null || level.isClientSide()) return;
-        if (getConfig() != RodConfiguration.FuelRod) return;
+        RodConfiguration config = getConfig();
+        if (!config.isFuelRod()) return;
 
-        fuelTicks += gameTicks;
+        fuelTicks += Math.round(gameTicks * (1f + consumptionBonus));
         if (fuelTicks >= fuelDuration()) {
             fuelTicks = 0;
-            updateRod(RodConfiguration.DepletedFuelRod.asStack());
+            updateRod(config.depleteInto().asStack());
         }
+    }
+
+    private float computeAdjacentConsumptionBonus() {
+        if (level == null) return 0f;
+        int[] dx = {-1, 1, 0, 0};
+        int[] dz = { 0, 0,-1, 1};
+        float bonus = 0f;
+        for (int d = 0; d < 4; d++) {
+            net.minecraft.world.level.block.entity.BlockEntity neighbor =
+                    level.getBlockEntity(worldPosition.offset(dx[d], 0, dz[d]));
+            if (neighbor instanceof RodAssemblyBlockEntity neighbourRod)
+                bonus += neighbourRod.getConfig().adjacentFuelConsumptionBonus;
+        }
+        return bonus;
     }
 
     @Override
@@ -173,7 +190,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         tooltip.add(Component.literal(spacing).append(
                 Component.translatable("block.createatomic.rod_assembly").withStyle(ChatFormatting.WHITE)));
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
-        if (config == RodConfiguration.FuelRod) {
+        if (config.isFuelRod()) {
             int duration = fuelDuration();
             int remainingSeconds = Math.max(0, duration - RodAssemblyPacketPayload.clientFuelTicks) / 20;
             int hours = remainingSeconds / 3600;
@@ -184,6 +201,12 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.translatable("createatomic.tooltip.fuel_rod.depletion",
                             String.format("%02dh:%02dm:%02ds", hours, minutes, seconds)).withStyle(color)));
+            float consumptionBonus = computeAdjacentConsumptionBonus();
+            if (consumptionBonus > 0f) {
+                tooltip.add(Component.literal(spacing + " ").append(
+                        Component.translatable("createatomic.tooltip.fuel_rod.consumption_bonus",
+                                String.format("%.0f%%", consumptionBonus * 100)).withStyle(ChatFormatting.GOLD)));
+            }
         }
         if (isLocked()) {
             tooltip.add(Component.literal(spacing + " ").append(

@@ -1,8 +1,6 @@
 package com.mrh0.createatomic.datagen.RecipeProvider;
 
 import com.mrh0.createatomic.CreateAtomic;
-import com.mrh0.createatomic.index.AtomicItems;
-import com.simibubi.create.api.data.recipe.BaseRecipeProvider.GeneratedRecipe;
 import com.simibubi.create.api.data.recipe.PressingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

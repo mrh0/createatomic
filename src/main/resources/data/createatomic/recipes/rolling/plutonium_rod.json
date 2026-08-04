@@ -1,0 +1,10 @@
+{
+	"type": "createaddition:rolling",
+	"input": {
+		"item": "createatomic:plutonium_ingot"
+	},
+	"result": {
+		"item": "createatomic:plutonium_rod",
+		"count": 1
+	}
+}

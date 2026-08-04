@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/refined_uranium"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "createatomic:refined_uranium_ingot"
+  }
+}

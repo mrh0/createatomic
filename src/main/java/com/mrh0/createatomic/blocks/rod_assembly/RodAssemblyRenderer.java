@@ -23,12 +23,14 @@ public class RodAssemblyRenderer extends SafeBlockEntityRenderer<RodAssemblyBloc
         RodConfiguration config = be.getConfig();
 
         PartialModel partial = switch (config) {
-            case FuelRod          -> AtomicPartials.ROD_FUEL;
-            case DepletedFuelRod  -> AtomicPartials.ROD_DEPLETED;
-            case SmallControlRod  -> AtomicPartials.ROD_CONTROL_SMALL;
-            case LargeControlRod  -> AtomicPartials.ROD_CONTROL_LARGE;
-            case NeutronReflector -> AtomicPartials.ROD_REFLECTOR;
-            default               -> null;
+            case FuelRod                  -> AtomicPartials.ROD_FUEL;
+            case DepletedFuelRod          -> AtomicPartials.ROD_DEPLETED;
+            case PlutoniumFuelRod         -> AtomicPartials.ROD_PLUTONIUM_FUEL;
+            case DepletedPlutoniumFuelRod -> AtomicPartials.ROD_DEPLETED_PLUTONIUM;
+            case SmallControlRod          -> AtomicPartials.ROD_CONTROL_SMALL;
+            case LargeControlRod          -> AtomicPartials.ROD_CONTROL_LARGE;
+            case NeutronReflector         -> AtomicPartials.ROD_REFLECTOR;
+            default                       -> null;
         };
 
         if (partial == null) return;

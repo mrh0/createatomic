@@ -18,6 +18,10 @@ public class CATagRegister {
         public static final TagKey<Item> ORES_IN_GROUND_DEEPSLATE = commonTags("ores_in_ground", "deepslate");
         public static final TagKey<Item> STORAGE_BLOCKS = commonTags("storage_blocks");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_URANIUM = commonTags("storage_blocks", "raw_uranium");
+        public static final TagKey<Item> STORAGE_BLOCKS_PLUTONIUM = commonTags("storage_blocks", "plutonium");
+        public static final TagKey<Item> STORAGE_BLOCKS_URANIUM = commonTags("storage_blocks", "uranium");
+        public static final TagKey<Item> STORAGE_BLOCKS_REFINED_URANIUM = commonTags("storage_blocks", "refined_uranium");
+        public static final TagKey<Item> STORAGE_BLOCKS_DENSE_ALLOY = commonTags("storage_blocks", "dense_alloy");
         public static final TagKey<Item> STORAGE_BLOCKS_IRON = commonTags("storage_blocks", "iron");
         public static final TagKey<Item> STORAGE_BLOCKS_COAL = commonTags("storage_blocks", "coal");
         public static final TagKey<Item> RAW_MATERIALS = commonTags("raw_materials");
@@ -76,6 +80,10 @@ public class CATagRegister {
         public static final TagKey<Block> ORES_IN_GROUND_DEEPSLATE = commonTags("ores_in_ground", "deepslate");
         public static final TagKey<Block> STORAGE_BLOCKS = commonTags("storage_blocks");
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_URANIUM = commonTags("storage_blocks", "raw_uranium");
+        public static final TagKey<Block> STORAGE_BLOCKS_PLUTONIUM = commonTags("storage_blocks", "plutonium");
+        public static final TagKey<Block> STORAGE_BLOCKS_URANIUM = commonTags("storage_blocks", "uranium");
+        public static final TagKey<Block> STORAGE_BLOCKS_REFINED_URANIUM = commonTags("storage_blocks", "refined_uranium");
+        public static final TagKey<Block> STORAGE_BLOCKS_DENSE_ALLOY = commonTags("storage_blocks", "dense_alloy");
         public static final TagKey<Block> STORAGE_BLOCKS_IRON = commonTags("storage_blocks", "iron");
         public static final TagKey<Block> STORAGE_BLOCKS_COAL = commonTags("storage_blocks", "coal");
 

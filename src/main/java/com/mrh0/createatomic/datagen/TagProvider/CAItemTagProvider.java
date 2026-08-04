@@ -24,6 +24,10 @@ public class CAItemTagProvider extends ItemTagsProvider {
         copy(CATagRegister.Blocks.ORES_IN_GROUND_DEEPSLATE, CATagRegister.Items.ORES_IN_GROUND_DEEPSLATE);
         copy(CATagRegister.Blocks.STORAGE_BLOCKS, CATagRegister.Items.STORAGE_BLOCKS);
         copy(CATagRegister.Blocks.STORAGE_BLOCKS_RAW_URANIUM, CATagRegister.Items.STORAGE_BLOCKS_RAW_URANIUM);
+        copy(CATagRegister.Blocks.STORAGE_BLOCKS_PLUTONIUM, CATagRegister.Items.STORAGE_BLOCKS_PLUTONIUM);
+        copy(CATagRegister.Blocks.STORAGE_BLOCKS_URANIUM, CATagRegister.Items.STORAGE_BLOCKS_URANIUM);
+        copy(CATagRegister.Blocks.STORAGE_BLOCKS_REFINED_URANIUM, CATagRegister.Items.STORAGE_BLOCKS_REFINED_URANIUM);
+        copy(CATagRegister.Blocks.STORAGE_BLOCKS_DENSE_ALLOY, CATagRegister.Items.STORAGE_BLOCKS_DENSE_ALLOY);
 
         // Raw materials
         tag(CATagRegister.Items.RAW_MATERIALS)

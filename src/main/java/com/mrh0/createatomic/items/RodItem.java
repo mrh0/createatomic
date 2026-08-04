@@ -27,5 +27,8 @@ public class RodItem extends Item {
         if (config.adjacencyBonus > 0)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.adjacency").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(String.format("+%.0f%%", config.adjacencyBonus * 100)).withStyle(ChatFormatting.YELLOW)));
+        if (config.adjacentFuelConsumptionBonus > 0)
+            tooltip.add(Component.translatable("createatomic.tooltip.rod_item.fuel_lifetime").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal(String.format("-%.0f%%", config.adjacentFuelConsumptionBonus * 100)).withStyle(ChatFormatting.GOLD)));
     }
 }

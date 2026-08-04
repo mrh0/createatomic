@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "createatomic:block/plutonium_block/block" }
+    }
+}

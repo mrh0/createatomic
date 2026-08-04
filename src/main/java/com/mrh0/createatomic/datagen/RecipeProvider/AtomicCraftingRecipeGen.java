@@ -89,6 +89,59 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("crafting/raw_uranium_from_block"));
 
         
+        // Storage blocks — compress
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.PLUTONIUM_BLOCK.get())
+            .pattern("PPP")
+            .pattern("PPP")
+            .pattern("PPP")
+            .define('P', CATagRegister.Items.INGOTS_PLUTONIUM)
+            .unlockedBy("has_plutonium_ingot", has(AtomicItems.PLUTONIUM_INGOT.get()))
+            .save(output, CreateAtomic.asResource("crafting/plutonium_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.PLUTONIUM_INGOT.get(), 9)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_PLUTONIUM)
+            .unlockedBy("has_plutonium_block", has(AtomicBlocks.PLUTONIUM_BLOCK.get()))
+            .save(output, CreateAtomic.asResource("crafting/plutonium_ingots_from_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.URANIUM_BLOCK.get())
+            .pattern("UUU")
+            .pattern("UUU")
+            .pattern("UUU")
+            .define('U', CATagRegister.Items.INGOTS_URANIUM)
+            .unlockedBy("has_uranium_ingot", has(AtomicItems.URANIUM_INGOT.get()))
+            .save(output, CreateAtomic.asResource("crafting/uranium_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.URANIUM_INGOT.get(), 9)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_URANIUM)
+            .unlockedBy("has_uranium_block", has(AtomicBlocks.URANIUM_BLOCK.get()))
+            .save(output, CreateAtomic.asResource("crafting/uranium_ingots_from_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.REFINED_URANIUM_BLOCK.get())
+            .pattern("RRR")
+            .pattern("RRR")
+            .pattern("RRR")
+            .define('R', CATagRegister.Items.INGOTS_REFINED_URANIUM)
+            .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
+            .save(output, CreateAtomic.asResource("crafting/refined_uranium_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.REFINED_URANIUM_INGOT.get(), 9)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_REFINED_URANIUM)
+            .unlockedBy("has_refined_uranium_block", has(AtomicBlocks.REFINED_URANIUM_BLOCK.get()))
+            .save(output, CreateAtomic.asResource("crafting/refined_uranium_ingots_from_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.DENSE_ALLOY_BLOCK.get())
+            .pattern("DDD")
+            .pattern("DDD")
+            .pattern("DDD")
+            .define('D', CATagRegister.Items.PLATES_DENSE_ALLOY)
+            .unlockedBy("has_dense_alloy", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/dense_alloy_block"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY.get(), 9)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_DENSE_ALLOY)
+            .unlockedBy("has_dense_alloy_block", has(AtomicBlocks.DENSE_ALLOY_BLOCK.get()))
+            .save(output, CreateAtomic.asResource("crafting/dense_alloy_from_block"));
+
         // Ores and Blocks
         SimpleCookingRecipeBuilder
             .smelting(Ingredient.of(AtomicItems.RAW_URANIUM.get()), RecipeCategory.MISC, AtomicItems.URANIUM_INGOT.get(), 0.7f, 200)
@@ -206,6 +259,12 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .requires(AtomicItems.DENSE_ALLOY.get())
             .unlockedBy("has_refined_uranium_ingot", has(AtomicItems.REFINED_URANIUM_INGOT.get()))
             .save(output, CreateAtomic.asResource("crafting/fuel_rod"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.PLUTONIUM_FUEL_ROD.get(), 1)
+            .requires(CATagRegister.Items.INGOTS_PLUTONIUM)
+            .requires(AtomicItems.DENSE_ALLOY.get())
+            .unlockedBy("has_plutonium_ingot", has(AtomicItems.PLUTONIUM_INGOT.get()))
+            .save(output, CreateAtomic.asResource("crafting/plutonium_rod"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.SMALL_CONTROL_ROD.get(), 1)
             .requires(CATagRegister.Items.STORAGE_BLOCKS_IRON)
