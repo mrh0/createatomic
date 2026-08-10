@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "all": "createatomic:block/nuclear_bomb"
+    "top": "createatomic:block/nuclear_bomb/nuclear_bomb_top",
+    "bottom": "createatomic:block/nuclear_bomb/nuclear_bomb_bottom",
+    "side": "createatomic:block/nuclear_bomb/nuclear_bomb"
   }
 }

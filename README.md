@@ -16,11 +16,11 @@ Create: Atomic adds Nuclear Reactors and related nuclear content to Minecraft vi
 
 ### Materials & Resources
 
-- **Uranium Ore** — spawns in stone and deepslate variants, requires iron-tier pickaxe
+- **Uranium Ore** - spawns in stone and deepslate variants, requires iron-tier pickaxe
 - **Raw Uranium / Uranium Ingot / Uranium Nugget**
-- **Refined Uranium Ingot / Refined Uranium Nugget** — processed form used in reactor fuel
-- **Dense Alloy / Dense Alloy Nugget** — heavy shielding material
-- **Plutonium Ingot / Plutonium Nugget** — byproduct of reactor operation
+- **Refined Uranium Ingot / Refined Uranium Nugget** - processed form used in reactor fuel
+- **Dense Alloy / Dense Alloy Nugget** - heavy shielding material
+- **Plutonium Ingot / Plutonium Nugget** - byproduct of reactor operation
 
 ### Storage Blocks
 
@@ -33,32 +33,32 @@ Craftable from 9 ingots/items and decompress back:
 
 ### Reactor Components
 
-- **Reactor Casing** — multi-block structure that forms the reactor body
-- **Rod Assembly** — placed on top of the casing; accepts one rod at a time
-- **Reactor Redstone Interface** — attaches to the casing side; arms/SCRAMs the reactor via redstone
-- **Steam Turbine** — bolts to the reactor face; converts reactor heat into Rotational Force (16 SU/RPM by default)
+- **Reactor Casing** - multi-block structure that forms the reactor body
+- **Rod Assembly** - placed on top of the casing; accepts one rod at a time
+- **Reactor Redstone Interface** - attaches to the casing side; arms/SCRAMs the reactor via redstone
+- **Steam Turbine** - bolts to the reactor face; converts reactor heat into Rotational Force (16 SU/RPM by default)
 
 ### Reactor Rods
 
 Inserted into Rod Assemblies:
 
-| Rod | Power | Hull Capacity | Adjacency Bonus | Notes |
-|---|---|---|---|---|
-| Uranium Fuel Rod | +1 | — | +50% | Depletes after ~2 hours (default) |
-| Plutonium Fuel Rod | +1 | −2 | +50% | Depletes after ~6 hours (default); accelerates adjacent fuel consumption by 25% |
-| Depleted Uranium Fuel Rod | — | — | — | Recycled or smelted for materials |
-| Depleted Plutonium Fuel Rod | — | — | — | Recycled or smelted for materials |
-| Small Control Rod | — | +2 | — | Absorbs reactor power; SCRAMs on deactivation |
-| Large Control Rod | — | +5 | — | Absorbs more reactor power; SCRAMs on deactivation |
-| Neutron Reflector | — | — | +50% | Boosts adjacent fuel rods; accelerates adjacent fuel consumption by 10% |
+| Rod | Power | Hull Capacity | Adjacency Bonus | Fuel Consumption Bonus | Notes |
+|---|---|---|---|---|---|
+| Uranium Fuel Rod | +1 |   | +50% |   | Depletes after ~2 hours (default) |
+| Plutonium Fuel Rod | +1 | −2 | +50% | +25% | Accelerates adjacent fuel rods' consumption by 25%; depletes after ~6 hours (default) |
+| Depleted Uranium Fuel Rod |   |   |   |   | Recycled or smelted for materials |
+| Depleted Plutonium Fuel Rod |   |   |   |   | Recycled or smelted for materials |
+| Small Control Rod |   | +2 |   |   | Absorbs reactor power; SCRAMs on deactivation |
+| Large Control Rod |   | +5 |   |   | Absorbs more reactor power; SCRAMs on deactivation |
+| Neutron Reflector |   |   | +50% | +10% | Boosts adjacent fuel rods' power; accelerates their consumption by 10% |
 
 ### Hazmat Equipment
 
-- **Hazmat Suit** (helmet, chestplate, leggings, boots) — protects against radiation effects when the full set is worn
+- **Hazmat Suit** (helmet, chestplate, leggings, boots) --> protects against radiation effects when the full set is worn
 
 ### Radioisotope Heat Generator (RHG)
 
-A passive heat source that slowly decays through three states: **Kindled** → **Smouldering** → **Inert**. Decay is random with an average of 2 real-world days per step (configurable).
+A passive heat source that slowly decays through three states: **Kindled** --> **Smouldering** --> **Inert**. Decay is random with an average of 2 real-world days per step (configurable).
 
 ### Reactor Debris
 
@@ -73,7 +73,7 @@ Left behind after a meltdown. Emits radiation. Requires a diamond pickaxe to min
 3. Insert rods into the assemblies by right-clicking with a rod item.
 4. Attach a **Reactor Redstone Interface** to the side of the casing and send it a redstone signal to arm the reactor.
 5. The reactor activates when effective power exceeds hull capacity.
-6. Pump water into the casing to keep it cooled — the reactor consumes water while running.
+6. Pump water into the casing to keep it cooled - the reactor consumes water while running.
 7. Bolt **Steam Turbines** to the reactor face to generate rotational force.
 8. Use a **Mechanical Arm** to automate swapping depleted rods for fresh ones.
 
@@ -81,7 +81,7 @@ Left behind after a meltdown. Emits radiation. Requires a diamond pickaxe to min
 
 **Hull Integrity:** If net power (effective fuel − control) exceeds zero while water runs out or heat exceeds safe limits, the reactor takes hull damage. At 0% integrity it melts down.
 
-**SCRAM:** Removing the redstone signal from the Reactor Redstone Interface causes a SCRAM — control rods insert and the reaction stops.
+**SCRAM:** Removing the redstone signal from the Reactor Redstone Interface causes a SCRAM - control rods insert and the reaction stops.
 
 ---
 
