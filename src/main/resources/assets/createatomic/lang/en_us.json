@@ -18,6 +18,10 @@
 	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
 	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
 
+	"block.createatomic.nuclear_bomb": "Nuclear Bomb",
+	"block.createatomic.nuclear_bomb.tooltip": "NUCLEAR BOMB",
+	"block.createatomic.nuclear_bomb.tooltip.summary": "A devastating nuclear device. _Right-click_ with Flint and Steel to arm. Detonates after a _10-second_ fuse with a massive explosion and _mushroom cloud_.",
+
 	"block.createatomic.yellow_cake": "Yellow Cake",
 	"block.createatomic.uranium_ore": "Uranium Ore",
 	"block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
@@ -86,8 +90,9 @@
 	"createatomic.tooltip.rod_assembly.plutonium_fuel_rod": "Plutonium Fuel Rod",
 	"createatomic.tooltip.rod_assembly.depleted_plutonium_fuel_rod": "Depleted Plutonium Fuel Rod",
 	"createatomic.tooltip.rod_assembly.neutron_reflector": "Neutron Reflector",
-	"createatomic.tooltip.rod_assembly.locked": "Locked — reactor is running",
+	"createatomic.tooltip.rod_assembly.locked": "Locked - reactor is running",
 	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
+	"createatomic.message.wrench_active_reactor": "Cannot pick up while reactor is active",
 
 	"createatomic.tooltip.reactor.scrammed": " (SCRAM)",
 	"createatomic.tooltip.reactor.info": "Reactor Status",
@@ -110,11 +115,11 @@
 	"createatomic.ponder.reactor.text_2": "Rod Assemblies on top hold the rods that control the reaction",
 	"createatomic.ponder.reactor.text_3": "Fuel Rods generate power proportional to their count and adjacency",
 	"createatomic.ponder.reactor.text_4": "Control Rods absorb power and is used to stop the reaction",
-	"createatomic.ponder.reactor.text_5": "If power exceeds hull capacity the reactor takes damage — keep them balanced!",
-	"createatomic.ponder.reactor.text_6": "The reactor consumes water — pump it into the casing to keep it cooled",
+	"createatomic.ponder.reactor.text_5": "If power exceeds hull capacity the reactor takes damage - keep them balanced!",
+	"createatomic.ponder.reactor.text_6": "The reactor consumes water - pump it into the casing to keep it cooled",
 	"createatomic.ponder.reactor.text_7": "Steam Turbines bolted to the reactor face convert heat into Rotational Force",
 	"createatomic.ponder.reactor.text_8": "A Reactor Redstone Interface arms the reactor when it receives a redstone signal",
-	"createatomic.ponder.reactor.text_9": "Without a signal the reactor SCRAMs — control rods drop and the reaction stops",
+	"createatomic.ponder.reactor.text_9": "Without a signal the reactor SCRAMs - control rods drop and the reaction stops",
 	"createatomic.ponder.reactor.text_10": "Fuel Rods gradually deplete and must be swapped out to keep the reactor running",
 	"createatomic.ponder.reactor.text_11": "A Mechanical Arm picks up Depleted Fuel Rods and deposits them into a funnel",
 	"createatomic.ponder.reactor.text_12": "A second arm takes fresh rods from a Depot and loads empty Rod Assemblies"

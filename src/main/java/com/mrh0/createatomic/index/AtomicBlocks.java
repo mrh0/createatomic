@@ -4,6 +4,7 @@ import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.mrh0.createatomic.CreateAtomic;
+import com.mrh0.createatomic.blocks.nuclear_bomb.NuclearBombBlock;
 import com.mrh0.createatomic.blocks.radioisotope_heat_generator.RadioisotopeHeatGeneratorBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
@@ -131,7 +132,7 @@ public class AtomicBlocks {
 
     public static final BlockEntry<ReactorDebrisBlock> REACTOR_DEBRIS = CreateAtomic.REGISTRATE.block("reactor_debris", ReactorDebrisBlock::new)
             .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks())
+            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().strength(400f, 1200f).requiresCorrectToolForDrops())
             .blockstate((ctx, prov) -> {})
             .item()
             .transform(customItemModel())
@@ -152,6 +153,14 @@ public class AtomicBlocks {
             .item()
             .transform(customItemModel())
             .register();*/
+
+    public static final BlockEntry<NuclearBombBlock> NUCLEAR_BOMB = CreateAtomic.REGISTRATE.block("nuclear_bomb", NuclearBombBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.YELLOW).strength(3.0f).ignitedByLava())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)

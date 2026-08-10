@@ -2,9 +2,12 @@ package com.mrh0.createatomic.blocks.reactor_redstone_interface;
 
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -21,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Map;
 
-public class ReactorRedstoneInterfaceBlock extends Block {
+public class ReactorRedstoneInterfaceBlock extends Block implements IWrenchable {
 
     public static final EnumProperty<Direction> FACING  = DirectionalBlock.FACING;
     public static final BooleanProperty         POWERED = BlockStateProperties.POWERED;
@@ -100,6 +103,11 @@ public class ReactorRedstoneInterfaceBlock extends Block {
 
         level.setBlock(pos, state.setValue(POWERED, nowPowered), Block.UPDATE_CLIENTS);
         notifyReactor(level, pos, state.setValue(POWERED, nowPowered));
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        return InteractionResult.PASS;
     }
 
     private static void notifyReactor(Level level, BlockPos pos, BlockState state) {

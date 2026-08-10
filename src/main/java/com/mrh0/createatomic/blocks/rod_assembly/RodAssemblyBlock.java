@@ -3,6 +3,7 @@ package com.mrh0.createatomic.blocks.rod_assembly;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.mrh0.createatomic.Utility;
+import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import com.mrh0.createatomic.config.AtomicConfigs;
 import com.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.ChatFormatting;
@@ -12,8 +13,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -180,6 +183,22 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        if (context.getLevel().isClientSide()) return InteractionResult.SUCCESS;
+        if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof RodAssemblyBlockEntity rabe) {
+            ReactorCasingBlockEntity controller = rabe.findReactor();
+            if (controller != null && controller.isActive()) {
+                Player player = context.getPlayer();
+                if (player != null)
+                    player.displayClientMessage(
+                        Component.translatable("createatomic.message.wrench_active_reactor").withStyle(ChatFormatting.RED), true);
+                return InteractionResult.FAIL;
+            }
+        }
+        return IWrenchable.super.onSneakWrenched(state, context);
     }
 
     @Override

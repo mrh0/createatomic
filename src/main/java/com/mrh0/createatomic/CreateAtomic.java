@@ -108,6 +108,8 @@ public class CreateAtomic {
         AtomicBlockEntities.register();
         AtomicItems.register();
         AtomicSounds.register(eventBus);
+        AtomicEntities.register(eventBus);
+        AtomicParticleTypes.register(eventBus);
         CREATIVE_MODE_TABS.register(eventBus);
         //CAFluids.register();
         AtomicEffects.register(eventBus);

@@ -1,6 +1,7 @@
 package com.mrh0.createatomic.blocks.radioisotope_heat_generator;
 
 import com.mrh0.createatomic.config.AtomicConfigs;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import net.minecraft.ChatFormatting;
@@ -8,9 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -18,7 +21,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class RadioisotopeHeatGeneratorBlock extends Block {
+public class RadioisotopeHeatGeneratorBlock extends Block implements IWrenchable {
 
     // Average random ticks a single block receives per real-world day at 20 TPS and default randomTickSpeed=3:
     // (24h x 3600s x 20tps) game ticks/day x (3 chosen / 4096 blocks per section) ~= 1266 random ticks/day
@@ -50,6 +53,11 @@ public class RadioisotopeHeatGeneratorBlock extends Block {
         Component level = Component.translatable("createatomic.tooltip.rhg.heat." + heatLevel.getSerializedName())
                 .withStyle(color);
         tooltip.add(Component.translatable("createatomic.tooltip.rhg.heat_output", level));
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        return InteractionResult.PASS;
     }
 
     @Override

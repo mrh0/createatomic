@@ -49,9 +49,12 @@ public class CABlockTagProvider extends BlockTagsProvider {
                 .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get())
                 .add(AtomicBlocks.REACTOR_CASING.get())
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
-                .add(AtomicBlocks.REACTOR_DEBRIS.get())
                 .add(AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
                 .add(AtomicBlocks.TURBINE.get());
+
+        // Reactor debris requires diamond-tier tool
+        tag(BlockTags.NEEDS_DIAMOND_TOOL)
+                .add(AtomicBlocks.REACTOR_DEBRIS.get());
 
         // Common ore tags (c: namespace)
         tag(CATagRegister.Blocks.ORES)

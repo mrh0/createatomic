@@ -4,11 +4,14 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
 import com.mrh0.createatomic.index.AtomicBlockEntities;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
@@ -63,8 +66,22 @@ public class ReactorCasingBlock extends Block implements IWrenchable, IBE<Reacto
 
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        //withTileEntityDo(context.getLevel(), context.getClickedPos(), ModularAccumulatorTileEntity::toggleWindows);
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        if (context.getLevel().isClientSide()) return InteractionResult.SUCCESS;
+        ReactorCasingBlockEntity controller = getBlockEntityOptional(context.getLevel(), context.getClickedPos())
+                .map(ReactorCasingBlockEntity::getControllerBE).orElse(null);
+        if (controller != null && controller.isActive()) {
+            Player player = context.getPlayer();
+            if (player != null)
+                player.displayClientMessage(
+                    Component.translatable("createatomic.message.wrench_active_reactor").withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
+        }
+        return IWrenchable.super.onSneakWrenched(state, context);
     }
 
     static final VoxelShape CAMPFIRE_SMOKE_CLIP = Block.box(0, 4, 0, 16, 16, 16);

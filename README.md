@@ -1,24 +1,100 @@
-# Create Atomic by MRH0
+# Create: Atomic by MRH0
 
 Addon to the Create mod by the Create Team.
 
-Create Atomic
-Minecraft NeoForge Mod by MRH0
+Minecraft NeoForge 1.21.1
 
 ## Download
 
-Minecraft 1.21.1
-
-At: https://www.curseforge.com/minecraft/mc-mods/createatomic
+https://www.curseforge.com/minecraft/mc-mods/createatomic
 
 ## About
 
-Create Atomic is an addon to the Create mod which adds Nuclear Reactors and other nuclear related content.
+Create: Atomic adds Nuclear Reactors and related nuclear content to Minecraft via the Create mod ecosystem.
 
 ## Content
 
-- Nuclear Reactors
-- Uranium Ore and Ingots
-- Radioisotope Heat Generators
+### Materials & Resources
 
-And more!
+- **Uranium Ore** — spawns in stone and deepslate variants, requires iron-tier pickaxe
+- **Raw Uranium / Uranium Ingot / Uranium Nugget**
+- **Refined Uranium Ingot / Refined Uranium Nugget** — processed form used in reactor fuel
+- **Dense Alloy / Dense Alloy Nugget** — heavy shielding material
+- **Plutonium Ingot / Plutonium Nugget** — byproduct of reactor operation
+
+### Storage Blocks
+
+Craftable from 9 ingots/items and decompress back:
+
+- Uranium Block
+- Refined Uranium Block
+- Dense Alloy Block
+- Plutonium Block
+
+### Reactor Components
+
+- **Reactor Casing** — multi-block structure that forms the reactor body
+- **Rod Assembly** — placed on top of the casing; accepts one rod at a time
+- **Reactor Redstone Interface** — attaches to the casing side; arms/SCRAMs the reactor via redstone
+- **Steam Turbine** — bolts to the reactor face; converts reactor heat into Rotational Force (16 SU/RPM by default)
+
+### Reactor Rods
+
+Inserted into Rod Assemblies:
+
+| Rod | Power | Hull Capacity | Adjacency Bonus | Notes |
+|---|---|---|---|---|
+| Uranium Fuel Rod | +1 | — | +50% | Depletes after ~2 hours (default) |
+| Plutonium Fuel Rod | +1 | −2 | +50% | Depletes after ~6 hours (default); accelerates adjacent fuel consumption by 25% |
+| Depleted Uranium Fuel Rod | — | — | — | Recycled or smelted for materials |
+| Depleted Plutonium Fuel Rod | — | — | — | Recycled or smelted for materials |
+| Small Control Rod | — | +2 | — | Absorbs reactor power; SCRAMs on deactivation |
+| Large Control Rod | — | +5 | — | Absorbs more reactor power; SCRAMs on deactivation |
+| Neutron Reflector | — | — | +50% | Boosts adjacent fuel rods; accelerates adjacent fuel consumption by 10% |
+
+### Hazmat Equipment
+
+- **Hazmat Suit** (helmet, chestplate, leggings, boots) — protects against radiation effects when the full set is worn
+
+### Radioisotope Heat Generator (RHG)
+
+A passive heat source that slowly decays through three states: **Kindled** → **Smouldering** → **Inert**. Decay is random with an average of 2 real-world days per step (configurable).
+
+### Reactor Debris
+
+Left behind after a meltdown. Emits radiation. Requires a diamond pickaxe to mine and takes roughly 8× as long to break as obsidian.
+
+---
+
+## Reactor Mechanics
+
+1. Build a multi-block of **Reactor Casings** (any rectangular prism shape).
+2. Place **Rod Assemblies** on top of the casing to create rod slots.
+3. Insert rods into the assemblies by right-clicking with a rod item.
+4. Attach a **Reactor Redstone Interface** to the side of the casing and send it a redstone signal to arm the reactor.
+5. The reactor activates when effective power exceeds hull capacity.
+6. Pump water into the casing to keep it cooled — the reactor consumes water while running.
+7. Bolt **Steam Turbines** to the reactor face to generate rotational force.
+8. Use a **Mechanical Arm** to automate swapping depleted rods for fresh ones.
+
+**Adjacency:** Fuel rods and Neutron Reflectors boost neighboring fuel rods. Each adjacent rod with an adjacency bonus increases a fuel rod's effective power by that bonus (+50% per neighbor by default).
+
+**Hull Integrity:** If net power (effective fuel − control) exceeds zero while water runs out or heat exceeds safe limits, the reactor takes hull damage. At 0% integrity it melts down.
+
+**SCRAM:** Removing the redstone signal from the Reactor Redstone Interface causes a SCRAM — control rods insert and the reaction stops.
+
+---
+
+## Configuration (server config)
+
+| Key | Default | Description |
+|---|---|---|
+| `fuelRodDuration` | `144000` ticks (~2 hours) | How long a Uranium Fuel Rod lasts before depleting |
+| `plutoniumFuelRodDuration` | `432000` ticks (~6 hours) | How long a Plutonium Fuel Rod lasts before depleting |
+| `meltdownEnabled` | `true` | Whether reactors can melt down; when false the reactor shuts down at 0% hull integrity and self-repairs when cooled |
+| `meltdownExplosion` | `true` | Whether a meltdown triggers an explosion |
+| `blockRadiationEnabled` | `true` | Whether reactor debris and running reactors emit radiation sickness to nearby entities |
+| `radiationEffectEnabled` | `true` | Master switch for all radiation effects |
+| `turbineCapacity` | `16.0` SU/RPM | Stress capacity generated by each Steam Turbine |
+| `hullRegenRate` | `0.5` per lazy tick | Hull integrity regenerated per second when the reactor is fully cooled |
+| `rhgDecayDays` | `2.0` days | Average real-world days per decay step of the Radioisotope Heat Generator |
