@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.api.stress.BlockStressValues;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingRenderer;
+import com.mrh0.createatomic.blocks.rtg.RTGBlockEntity;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyRenderer;
 import com.mrh0.createatomic.blocks.turbine.TurbineRenderer;
 import com.mrh0.createatomic.config.AtomicConfigs;
@@ -97,6 +98,7 @@ public class CreateAtomic {
         eventBus.addListener(this::postInit);
         eventBus.addListener(this::onRegister);
         eventBus.addListener(RegisterCapabilitiesEvent.class, ReactorCasingBlockEntity::registerCapabilities);
+        eventBus.addListener(RegisterCapabilitiesEvent.class, RTGBlockEntity::registerCapabilities);
         eventBus.addListener(RegisterPayloadHandlersEvent.class, CreateAtomic::registerPackets);
         //FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, CARecipes::register);
 

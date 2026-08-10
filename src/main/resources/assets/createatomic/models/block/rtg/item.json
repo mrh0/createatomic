@@ -1,0 +1,10 @@
+{
+    "parent": "createatomic:block/rtg/block",
+    "display": {
+        "gui": {
+            "rotation": [30, 225, 0],
+            "translation": [0, 0, 0],
+            "scale": [0.5625, 0.5625, 0.5625]
+        }
+    }
+}

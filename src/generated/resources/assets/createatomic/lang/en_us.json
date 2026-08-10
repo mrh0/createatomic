@@ -1,6 +1,7 @@
 {
   "block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
   "block.createatomic.dense_alloy_block": "Dense Alloy Block",
+  "block.createatomic.nuclear_bomb": "Nuclear Bomb",
   "block.createatomic.plutonium_block": "Plutonium Block",
   "block.createatomic.radioisotope_heat_generator_kindled": "Radioisotope Heat Generator Kindled",
   "block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator None",
@@ -11,6 +12,7 @@
   "block.createatomic.reactor_redstone_interface": "Reactor Redstone Interface",
   "block.createatomic.refined_uranium_block": "Refined Uranium Block",
   "block.createatomic.rod_assembly": "Rod Assembly",
+  "block.createatomic.rtg": "Rtg",
   "block.createatomic.steam_turbine": "Steam Turbine",
   "block.createatomic.uranium_block": "Uranium Block",
   "block.createatomic.uranium_ore": "Uranium Ore",

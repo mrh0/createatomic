@@ -4,6 +4,7 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.mrh0.createatomic.CreateAtomic;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
+import com.mrh0.createatomic.blocks.rtg.RTGBlockEntity;
 import com.mrh0.createatomic.blocks.turbine.TurbineBlockEntity;
 
 public class AtomicBlockEntities {
@@ -22,6 +23,11 @@ public class AtomicBlockEntities {
     public static final BlockEntityEntry<TurbineBlockEntity> TURBINE = CreateAtomic.REGISTRATE
             .blockEntity("steam_turbine", TurbineBlockEntity::new)
             .validBlocks(AtomicBlocks.TURBINE)
+            .register();
+
+    public static final BlockEntityEntry<RTGBlockEntity> RTG = CreateAtomic.REGISTRATE
+            .blockEntity("rtg", RTGBlockEntity::new)
+            .validBlocks(AtomicBlocks.RTG)
             .register();
 
     public static void register() {}

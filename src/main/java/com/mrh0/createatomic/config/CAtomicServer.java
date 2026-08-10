@@ -40,6 +40,14 @@ public class CAtomicServer extends ConfigBase {
             "Each step: heated -> smouldering -> inert.",
             "1.0 = on average (random) 24 real hours (~1,728,000 ticks) per step.");
 
+    public final ConfigGroup rtg = group(0, "rtg", "Radioisotope Thermoelectric Generator settings");
+
+    public final ConfigInt rtgEnergyPerTick = i(10, 1, Integer.MAX_VALUE, "rtgEnergyPerTick",
+            "Forge Energy (FE) generated per tick by each RTG block.");
+
+    public final ConfigInt rtgBufferCapacity = i(100_000, 1, Integer.MAX_VALUE, "rtgBufferCapacity",
+            "Maximum FE stored in the RTG's internal buffer.");
+
     @Override
     public String getName() {
         return "server";

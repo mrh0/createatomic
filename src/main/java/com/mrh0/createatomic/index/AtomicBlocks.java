@@ -7,6 +7,7 @@ import com.mrh0.createatomic.CreateAtomic;
 import com.mrh0.createatomic.blocks.nuclear_bomb.NuclearBombBlock;
 import com.mrh0.createatomic.blocks.radioisotope_heat_generator.RadioisotopeHeatGeneratorBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
+import com.mrh0.createatomic.blocks.rtg.RTGBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockItem;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingCTBehaviour;
@@ -165,6 +166,14 @@ public class AtomicBlocks {
     public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY).strength(3.5f).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<RTGBlock> RTG = CreateAtomic.REGISTRATE.block("rtg", RTGBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY).lightLevel(s -> 3).requiresCorrectToolForDrops().noOcclusion())
             .blockstate((ctx, prov) -> {})
             .item()
             .transform(customItemModel())

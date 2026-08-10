@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "createatomic:nuclear_bomb"
+          "name": "createatomic:rtg"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "createatomic:blocks/nuclear_bomb"
+  "random_sequence": "createatomic:blocks/rtg"
 }

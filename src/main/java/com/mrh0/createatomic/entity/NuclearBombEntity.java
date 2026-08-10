@@ -2,7 +2,6 @@ package com.mrh0.createatomic.entity;
 
 import com.mrh0.createatomic.Utility;
 import com.mrh0.createatomic.index.AtomicParticleTypes;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 public class NuclearBombEntity extends Entity implements TraceableEntity {
 
     public static final int FUSE_TIME = 200;
-    public static final float EXPLOSION_RADIUS = 15.0f;
+    public static final float EXPLOSION_RADIUS = 40.0f;
 
     private static final EntityDataAccessor<Integer> DATA_FUSE =
             SynchedEntityData.defineId(NuclearBombEntity.class, EntityDataSerializers.INT);
@@ -83,7 +82,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
     private void explode() {
         Level level = this.level();
         level.explode(this, this.getX(), this.getY(), this.getZ(),
-                EXPLOSION_RADIUS, ExplosionInteraction.TNT);
+                EXPLOSION_RADIUS, true, ExplosionInteraction.TNT);
         Utility.applyRadiationInRadius(level, this.blockPosition(), (int) (EXPLOSION_RADIUS * 3), 2);
         if (level instanceof ServerLevel serverLevel) {
             spawnMushroomCloud(serverLevel);

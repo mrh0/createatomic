@@ -1,6 +1,7 @@
 {
   "block.createatomic.deepslate_uranium_ore": "ǝɹO ɯnıuɐɹ∩ ǝʇɐןsdǝǝᗡ",
   "block.createatomic.dense_alloy_block": "ʞɔoןᗺ ʎoןןⱯ ǝsuǝᗡ",
+  "block.createatomic.nuclear_bomb": "qɯoᗺ ɹɐǝןɔnN",
   "block.createatomic.plutonium_block": "ʞɔoןᗺ ɯnıuoʇnןԀ",
   "block.createatomic.radioisotope_heat_generator_kindled": "pǝןpuıʞ ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
   "block.createatomic.radioisotope_heat_generator_none": "ǝuoN ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
@@ -11,6 +12,7 @@
   "block.createatomic.reactor_redstone_interface": "ǝɔɐɟɹǝʇuI ǝuoʇspǝᴚ ɹoʇɔɐǝᴚ",
   "block.createatomic.refined_uranium_block": "ʞɔoןᗺ ɯnıuɐɹ∩ pǝuıɟǝᴚ",
   "block.createatomic.rod_assembly": "ʎןqɯǝssⱯ poᴚ",
+  "block.createatomic.rtg": "bʇᴚ",
   "block.createatomic.steam_turbine": "ǝuıqɹn⟘ ɯɐǝʇS",
   "block.createatomic.uranium_block": "ʞɔoןᗺ ɯnıuɐɹ∩",
   "block.createatomic.uranium_ore": "ǝɹO ɯnıuɐɹ∩",
