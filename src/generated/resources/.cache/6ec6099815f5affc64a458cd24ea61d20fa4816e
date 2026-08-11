@@ -1,6 +1,6 @@
-// 1.21.1	2026-08-11T00:36:39.498568693	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-e654b4948723224a495fc766dd280dab578b50c6 assets/createatomic/lang/en_ud.json
-eda86cd803c562778963eb788119ee3ce7ae203e assets/createatomic/lang/en_us.json
+// 1.21.1	2026-08-12T00:55:56.617955619	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+b51c5bf197fbe86f5fe8f50f6a0ff1a18a006a15 assets/createatomic/lang/en_ud.json
+3ac5d419d6a4d762246d44d26944959ebfe4a164 assets/createatomic/lang/en_us.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
 2f62fb55dcfa91076789b21fe5c7dab43b12163f assets/createatomic/models/item/dense_alloy_block.json
@@ -18,6 +18,7 @@ bf064ab5567c9d4e43487acd98ab004f75753161 assets/createatomic/models/item/plutoni
 c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json
 b53e109017e3cbafb9b4c6358c106236f1690098 assets/createatomic/models/item/plutonium_nugget.json
 3b7b09bf40b83645e8eda4b6b43307959957c999 assets/createatomic/models/item/plutonium_rod.json
+22ed0dc231644f7d5f7ec102139c36cc29df609d assets/createatomic/models/item/portable_rtg.json
 104b6c4cded2628b8b11ba16c58854537e1920d1 assets/createatomic/models/item/radioisotope_heat_generator_kindled.json
 4de4b676b5b1b430c52ed3826f49d37632cb2e79 assets/createatomic/models/item/radioisotope_heat_generator_none.json
 e8fe5c233ab0ee73279e9904847eec4a7776526b assets/createatomic/models/item/radioisotope_heat_generator_smouldering.json

@@ -3,6 +3,7 @@ package com.mrh0.createatomic.blocks.rtg;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.mrh0.createatomic.Utility;
 import com.mrh0.createatomic.config.AtomicConfigs;
 import com.mrh0.createatomic.index.AtomicBlockEntities;
 import net.minecraft.ChatFormatting;
@@ -14,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.createmod.catnip.lang.Lang;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -110,22 +112,26 @@ public class RTGBlockEntity extends SmartBlockEntity implements IHaveGoggleInfor
         );
     }
 
-    /* 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        String indent = "  ";
         int perTick = AtomicConfigs.server().rtgEnergyPerTick.get();
-        int capacity = AtomicConfigs.server().rtgBufferCapacity.get();
 
-        tooltip.add(Component.literal(indent).append(
-                Component.translatable("createatomic.tooltip.rtg.generating", perTick)
-                        .withStyle(ChatFormatting.GREEN)));
-        tooltip.add(Component.literal(indent).append(
-                Component.translatable("createatomic.tooltip.rtg.stored", storedEnergy, capacity)
-                        .withStyle(ChatFormatting.AQUA)));
+        Lang.builder("createatomic")
+                .add(Component.translatable("createatomic.tooltip.rtg.generation").withStyle(ChatFormatting.GRAY))
+                .forGoggles(tooltip);
+        Lang.builder("createatomic")
+                .add(Utility.getTextComponent(perTick, "⚡/t").withStyle(ChatFormatting.GREEN))
+                .forGoggles(tooltip, 1);
+
+        Lang.builder("createatomic")
+                .add(Component.translatable("createatomic.tooltip.rtg.stored").withStyle(ChatFormatting.GRAY))
+                .forGoggles(tooltip);
+        Lang.builder("createatomic")
+                .add(Utility.getTextComponent(energyCapability))
+                .forGoggles(tooltip, 1);
+
         return true;
     }
-    */
 
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
