@@ -33,6 +33,7 @@
 	"block.createatomic.radioisotope_heat_generator_kindled": "Radioisotope Heat Generator",
 	"block.createatomic.radioisotope_heat_generator_smouldering": "Radioisotope Heat Generator",
 	"block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator",
+	"item.createatomic.heatsink": "Heatsink",
 	"item.createatomic.portable_rtg": "Portable RTG",
 	"block.createatomic.rtg": "Radioisotope Thermoelectric Generator",
 	"block.createatomic.rtg.tooltip": "RTG",

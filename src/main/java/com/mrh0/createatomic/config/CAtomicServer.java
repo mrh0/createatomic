@@ -53,7 +53,7 @@ public class CAtomicServer extends ConfigBase {
     public final ConfigInt portableRtgEnergyPerTick = i(2, 1, Integer.MAX_VALUE, "portableRtgEnergyPerTick",
             "Forge Energy (FE) generated per tick by each Portable RTG item.");
 
-    public final ConfigInt portableRtgBufferCapacity = i(8_000, 1, Integer.MAX_VALUE, "portableRtgBufferCapacity",
+    public final ConfigInt portableRtgBufferCapacity = i(500, 1, Integer.MAX_VALUE, "portableRtgBufferCapacity",
             "Maximum FE stored in the Portable RTG's internal buffer.");
 
     @Override

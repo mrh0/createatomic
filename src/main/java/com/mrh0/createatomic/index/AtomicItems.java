@@ -133,6 +133,11 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
+    public static final ItemEntry<Item> HEATSINK =
+            CreateAtomic.REGISTRATE.item("heatsink", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
     public static final ItemEntry<PortableRTGItem> PORTABLE_RTG =
             CreateAtomic.REGISTRATE.item("portable_rtg", PortableRTGItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))

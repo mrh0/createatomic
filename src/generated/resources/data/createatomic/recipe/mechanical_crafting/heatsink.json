@@ -1,0 +1,17 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": true,
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:plates/copper"
+    }
+  },
+  "pattern": [
+    "CCCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:heatsink"
+  }
+}

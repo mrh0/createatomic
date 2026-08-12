@@ -4,6 +4,7 @@ import com.mrh0.createatomic.CreateAtomic;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicCraftingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicCrushingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicItemApplicationRecipeGen;
+import com.mrh0.createatomic.datagen.RecipeProvider.AtomicMechanicalCrafterRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicMixingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicPressingRecipeGen;
 import com.mrh0.createatomic.datagen.RecipeProvider.AtomicWashingRecipeGen;
@@ -56,6 +57,7 @@ public class CreateAtomicDataGen {
         generator.addProvider(event.includeServer(), new AtomicPressingRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new AtomicMixingRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new AtomicItemApplicationRecipeGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new AtomicMechanicalCrafterRecipeGen(output, lookupProvider));
 
         // World generation
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
