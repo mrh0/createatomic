@@ -46,7 +46,7 @@ public class NuclearBombRenderer extends EntityRenderer<NuclearBombEntity> {
                 : OverlayTexture.NO_OVERLAY;
 
         this.blockRenderer.renderSingleBlock(
-                AtomicBlocks.NUCLEAR_BOMB.getDefaultState(),
+                AtomicBlocks.CRUDE_NUCLEAR_BOMB.getDefaultState(),
                 poseStack, bufferSource, packedLight, overlay
         );
 

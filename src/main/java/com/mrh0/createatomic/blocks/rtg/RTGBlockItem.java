@@ -1,38 +1,28 @@
-package com.mrh0.createatomic.items;
+package com.mrh0.createatomic.blocks.rtg;
 
 import com.mrh0.createatomic.Utility;
 import com.mrh0.createatomic.config.AtomicConfigs;
-import com.mrh0.createatomic.index.AtomicItems;
+import com.mrh0.createatomic.index.AtomicBlocks;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.List;
 
-public class PortableRTGItem extends Item {
+public class RTGBlockItem extends BlockItem {
 
-    public PortableRTGItem(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (level.isClientSide()) return;
-        int perTick = AtomicConfigs.server().portableRtgEnergyPerTick.get();
-        int capacity = AtomicConfigs.server().portableRtgBufferCapacity.get();
-        int current = getEnergy(stack);
-        if (current < capacity) {
-            setEnergy(stack, Math.min(current + perTick, capacity));
-        }
+    public RTGBlockItem(Block block, Properties properties) {
+        super(block, properties);
     }
 
     public static int getEnergy(ItemStack stack) {
@@ -66,33 +56,31 @@ public class PortableRTGItem extends Item {
                 return toExtract;
             }
 
-            @Override
-            public int getEnergyStored() { return getEnergy(stack); }
-
-            @Override
-            public int getMaxEnergyStored() { return AtomicConfigs.server().portableRtgBufferCapacity.get(); }
-
-            @Override
-            public boolean canExtract() { return true; }
-
-            @Override
-            public boolean canReceive() { return true; }
+            @Override public int getEnergyStored() { return getEnergy(stack); }
+            @Override public int getMaxEnergyStored() { return AtomicConfigs.server().portableRtgBufferCapacity.get(); }
+            @Override public boolean canExtract() { return true; }
+            @Override public boolean canReceive() { return true; }
         };
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+        if (level.isClientSide()) return;
+        int perTick = AtomicConfigs.server().portableRtgEnergyPerTick.get();
+        int capacity = AtomicConfigs.server().portableRtgBufferCapacity.get();
+        int current = getEnergy(stack);
+        if (current < capacity) setEnergy(stack, Math.min(current + perTick, capacity));
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(
                 Capabilities.EnergyStorage.ITEM,
                 (stack, ctx) -> createEnergyStorage(stack),
-                AtomicItems.PORTABLE_RTG.get()
+                AtomicBlocks.RTG.asItem()
         );
     }
 
-    /*
-    @Override
-    public boolean isBarVisible(ItemStack stack) {
-        return true;
-    }
+    @Override public boolean isBarVisible(ItemStack stack) { return true; }
 
     @Override
     public int getBarWidth(ItemStack stack) {
@@ -101,11 +89,7 @@ public class PortableRTGItem extends Item {
         return Math.round(13f * getEnergy(stack) / capacity);
     }
 
-    @Override
-    public int getBarColor(ItemStack stack) {
-        return 0x00BFFF;
-    }
-    */
+    @Override public int getBarColor(ItemStack stack) { return 0x00BFFF; }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {

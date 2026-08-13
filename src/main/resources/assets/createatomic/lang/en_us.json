@@ -18,9 +18,9 @@
 	"item.createatomic.plutonium_ingot": "Plutonium Ingot",
 	"item.createatomic.plutonium_nugget": "Plutonium Nugget",
 
-	"block.createatomic.nuclear_bomb": "Nuclear Bomb",
-	"block.createatomic.nuclear_bomb.tooltip": "NUCLEAR BOMB",
-	"block.createatomic.nuclear_bomb.tooltip.summary": "A devastating nuclear device. _Right-click_ with Flint and Steel to arm. Detonates after a _10-second_ fuse with a massive explosion and _mushroom cloud_.",
+	"block.createatomic.crude_nuclear_bomb": "Crude Nuclear Bomb",
+	"block.createatomic.crude_nuclear_bomb.tooltip": "CRUDE NUCLEAR BOMB",
+	"block.createatomic.crude_nuclear_bomb.tooltip.summary": "A devastating nuclear device. _Right-click_ with Flint and Steel to arm. Detonates after a _10-second_ fuse with a massive explosion and _mushroom cloud_.",
 
 	"block.createatomic.yellow_cake": "Yellow Cake",
 	"block.createatomic.uranium_ore": "Uranium Ore",
@@ -34,7 +34,6 @@
 	"block.createatomic.radioisotope_heat_generator_smouldering": "Radioisotope Heat Generator",
 	"block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator",
 	"item.createatomic.heatsink": "Heatsink",
-	"item.createatomic.portable_rtg": "Portable RTG",
 	"block.createatomic.rtg": "Radioisotope Thermoelectric Generator",
 	"block.createatomic.rtg.tooltip": "RTG",
 	"block.createatomic.rtg.tooltip.summary": "Passively generates _Forge Energy_ from radioactive decay. Output rate and buffer size are configurable.",

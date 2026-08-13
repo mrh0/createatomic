@@ -2,7 +2,6 @@ package com.mrh0.createatomic.index;
 
 import com.mrh0.createatomic.items.FuelRodItem;
 import com.mrh0.createatomic.items.HazmatArmorItem;
-import com.mrh0.createatomic.items.PortableRTGItem;
 import com.mrh0.createatomic.items.RodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
@@ -135,11 +134,6 @@ public class AtomicItems {
 
     public static final ItemEntry<Item> HEATSINK =
             CreateAtomic.REGISTRATE.item("heatsink", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<PortableRTGItem> PORTABLE_RTG =
-            CreateAtomic.REGISTRATE.item("portable_rtg", PortableRTGItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

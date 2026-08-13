@@ -1,7 +1,7 @@
 {
+  "block.createatomic.crude_nuclear_bomb": "qɯoᗺ ɹɐǝןɔnN ǝpnɹƆ",
   "block.createatomic.deepslate_uranium_ore": "ǝɹO ɯnıuɐɹ∩ ǝʇɐןsdǝǝᗡ",
   "block.createatomic.dense_alloy_block": "ʞɔoןᗺ ʎoןןⱯ ǝsuǝᗡ",
-  "block.createatomic.nuclear_bomb": "qɯoᗺ ɹɐǝןɔnN",
   "block.createatomic.plutonium_block": "ʞɔoןᗺ ɯnıuoʇnןԀ",
   "block.createatomic.radioisotope_heat_generator_kindled": "pǝןpuıʞ ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
   "block.createatomic.radioisotope_heat_generator_none": "ǝuoN ɹoʇɐɹǝuǝ⅁ ʇɐǝH ǝdoʇosıoıpɐᴚ",
@@ -30,7 +30,6 @@
   "item.createatomic.plutonium_ingot": "ʇobuI ɯnıuoʇnןԀ",
   "item.createatomic.plutonium_nugget": "ʇǝbbnN ɯnıuoʇnןԀ",
   "item.createatomic.plutonium_rod": "poᴚ ɯnıuoʇnןԀ",
-  "item.createatomic.portable_rtg": "bʇᴚ ǝןqɐʇɹoԀ",
   "item.createatomic.raw_uranium": "ɯnıuɐɹ∩ ʍɐᴚ",
   "item.createatomic.refined_uranium_ingot": "ʇobuI ɯnıuɐɹ∩ pǝuıɟǝᴚ",
   "item.createatomic.refined_uranium_nugget": "ʇǝbbnN ɯnıuɐɹ∩ pǝuıɟǝᴚ",

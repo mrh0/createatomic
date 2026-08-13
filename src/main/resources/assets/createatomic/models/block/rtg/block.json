@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"format_version": "1.21.11",
 	"parent": "minecraft:block/block",
 	"textures": {
 		"0": "createatomic:block/rtg/block",
@@ -21,14 +21,15 @@
 		},
 		{
 			"name": "middle",
-			"from": [6, 10, 6],
-			"to": [10, 20, 10],
+			"from": [5, 10, 5],
+			"to": [11, 20, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 0, -1]},
 			"faces": {
-				"north": {"uv": [14, 0, 16, 5], "texture": "#0"},
-				"east": {"uv": [14, 0, 16, 5], "texture": "#0"},
-				"south": {"uv": [14, 0, 16, 5], "texture": "#0"},
-				"west": {"uv": [14, 0, 16, 5], "texture": "#0"},
-				"up": {"uv": [14, 0, 16, 2], "texture": "#0"},
+				"north": {"uv": [13, 0, 16, 5], "texture": "#0"},
+				"east": {"uv": [13, 0, 16, 5], "texture": "#0"},
+				"south": {"uv": [13, 0, 16, 5], "texture": "#0"},
+				"west": {"uv": [13, 0, 16, 5], "texture": "#0"},
+				"up": {"uv": [13, 0, 16, 3], "texture": "#0"},
 				"down": {"uv": [0, 0, 4, 4], "texture": "#missing"}
 			}
 		},
@@ -48,14 +49,14 @@
 		},
 		{
 			"name": "bladeS1",
-			"from": [7.5, 11, -1],
-			"to": [8.5, 19, 17],
+			"from": [7.5, 10.5, -1],
+			"to": [8.5, 19.5, 17],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 20, 8]},
 			"faces": {
-				"north": {"uv": [8.5, 0, 9, 4], "texture": "#0"},
-				"east": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"south": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
-				"west": {"uv": [0, 0, 9, 4], "texture": "#0"},
+				"north": {"uv": [8.5, 0, 9, 4.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 0.5, 4.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
 				"up": {"uv": [0, 0, 9, 0.5], "rotation": 90, "texture": "#0"},
 				"down": {"uv": [0, 0, 9, 0.5], "rotation": 90, "texture": "#0"}
 			}
@@ -76,14 +77,14 @@
 		},
 		{
 			"name": "bladeS2",
-			"from": [-1, 11, 7.5],
-			"to": [17, 19, 8.5],
+			"from": [-1, 10.5, 7.5],
+			"to": [17, 19.5, 8.5],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 20, 8]},
 			"faces": {
-				"north": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"east": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
-				"south": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"west": {"uv": [8.5, 0, 9, 4], "texture": "#0"},
+				"north": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 0.5, 4.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"west": {"uv": [8.5, 0, 9, 4.5], "texture": "#0"},
 				"up": {"uv": [0, 0, 9, 0.5], "texture": "#0"},
 				"down": {"uv": [0, 0, 9, 0.5], "rotation": 180, "texture": "#0"}
 			}
@@ -104,30 +105,16 @@
 		},
 		{
 			"name": "bladeS3",
-			"from": [-1, 11, 7.5],
-			"to": [17, 19, 8.5],
+			"from": [-1, 10.5, 7.5],
+			"to": [17, 19.5, 8.5],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [8, 20, 8]},
 			"faces": {
-				"north": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"east": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
-				"south": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"west": {"uv": [8.5, 0, 9, 4], "texture": "#0"},
+				"north": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 0.5, 4.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"west": {"uv": [8.5, 0, 9, 4.5], "texture": "#0"},
 				"up": {"uv": [0, 0, 9, 0.5], "texture": "#0"},
 				"down": {"uv": [0, 0, 9, 0.5], "rotation": 180, "texture": "#0"}
-			}
-		},
-		{
-			"name": "bladeS4",
-			"from": [7.5, 11, -1],
-			"to": [8.5, 19, 17],
-			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 20, 8]},
-			"faces": {
-				"north": {"uv": [0, 0, 0.5, 4], "texture": "#0"},
-				"east": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"south": {"uv": [8.5, 0, 9, 4], "texture": "#0"},
-				"west": {"uv": [0, 0, 9, 4], "texture": "#0"},
-				"up": {"uv": [0, 0, 9, 0.5], "rotation": 270, "texture": "#0"},
-				"down": {"uv": [0, 0, 9, 0.5], "rotation": 270, "texture": "#0"}
 			}
 		},
 		{
@@ -142,6 +129,20 @@
 				"west": {"uv": [8.5, 0, 9, 4.5], "texture": "#0"},
 				"up": {"uv": [0, 0, 9, 0.5], "texture": "#0"},
 				"down": {"uv": [0, 0, 9, 0.5], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "bladeS4",
+			"from": [7.5, 10.5, -1],
+			"to": [8.5, 19.5, 17],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 20, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0.5, 4.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"south": {"uv": [8.5, 0, 9, 4.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 9, 4.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 9, 0.5], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 9, 0.5], "rotation": 270, "texture": "#0"}
 			}
 		}
 	]

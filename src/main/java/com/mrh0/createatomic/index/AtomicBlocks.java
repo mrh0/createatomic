@@ -8,6 +8,7 @@ import com.mrh0.createatomic.blocks.nuclear_bomb.NuclearBombBlock;
 import com.mrh0.createatomic.blocks.radioisotope_heat_generator.RadioisotopeHeatGeneratorBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlock;
 import com.mrh0.createatomic.blocks.rtg.RTGBlock;
+import com.mrh0.createatomic.blocks.rtg.RTGBlockItem;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockItem;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingCTBehaviour;
@@ -155,7 +156,7 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();*/
 
-    public static final BlockEntry<NuclearBombBlock> NUCLEAR_BOMB = CreateAtomic.REGISTRATE.block("nuclear_bomb", NuclearBombBlock::new)
+    public static final BlockEntry<NuclearBombBlock> CRUDE_NUCLEAR_BOMB = CreateAtomic.REGISTRATE.block("crude_nuclear_bomb", NuclearBombBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.YELLOW).strength(3.0f).ignitedByLava())
             .blockstate((ctx, prov) -> {})
@@ -175,7 +176,7 @@ public class AtomicBlocks {
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY).lightLevel(s -> 3).requiresCorrectToolForDrops().noOcclusion())
             .blockstate((ctx, prov) -> {})
-            .item()
+            .item(RTGBlockItem::new)
             .transform(customItemModel())
             .register();
 

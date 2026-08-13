@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "createatomic:dense_alloy"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "P": {
+      "tag": "c:ingots/plutonium"
+    }
+  },
+  "pattern": [
+    "GDG",
+    "GPG",
+    "GDG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:crude_nuclear_bomb"
+  }
+}

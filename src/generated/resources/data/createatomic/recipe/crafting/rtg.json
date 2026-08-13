@@ -2,26 +2,26 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "tag": "c:plates/copper"
+    "D": {
+      "item": "createatomic:dense_alloy"
     },
     "H": {
       "item": "createatomic:heatsink"
     },
     "P": {
-      "item": "createatomic:plutonium_ingot"
+      "tag": "c:ingots/plutonium"
     },
     "R": {
       "item": "createatomic:reactor_casing"
     }
   },
   "pattern": [
-    "CHC",
+    "HDH",
     "PPP",
     " R "
   ],
   "result": {
     "count": 1,
-    "id": "createatomic:radioisotope_heat_generator_kindled"
+    "id": "createatomic:rtg"
   }
 }

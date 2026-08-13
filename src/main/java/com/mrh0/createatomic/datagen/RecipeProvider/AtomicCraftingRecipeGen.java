@@ -9,6 +9,7 @@ import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 
@@ -193,17 +194,6 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .unlockedBy("has_depleted_fuel_rod", has(AtomicItems.DEPLETED_FUEL_ROD.get()))
             .save(output, CreateAtomic.asResource("blasting/uranium_from_depleted_rod"));*/
 
-        // Crafting Components
-        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicItems.DENSE_ALLOY.get(), 1)
-            .pattern("L")
-            .pattern("C")
-            .pattern("I")
-            .define('L', CATagRegister.Items.PLATES_GRAPHITE)
-            .define('C', CATagRegister.Items.PLATES_COPPER)
-            .define('I', CATagRegister.Items.PLATES_IRON)
-            .unlockedBy("has_plates", has(CATagRegister.Items.PLATES))
-            .save(output, CreateAtomic.asResource("crafting/dense_alloy"));*/
-
         // Reactor Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
             .pattern("E")
@@ -245,13 +235,36 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("crafting/turbine_alt"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get())
-            .pattern("PRP")
-            .pattern("DPD")
-            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .pattern("CHC")
+            .pattern("PPP")
+            .pattern(" R ")
+            .define('H', AtomicItems.HEATSINK)
             .define('P', AtomicItems.PLUTONIUM_INGOT.get())
             .define('R', AtomicBlocks.REACTOR_CASING.get())
+            .define('C', CATagRegister.Items.PLATES_COPPER)
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
             .save(output, CreateAtomic.asResource("crafting/radioisotope_heat_generator"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.CRUDE_NUCLEAR_BOMB.get(), 1)
+            .pattern("GDG")
+            .pattern("GPG")
+            .pattern("GDG")
+            .define('G', Items.GUNPOWDER)
+            .define('P', CATagRegister.Items.INGOTS_PLUTONIUM)
+            .define('D', AtomicItems.DENSE_ALLOY)
+            .unlockedBy("has_plutonium", has(CATagRegister.Items.INGOTS_PLUTONIUM))
+            .save(output, CreateAtomic.asResource("crafting/crude_nuclear_bomb"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.RTG.get(), 1)
+            .pattern("HDH")
+            .pattern("PPP")
+            .pattern(" R ")
+            .define('H', AtomicItems.HEATSINK)
+            .define('P', CATagRegister.Items.INGOTS_PLUTONIUM)
+            .define('D', AtomicItems.DENSE_ALLOY)
+            .define('R', AtomicBlocks.REACTOR_CASING.get())
+            .unlockedBy("has_plutonium", has(CATagRegister.Items.INGOTS_PLUTONIUM))
+            .save(output, CreateAtomic.asResource("crafting/rtg"));
 
         // Reactor Components
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.FUEL_ROD.get(), 1)

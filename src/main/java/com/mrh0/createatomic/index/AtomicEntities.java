@@ -15,12 +15,12 @@ public class AtomicEntities {
             DeferredRegister.create(Registries.ENTITY_TYPE, CreateAtomic.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<NuclearBombEntity>> NUCLEAR_BOMB =
-            ENTITIES.register("nuclear_bomb", () ->
+            ENTITIES.register("crude_nuclear_bomb", () ->
                     EntityType.Builder.<NuclearBombEntity>of(NuclearBombEntity::new, MobCategory.MISC)
                             .sized(0.98F, 0.98F)
                             .clientTrackingRange(8)
                             .updateInterval(10)
-                            .build("createatomic:nuclear_bomb"));
+                            .build("createatomic:crude_nuclear_bomb"));
 
     public static void register(IEventBus eventBus) {
         ENTITIES.register(eventBus);

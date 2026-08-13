@@ -1,7 +1,7 @@
 {
+  "block.createatomic.crude_nuclear_bomb": "Crude Nuclear Bomb",
   "block.createatomic.deepslate_uranium_ore": "Deepslate Uranium Ore",
   "block.createatomic.dense_alloy_block": "Dense Alloy Block",
-  "block.createatomic.nuclear_bomb": "Nuclear Bomb",
   "block.createatomic.plutonium_block": "Plutonium Block",
   "block.createatomic.radioisotope_heat_generator_kindled": "Radioisotope Heat Generator Kindled",
   "block.createatomic.radioisotope_heat_generator_none": "Radioisotope Heat Generator None",
@@ -30,7 +30,6 @@
   "item.createatomic.plutonium_ingot": "Plutonium Ingot",
   "item.createatomic.plutonium_nugget": "Plutonium Nugget",
   "item.createatomic.plutonium_rod": "Plutonium Rod",
-  "item.createatomic.portable_rtg": "Portable Rtg",
   "item.createatomic.raw_uranium": "Raw Uranium",
   "item.createatomic.refined_uranium_ingot": "Refined Uranium Ingot",
   "item.createatomic.refined_uranium_nugget": "Refined Uranium Nugget",
