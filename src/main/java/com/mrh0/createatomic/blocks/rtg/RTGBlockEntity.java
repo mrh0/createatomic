@@ -25,6 +25,8 @@ import java.util.List;
 public class RTGBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
     private int storedEnergy = 0;
+    private int radiationTimer = 0;
+    private int radiationInterval = nextRadiationInterval();
 
     private final IEnergyStorage energyCapability = new IEnergyStorage() {
         @Override
@@ -85,6 +87,16 @@ public class RTGBlockEntity extends SmartBlockEntity implements IHaveGoggleInfor
         }
 
         pushEnergyToNeighbors();
+
+        if (++radiationTimer >= radiationInterval) {
+            radiationTimer = 0;
+            radiationInterval = nextRadiationInterval();
+            Utility.applyRadiationInRadius(level, getBlockPos(), AtomicConfigs.server().rtgRadiationRadius.get(), 0);
+        }
+    }
+
+    private static int nextRadiationInterval() {
+        return 20 * (30 + (int) (Math.random() * 61));
     }
 
     private void pushEnergyToNeighbors() {

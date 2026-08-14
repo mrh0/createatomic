@@ -42,7 +42,7 @@ public class RTGBlockItem extends BlockItem {
             @Override
             public int receiveEnergy(int maxReceive, boolean simulate) {
                 int current = getEnergy(stack);
-                int capacity = AtomicConfigs.server().portableRtgBufferCapacity.get();
+                int capacity = AtomicConfigs.server().rtgBufferCapacity.get();
                 int toReceive = Math.min(maxReceive, capacity - current);
                 if (!simulate && toReceive > 0) setEnergy(stack, current + toReceive);
                 return toReceive;
@@ -57,7 +57,7 @@ public class RTGBlockItem extends BlockItem {
             }
 
             @Override public int getEnergyStored() { return getEnergy(stack); }
-            @Override public int getMaxEnergyStored() { return AtomicConfigs.server().portableRtgBufferCapacity.get(); }
+            @Override public int getMaxEnergyStored() { return AtomicConfigs.server().rtgBufferCapacity.get(); }
             @Override public boolean canExtract() { return true; }
             @Override public boolean canReceive() { return true; }
         };
@@ -66,8 +66,8 @@ public class RTGBlockItem extends BlockItem {
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
         if (level.isClientSide()) return;
-        int perTick = AtomicConfigs.server().portableRtgEnergyPerTick.get();
-        int capacity = AtomicConfigs.server().portableRtgBufferCapacity.get();
+        int perTick = AtomicConfigs.server().rtgEnergyPerTick.get();
+        int capacity = AtomicConfigs.server().rtgBufferCapacity.get();
         int current = getEnergy(stack);
         if (current < capacity) setEnergy(stack, Math.min(current + perTick, capacity));
     }
@@ -80,19 +80,22 @@ public class RTGBlockItem extends BlockItem {
         );
     }
 
+    /* 
     @Override public boolean isBarVisible(ItemStack stack) { return true; }
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        int capacity = AtomicConfigs.server().portableRtgBufferCapacity.get();
+        int capacity = AtomicConfigs.server().rtgBufferCapacity.get();
         if (capacity <= 0) return 0;
         return Math.round(13f * getEnergy(stack) / capacity);
     }
 
     @Override public int getBarColor(ItemStack stack) { return 0x00BFFF; }
+    
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Utility.getTextComponent(createEnergyStorage(stack)));
     }
+    */
 }

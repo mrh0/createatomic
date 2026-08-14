@@ -18,6 +18,7 @@ import com.mrh0.createatomic.blocks.reactor_redstone_interface.ReactorRedstoneIn
 import com.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
@@ -157,8 +158,8 @@ public class AtomicBlocks {
             .register();*/
 
     public static final BlockEntry<NuclearBombBlock> CRUDE_NUCLEAR_BOMB = CreateAtomic.REGISTRATE.block("crude_nuclear_bomb", NuclearBombBlock::new)
-            .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(DyeColor.YELLOW).strength(3.0f).ignitedByLava())
+            .initialProperties(() -> Blocks.TNT)
+            .properties(p -> p.mapColor(DyeColor.YELLOW))
             .blockstate((ctx, prov) -> {})
             .item()
             .transform(customItemModel())

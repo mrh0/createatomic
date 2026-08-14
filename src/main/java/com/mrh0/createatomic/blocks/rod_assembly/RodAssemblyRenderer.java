@@ -29,7 +29,7 @@ public class RodAssemblyRenderer extends SafeBlockEntityRenderer<RodAssemblyBloc
             case DepletedPlutoniumFuelRod -> AtomicPartials.ROD_DEPLETED_PLUTONIUM;
             case SmallControlRod          -> AtomicPartials.ROD_CONTROL_SMALL;
             case LargeControlRod          -> AtomicPartials.ROD_CONTROL_LARGE;
-            case NeutronReflector         -> AtomicPartials.ROD_REFLECTOR;
+            case NeutronReflectorRod         -> AtomicPartials.ROD_REFLECTOR;
             default                       -> null;
         };
 

@@ -24,6 +24,7 @@ public class CATagRegister {
         public static final TagKey<Item> STORAGE_BLOCKS_DENSE_ALLOY = commonTags("storage_blocks", "dense_alloy");
         public static final TagKey<Item> STORAGE_BLOCKS_IRON = commonTags("storage_blocks", "iron");
         public static final TagKey<Item> STORAGE_BLOCKS_COAL = commonTags("storage_blocks", "coal");
+        public static final TagKey<Item> STORAGE_BLOCKS_COPPER = commonTags("storage_blocks", "copper");
         public static final TagKey<Item> RAW_MATERIALS = commonTags("raw_materials");
         public static final TagKey<Item> RAW_MATERIALS_URANIUM = commonTags("raw_materials", "uranium");
         public static final TagKey<Item> INGOTS = commonTags("ingots");

@@ -171,7 +171,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
                 var controller = rabe.findReactor();
                 boolean inMeltdown = controller != null && controller.hasMeltdown;
 
-                // Drop the rod only when broken normally — rods are destroyed in a meltdown.
+                // Drop the rod only when broken normally - rods are destroyed in a meltdown.
                 if (!inMeltdown) {
                     ItemStack rod = rabe.getRodWithDepletion();
                     if (!rod.isEmpty())

@@ -98,6 +98,11 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
+    public static final ItemEntry<RodItem> COOLING_ROD =
+            CreateAtomic.REGISTRATE.item("cooling_rod", RodItem::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
     public static final ItemEntry<Item> PLUTONIUM_INGOT =
             CreateAtomic.REGISTRATE.item("plutonium_ingot", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))

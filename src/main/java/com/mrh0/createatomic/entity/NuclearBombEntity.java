@@ -69,11 +69,14 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
         } else {
             this.updateInWaterStateAndDoFluidPushing();
             if (this.level().isClientSide) {
+                double rx = (this.level().random.nextDouble() - 0.5) * 0.3;
+                double rz = (this.level().random.nextDouble() - 0.5) * 0.3;
                 this.level().addParticle(ParticleTypes.SMOKE,
-                        this.getX(), this.getY() + 0.5, this.getZ(), 0, 0, 0);
-                if (fuse < 60 && fuse % 4 == 0) {
-                    this.level().addParticle(ParticleTypes.LARGE_SMOKE,
-                            this.getX(), this.getY() + 0.5, this.getZ(), 0, 0.02, 0);
+                        this.getX() + rx, this.getY() + 0.5, this.getZ() + rz, 0, 0.01, 0);
+                if (fuse % 3 == 0) {
+                    this.level().addParticle(ParticleTypes.SMALL_FLAME,
+                            this.getX() + rx, this.getY() + 0.4, this.getZ() + rz,
+                            rx * 0.1, 0.02, rz * 0.1);
                 }
             }
         }
@@ -94,6 +97,16 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
         double cy = this.getY();
         double cz = this.getZ();
 
+        // Scattered TNT-style explosion puffs across the blast radius
+        for (int i = 0; i < 48; i++) {
+            double angle = level.random.nextDouble() * Math.PI * 2;
+            double dist = level.random.nextDouble() * EXPLOSION_RADIUS * 0.6;
+            double height = level.random.nextDouble() * 8;
+            level.sendParticles(ParticleTypes.EXPLOSION,
+                    cx + Math.cos(angle) * dist, cy + height, cz + Math.sin(angle) * dist,
+                    1, 0, 0, 0, 0);
+        }
+
         // Ground-level shockwave ring
         for (int i = 0; i < 64; i++) {
             double angle = (i / 64.0) * Math.PI * 2;
@@ -103,7 +116,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
                     0, 0.0, 0.01, 0.0, 0);
         }
 
-        // Stem — rising column
+        // Stem - rising column
         for (int i = 0; i < 50; i++) {
             double angle = level.random.nextDouble() * Math.PI * 2;
             double dist = level.random.nextDouble() * 3;
@@ -113,7 +126,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
                     0, 0.0, 0.07, 0.0, 0);
         }
 
-        // Cap underside — spreading outward at mid-height
+        // Cap underside - spreading outward at mid-height
         for (int i = 0; i < 80; i++) {
             double angle = level.random.nextDouble() * Math.PI * 2;
             double dist = level.random.nextDouble() * 18;
@@ -123,7 +136,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
                     0, Math.cos(angle) * 0.03, 0.01, Math.sin(angle) * 0.03, 0);
         }
 
-        // Cap top — wide toroidal ring
+        // Cap top - wide toroidal ring
         for (int i = 0; i < 80; i++) {
             double angle = (i / 80.0) * Math.PI * 2;
             double dist = 8 + level.random.nextDouble() * 14;
@@ -133,7 +146,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
                     0, 0.0, 0.008, 0.0, 0);
         }
 
-        // Anvil cap — flat cloud spreading at the very top
+        // Anvil cap - flat cloud spreading at the very top
         for (int i = 0; i < 60; i++) {
             double angle = level.random.nextDouble() * Math.PI * 2;
             double dist = level.random.nextDouble() * 25;

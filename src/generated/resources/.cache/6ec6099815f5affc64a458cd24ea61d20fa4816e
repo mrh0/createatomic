@@ -1,6 +1,6 @@
-// 1.21.1	2026-08-14T00:10:09.200190849	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-fbdd93a746e8b8921b5a29d4f14bef6088680bb1 assets/createatomic/lang/en_ud.json
-091cdc6b357063e66828cf36cfb8cc4e400d6a7c assets/createatomic/lang/en_us.json
+// 1.21.1	2026-08-15T01:37:28.813009748	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+35a3cab96c654530cc3ec91a01a32d68e24f4682 assets/createatomic/lang/en_ud.json
+8caac04735604109ba7d70402e3bb1aa6de43933 assets/createatomic/lang/en_us.json
 4e2ba19042b703eafd590e592062ffa1fd29507f assets/createatomic/models/item/crude_nuclear_bomb.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json

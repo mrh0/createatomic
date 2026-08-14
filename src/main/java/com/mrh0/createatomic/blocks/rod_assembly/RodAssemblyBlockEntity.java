@@ -102,6 +102,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
     public boolean isLockedWith(RodConfiguration config) {
         ReactorCasingBlockEntity reactor = findReactor();
         if (reactor == null) return false;
+        if (!reactor.isActive()) return false;
         return config.shouldInsert(reactor.isActive(), reactor.isArmed());
     }
 

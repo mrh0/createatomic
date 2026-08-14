@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/copper"
+    },
+    {
+      "item": "createatomic:heatsink"
+    },
+    {
+      "item": "createatomic:dense_alloy"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:cooling_rod"
+  }
+}

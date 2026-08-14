@@ -28,7 +28,7 @@ public class RadioisotopeHeatGeneratorBlock extends Block implements IWrenchable
     private static final double AVG_RANDOM_TICKS_PER_REAL_DAY = 24.0 * 3600.0 * 20.0 * 3.0 / 4096.0;
 
     private final HeatLevel heatLevel;
-    // Null for the fully-decayed (NONE) variant — no further transition.
+    // Null for the fully-decayed (NONE) variant - no further transition.
     private final Supplier<? extends Block> nextBlock;
 
     public RadioisotopeHeatGeneratorBlock(Properties properties, HeatLevel heatLevel, Supplier<? extends Block> nextBlock) {

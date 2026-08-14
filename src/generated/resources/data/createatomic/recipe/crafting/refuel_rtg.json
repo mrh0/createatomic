@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/plutonium"
+    },
+    {
+      "tag": "c:ingots/plutonium"
+    },
+    {
+      "tag": "c:ingots/plutonium"
+    },
+    {
+      "item": "createatomic:radioisotope_heat_generator_none"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:radioisotope_heat_generator_kindled"
+  }
+}

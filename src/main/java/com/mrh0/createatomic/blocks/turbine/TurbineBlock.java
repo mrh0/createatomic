@@ -111,7 +111,7 @@ public class TurbineBlock extends DirectionalKineticBlock implements IWrenchable
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);
         if (world.isClientSide()) return;
 
-        // React to changes on either the intake or output side — both affect the type.
+        // React to changes on either the intake or output side - both affect the type.
         Direction facing = state.getValue(FACING);
         boolean intakeChanged  = fromPos.equals(pos.relative(facing.getOpposite()));
         boolean outputChanged  = fromPos.equals(pos.relative(facing));
@@ -199,7 +199,7 @@ public class TurbineBlock extends DirectionalKineticBlock implements IWrenchable
             return PlacementOffset.success(target, s -> {
                 // Compute TYPE now (world state is already updated with the chain so far).
                 // The new turbine is always at the end of the chain, so it's either INLET
-                // (no turbine behind — shouldn't happen via helper) or OUTLET (has turbine
+                // (no turbine behind - shouldn't happen via helper) or OUTLET (has turbine
                 // behind, nothing in front yet).
                 BlockState behind   = world.getBlockState(finalTarget.relative(finalFacing.getOpposite()));
                 BlockState inFront  = world.getBlockState(finalTarget.relative(finalFacing));

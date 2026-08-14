@@ -90,7 +90,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("crafting/raw_uranium_from_block"));
 
         
-        // Storage blocks — compress
+        // Storage blocks - compress
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.PLUTONIUM_BLOCK.get())
             .pattern("PPP")
             .pattern("PPP")
@@ -245,6 +245,14 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
             .save(output, CreateAtomic.asResource("crafting/radioisotope_heat_generator"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_KINDLED.get(), 1)
+            .requires(CATagRegister.Items.INGOTS_PLUTONIUM)
+            .requires(CATagRegister.Items.INGOTS_PLUTONIUM)
+            .requires(CATagRegister.Items.INGOTS_PLUTONIUM)
+            .requires(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_INERT)
+            .unlockedBy("has_plutonium", has(CATagRegister.Items.INGOTS_PLUTONIUM))
+            .save(output, CreateAtomic.asResource("crafting/refuel_rtg"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.CRUDE_NUCLEAR_BOMB.get(), 1)
             .pattern("GDG")
             .pattern("GPG")
@@ -298,6 +306,13 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .requires(AtomicItems.DENSE_ALLOY.get())
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
             .save(output, CreateAtomic.asResource("crafting/neutron_reflector"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AtomicItems.COOLING_ROD.get(), 1)
+            .requires(CATagRegister.Items.STORAGE_BLOCKS_COPPER)
+            .requires(AtomicItems.HEATSINK)
+            .requires(AtomicItems.DENSE_ALLOY.get())
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/cooling_rod"));
 
         // Hazmat Armor
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AtomicItems.HAZMAT_HELMET.get())

@@ -48,13 +48,8 @@ public class CAtomicServer extends ConfigBase {
     public final ConfigInt rtgBufferCapacity = i(16_000, 1, Integer.MAX_VALUE, "rtgBufferCapacity",
             "Maximum FE stored in the RTG's internal buffer.");
 
-    public final ConfigGroup portableRtg = group(1, "portableRtg", "Portable RTG item settings");
-
-    public final ConfigInt portableRtgEnergyPerTick = i(2, 1, Integer.MAX_VALUE, "portableRtgEnergyPerTick",
-            "Forge Energy (FE) generated per tick by each Portable RTG item.");
-
-    public final ConfigInt portableRtgBufferCapacity = i(500, 1, Integer.MAX_VALUE, "portableRtgBufferCapacity",
-            "Maximum FE stored in the Portable RTG's internal buffer.");
+    public final ConfigInt rtgRadiationRadius = i(4, 1, 64, "rtgRadiationRadius",
+            "Radius in blocks at which each RTG block applies the Radioactivity effect.");
 
     @Override
     public String getName() {
