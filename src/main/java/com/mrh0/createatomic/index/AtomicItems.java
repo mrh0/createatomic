@@ -38,13 +38,18 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<RodItem> SMALL_CONTROL_ROD =
-            CreateAtomic.REGISTRATE.item("small_control_rod", RodItem::new)
+    public static final ItemEntry<RodItem> DENSE_ALLOY =
+            CreateAtomic.REGISTRATE.item("dense_alloy", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<RodItem> LARGE_CONTROL_ROD =
-            CreateAtomic.REGISTRATE.item("large_control_rod", RodItem::new)
+    public static final ItemEntry<Item> DENSE_ALLOY_NUGGET =
+            CreateAtomic.REGISTRATE.item("dense_alloy_nugget", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<Item> HEATSINK =
+            CreateAtomic.REGISTRATE.item("heatsink", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
@@ -58,31 +63,6 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> DENSE_ALLOY =
-            CreateAtomic.REGISTRATE.item("dense_alloy", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<Item> DENSE_ALLOY_NUGGET =
-            CreateAtomic.REGISTRATE.item("dense_alloy_nugget", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    /*public static final ItemEntry<Item> DENSE_ALLOY =
-            CreateAtomic.REGISTRATE.item("dense_alloy", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<Item> GRAPHITE_DUST =
-            CreateAtomic.REGISTRATE.item("graphite_dust", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<Item> GRAPHITE_SHEET =
-            CreateAtomic.REGISTRATE.item("graphite_sheet", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();*/
-
     public static final ItemEntry<FuelRodItem> PLUTONIUM_FUEL_ROD =
             CreateAtomic.REGISTRATE.item("plutonium_rod", FuelRodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
@@ -90,6 +70,16 @@ public class AtomicItems {
 
     public static final ItemEntry<Item> DEPLETED_PLUTONIUM_FUEL_ROD =
             CreateAtomic.REGISTRATE.item("depleted_plutonium_rod", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<RodItem> SMALL_CONTROL_ROD =
+            CreateAtomic.REGISTRATE.item("small_control_rod", RodItem::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<RodItem> LARGE_CONTROL_ROD =
+            CreateAtomic.REGISTRATE.item("large_control_rod", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
@@ -134,11 +124,6 @@ public class AtomicItems {
     public static final ItemEntry<HazmatArmorItem> HAZMAT_BOOTS =
             CreateAtomic.REGISTRATE.item("hazmat_boots",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.BOOTS, props))
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<Item> HEATSINK =
-            CreateAtomic.REGISTRATE.item("heatsink", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

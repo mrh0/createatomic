@@ -91,9 +91,10 @@
 	"createatomic.display_source.reactor.scrammed": "SCRAM",
 
 	"createatomic.tooltip.rod_item.power": "Power: ",
-	"createatomic.tooltip.rod_item.capacity": "Capacity: ",
+	"createatomic.tooltip.rod_item.control_capacity": "Control Capacity: ",
 	"createatomic.tooltip.rod_item.adjacency": "Adjacency Bonus: ",
 	"createatomic.tooltip.rod_item.fuel_lifetime": "Adjacent Fuel Lifetime: ",
+	"createatomic.tooltip.rod_item.capacity_buff": "Hull Capacity: ",
 
 	"createatomic.tooltip.fuel_rod.depletion": "Depleted in %s",
 	"createatomic.tooltip.fuel_rod.consumption_bonus": "Consumption: +%s",
@@ -112,6 +113,7 @@
 	"createatomic.tooltip.rod_assembly.depleted_plutonium_fuel_rod": "Depleted Plutonium Fuel Rod",
 	"createatomic.tooltip.rod_assembly.neutron_reflector": "Neutron Reflector",
 	"createatomic.tooltip.rod_assembly.cooling_rod": "Cooling Rod",
+	"createatomic.tooltip.rod_assembly.plate": "Dense Alloy Plate",
 	"createatomic.tooltip.rod_assembly.locked": "Locked - reactor is running",
 	"createatomic.message.rod_locked": "Cannot modify rod while reactor is running",
 	"createatomic.message.wrench_active_reactor": "Cannot pick up while reactor is active",

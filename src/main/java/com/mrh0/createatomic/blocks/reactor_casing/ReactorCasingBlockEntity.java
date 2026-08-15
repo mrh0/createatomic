@@ -91,6 +91,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
     int cachedControlRodLevel;
     int cachedHullCapacity;
     int cachedHullCapacityDebuff;
+    int cachedCapacityBuff;
     int cachedInstalledFuelRods;
     float cachedReactivityFactor = 1f;
     public float turbineTargetRpm;  // RPM each connected turbine should reach
@@ -392,6 +393,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             cachedEffectivePower  = compound.getInt("EffectivePower");
             cachedHullCapacity       = compound.getInt("HullCapacity");
             cachedHullCapacityDebuff = compound.getInt("HullCapacityDebuff");
+            cachedCapacityBuff       = compound.getInt("CapacityBuff");
             cachedInstalledFuelRods = compound.getInt("InstalledRods");
             cachedReactivityFactor  = compound.contains("ReactivityFactor") ? compound.getFloat("ReactivityFactor") : 1f;
             turbineTargetRpm    = compound.getFloat("TurbineRpm");
@@ -465,6 +467,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
             compound.putInt("EffectivePower", cachedEffectivePower);
             compound.putInt("HullCapacity", cachedHullCapacity);
             compound.putInt("HullCapacityDebuff", cachedHullCapacityDebuff);
+            compound.putInt("CapacityBuff", cachedCapacityBuff);
             compound.putInt("InstalledRods", cachedInstalledFuelRods);
             compound.putFloat("ReactivityFactor", cachedReactivityFactor);
             compound.putFloat("TurbineRpm", turbineTargetRpm);
@@ -653,8 +656,13 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                         .append(Component.literal((String.valueOf(con.cachedHullCapacity)))
                         .withStyle(powerColour))
                         .append(con.cachedHullCapacityDebuff > 0
-                                ? Component.literal(" [" + String.valueOf(con.cachedHullCapacity + con.cachedHullCapacityDebuff) + "-" + con.cachedHullCapacityDebuff + "]")
+                                ? Component.literal(" [" + (con.cachedHullCapacity + con.cachedHullCapacityDebuff) + "-" + con.cachedHullCapacityDebuff + "]")
                                         .withStyle(ChatFormatting.RED)
+                                : Component.empty())
+                        .append(con.cachedCapacityBuff > 0
+                                ? Component.literal(" [+" + con.cachedCapacityBuff + "]").withStyle(ChatFormatting.AQUA)
+                                : con.cachedCapacityBuff < 0
+                                ? Component.literal(" [" + con.cachedCapacityBuff + "]").withStyle(ChatFormatting.RED)
                                 : Component.empty()));
 
         int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
@@ -735,6 +743,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         float effectiveFuel = 0f;
         int installedFuel   = 0;
         int controlLevel    = 0;
+        int capacityBuff    = 0;
 
         for (int x = 0; x < w; x++) {
             for (int z = 0; z < w; z++) {
@@ -742,7 +751,8 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                 if (rabe == null) continue;
 
                 RodConfiguration config = rabe.getConfig();
-                controlLevel += config.hullCapacity;
+                controlLevel += config.controlLevel;
+                capacityBuff += config.capacityBuff;
 
                 if (config.effectivePower > 0) {
                     installedFuel += config.effectivePower;
@@ -765,6 +775,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         // Cache for display / goggle tooltip (updated server-side each lazy tick)
         cachedInstalledFuelRods  = installedFuel;
         cachedReactivityFactor   = installedFuel > 0 ? effectiveFuel / installedFuel : 1f;
+        cachedCapacityBuff       = capacityBuff;
 
         return Pair.of(Math.round(effectiveFuel), controlLevel);
     }
@@ -830,8 +841,9 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         float fill = tankInventory.getCapacity() > 0
                 ? (float) tankInventory.getFluidAmount() / tankInventory.getCapacity() : 0f;
         float capacityMult = fill >= 0.5f ? 1.0f : fill >= 0.25f ? 0.8f : fill >= 0.15f ? 0.6f : 0.4f;
-        int hullCapacity = (int)(baseCapacity * capacityMult);
-        cachedHullCapacityDebuff = baseCapacity - hullCapacity;
+        int waterReducedCapacity = (int)(baseCapacity * capacityMult);
+        int hullCapacity = waterReducedCapacity + cachedCapacityBuff;
+        cachedHullCapacityDebuff = baseCapacity - waterReducedCapacity;
         cachedHullCapacity = hullCapacity;
 
         // Fuel rods only feed the reactor when armed (signal present) or already running.

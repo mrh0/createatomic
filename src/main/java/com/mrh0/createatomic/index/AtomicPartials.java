@@ -16,6 +16,8 @@ public class AtomicPartials {
     public static final PartialModel ROD_CONTROL_SMALL     = block("rod_assembly/rod_control_small");
     public static final PartialModel ROD_CONTROL_LARGE     = block("rod_assembly/rod_control_large");
     public static final PartialModel ROD_REFLECTOR         = block("rod_assembly/rod_reflector");
+    public static final PartialModel ROD_COOLING           = block("rod_assembly/rod_cooling");
+    public static final PartialModel ROD_PLATE             = block("rod_assembly/rod_plate");
 
     private static PartialModel block(String path) {
         return PartialModel.of(ResourceLocation.fromNamespaceAndPath(CreateAtomic.MODID, "block/" + path));

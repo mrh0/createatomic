@@ -30,7 +30,9 @@ public class RodAssemblyRenderer extends SafeBlockEntityRenderer<RodAssemblyBloc
             case SmallControlRod          -> AtomicPartials.ROD_CONTROL_SMALL;
             case LargeControlRod          -> AtomicPartials.ROD_CONTROL_LARGE;
             case NeutronReflectorRod         -> AtomicPartials.ROD_REFLECTOR;
-            default                       -> null;
+            case CoolingRod                  -> AtomicPartials.ROD_COOLING;
+            case Plate                       -> AtomicPartials.ROD_PLATE;
+            default                          -> null;
         };
 
         if (partial == null) return;

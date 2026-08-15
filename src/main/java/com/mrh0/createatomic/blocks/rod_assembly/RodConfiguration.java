@@ -8,29 +8,32 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public enum RodConfiguration implements StringRepresentable {
-    None                   ("none",                   0, 0,  0f,   0f,   RodInsertionBehaviour.NEVER),
-    SmallControlRod        ("small_control_rod",       0, 2,  0f,   0f,   RodInsertionBehaviour.SCRAM),
-    LargeControlRod        ("large_control_rod",       0, 5,  0f,   0f,   RodInsertionBehaviour.SCRAM),
-    FuelRod                ("fuel_rod",                1, 0,  0.5f, 0f,   RodInsertionBehaviour.ACTIVE),
-    DepletedFuelRod        ("depleted_fuel_rod",       0, 0,  0f,   0f,   RodInsertionBehaviour.NEVER),
-    PlutoniumFuelRod       ("plutonium_fuel_rod",      1, 0, 0.75f, 0.25f, RodInsertionBehaviour.ACTIVE),
-    DepletedPlutoniumFuelRod("depleted_plutonium_fuel_rod", 0, 0, 0f, 0f, RodInsertionBehaviour.NEVER),
-    NeutronReflectorRod       ("neutron_reflector",       0, 0,  0.5f, 0.1f, RodInsertionBehaviour.ARMED),
-    CoolingRod       ("cooling_rod",       0, 4,  0, 0, RodInsertionBehaviour.ALWAYS);
+    None                     ("none",                        0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
+    SmallControlRod          ("small_control_rod",           0, 2,  0f,    0f,    0, RodInsertionBehaviour.SCRAM),
+    LargeControlRod          ("large_control_rod",           0, 5,  0f,    0f,    0, RodInsertionBehaviour.SCRAM),
+    FuelRod                  ("fuel_rod",                    1, 0,  0.5f,  0f,    0, RodInsertionBehaviour.ACTIVE),
+    DepletedFuelRod          ("depleted_fuel_rod",           0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
+    PlutoniumFuelRod         ("plutonium_fuel_rod",          1, 0,  0.75f, 0.25f, 0, RodInsertionBehaviour.ACTIVE),
+    DepletedPlutoniumFuelRod ("depleted_plutonium_fuel_rod", 0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
+    NeutronReflectorRod      ("neutron_reflector",           0, 0,  0.5f,  0.1f,  0, RodInsertionBehaviour.ARMED),
+    CoolingRod               ("cooling_rod",                 0, 0,  0f,    0f,    5, RodInsertionBehaviour.ALWAYS),
+    Plate                    ("plate",                       0, 0,  0f,   -0.1f,  3, RodInsertionBehaviour.ALWAYS);
 
     private final String name;
     public final int effectivePower;
-    public final int hullCapacity;
+    public final int controlLevel;
     public final float adjacencyBonus;
     public final float adjacentFuelConsumptionBonus;
+    public final int capacityBuff;
     private final RodInsertionBehaviour insertionBehaviour;
 
-    RodConfiguration(String name, int effectivePower, int hullCapacity, float adjacencyBonus, float adjacentFuelConsumptionBonus, RodInsertionBehaviour insertionBehaviour) {
+    RodConfiguration(String name, int effectivePower, int controlLevel, float adjacencyBonus, float adjacentFuelConsumptionBonus, int capacityBuff, RodInsertionBehaviour insertionBehaviour) {
         this.name = name;
         this.effectivePower = effectivePower;
-        this.hullCapacity = hullCapacity;
+        this.controlLevel = controlLevel;
         this.adjacencyBonus = adjacencyBonus;
         this.adjacentFuelConsumptionBonus = adjacentFuelConsumptionBonus;
+        this.capacityBuff = capacityBuff;
         this.insertionBehaviour = insertionBehaviour;
     }
 
@@ -49,6 +52,7 @@ public enum RodConfiguration implements StringRepresentable {
             case DepletedPlutoniumFuelRod -> Component.translatable("createatomic.tooltip.rod_assembly.depleted_plutonium_fuel_rod");
             case NeutronReflectorRod        -> Component.translatable("createatomic.tooltip.rod_assembly.neutron_reflector");
             case CoolingRod                 -> Component.translatable("createatomic.tooltip.rod_assembly.cooling_rod");
+            case Plate                      -> Component.translatable("createatomic.tooltip.rod_assembly.plate");
             default -> Component.translatable("createatomic.tooltip.rod_assembly.none");
         };
     }
@@ -63,6 +67,7 @@ public enum RodConfiguration implements StringRepresentable {
             case DepletedPlutoniumFuelRod -> AtomicItems.DEPLETED_PLUTONIUM_FUEL_ROD.asStack();
             case NeutronReflectorRod        -> AtomicItems.NEUTRON_REFLECTOR.asStack();
             case CoolingRod                 -> AtomicItems.COOLING_ROD.asStack();
+            case Plate                      -> AtomicItems.DENSE_ALLOY.asStack();
             default -> ItemStack.EMPTY;
         };
     }
@@ -77,6 +82,7 @@ public enum RodConfiguration implements StringRepresentable {
         if (item == AtomicItems.DEPLETED_PLUTONIUM_FUEL_ROD.get()) return DepletedPlutoniumFuelRod;
         if (item == AtomicItems.NEUTRON_REFLECTOR.get())          return NeutronReflectorRod;
         if (item == AtomicItems.COOLING_ROD.get())                return CoolingRod;
+        if (item == AtomicItems.DENSE_ALLOY.get())                return Plate;
         return None;
     }
 
@@ -101,7 +107,7 @@ public enum RodConfiguration implements StringRepresentable {
     }
 
     public int getControlLevel() {
-        return hullCapacity;
+        return controlLevel;
     }
 
     public int getFuelLevel() {
