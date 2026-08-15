@@ -32,6 +32,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.ItemLike;
@@ -43,6 +44,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -161,6 +163,20 @@ public class CreateAtomic {
     public void onRegister(final RegisterEvent event) {
         AtomicArmInteractionPointTypes.register();
     }
+
+    /* 
+    @SubscribeEvent
+    public void onMobEffectApplicable(MobEffectEvent.Applicable event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        
+        // Radioactivity has its own partial-immunity logic in Utility.applyRadiationToEntity.
+        if (event.getEffectInstance().getEffect().value() == AtomicEffects.RADIOACTIVITY.value()) return;
+        int pieces = Utility.countHazmatPieces(player);
+        if (pieces <= 0) return;
+        if (pieces >= 4 || player.level().random.nextFloat() < pieces / 4.0f)
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+    }
+    */
 
     @SubscribeEvent
     public void onRegisterCommandEvent(RegisterCommandsEvent event) {

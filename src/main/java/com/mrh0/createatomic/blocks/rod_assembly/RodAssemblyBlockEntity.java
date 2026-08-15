@@ -197,7 +197,9 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         tooltip.add(Component.literal(spacing + " ").append(config.getTooltip().withStyle(ChatFormatting.GRAY)));
         if (config.isFuelRod()) {
             int duration = fuelDuration(config);
-            int remainingSeconds = Math.max(0, duration - RodAssemblyPacketPayload.clientFuelTicks) / 20;
+            float consumptionBonus = computeAdjacentConsumptionBonus();
+            int remainingFuelTicks = Math.max(0, duration - RodAssemblyPacketPayload.clientFuelTicks);
+            int remainingSeconds = Math.round(remainingFuelTicks / (1f + consumptionBonus)) / 20;
             int hours = remainingSeconds / 3600;
             int minutes = (remainingSeconds % 3600) / 60;
             int seconds = remainingSeconds % 60;
@@ -206,7 +208,6 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
             tooltip.add(Component.literal(spacing + " ").append(
                     Component.translatable("createatomic.tooltip.fuel_rod.depletion",
                             String.format("%02dh:%02dm:%02ds", hours, minutes, seconds)).withStyle(color)));
-            float consumptionBonus = computeAdjacentConsumptionBonus();
             if (consumptionBonus > 0f) {
                 tooltip.add(Component.literal(spacing + " ").append(
                         Component.translatable("createatomic.tooltip.fuel_rod.consumption_bonus",

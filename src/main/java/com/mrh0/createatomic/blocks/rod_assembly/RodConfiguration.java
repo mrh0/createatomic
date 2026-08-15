@@ -11,13 +11,13 @@ public enum RodConfiguration implements StringRepresentable {
     None                     ("none",                        0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
     SmallControlRod          ("small_control_rod",           0, 2,  0f,    0f,    0, RodInsertionBehaviour.SCRAM),
     LargeControlRod          ("large_control_rod",           0, 5,  0f,    0f,    0, RodInsertionBehaviour.SCRAM),
-    FuelRod                  ("fuel_rod",                    1, 0,  0.5f,  0f,    0, RodInsertionBehaviour.ACTIVE),
+    FuelRod                  ("fuel_rod",                    2, 0,  0.5f,  0.1f,    0, RodInsertionBehaviour.ACTIVE),
     DepletedFuelRod          ("depleted_fuel_rod",           0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
-    PlutoniumFuelRod         ("plutonium_fuel_rod",          1, 0,  0.75f, 0.25f, 0, RodInsertionBehaviour.ACTIVE),
+    PlutoniumFuelRod         ("plutonium_fuel_rod",          1, 0,  0.25f, 0.50f, 0, RodInsertionBehaviour.ACTIVE),
     DepletedPlutoniumFuelRod ("depleted_plutonium_fuel_rod", 0, 0,  0f,    0f,    0, RodInsertionBehaviour.NEVER),
-    NeutronReflectorRod      ("neutron_reflector",           0, 0,  0.5f,  0.1f,  0, RodInsertionBehaviour.ARMED),
+    NeutronReflectorRod      ("neutron_reflector",           0, 0,  0.5f,  0.25f,  0, RodInsertionBehaviour.ARMED),
     CoolingRod               ("cooling_rod",                 0, 0,  0f,    0f,    5, RodInsertionBehaviour.ALWAYS),
-    Plate                    ("plate",                       0, 0,  0f,   -0.1f,  3, RodInsertionBehaviour.ALWAYS);
+    Plate                    ("plate",                       0, 0,  0f,   0f,  3, RodInsertionBehaviour.ALWAYS);
 
     private final String name;
     public final int effectivePower;

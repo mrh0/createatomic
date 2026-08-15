@@ -90,14 +90,14 @@
 	"createatomic.display_source.reactor.inactive": "Inactive",
 	"createatomic.display_source.reactor.scrammed": "SCRAM",
 
-	"createatomic.tooltip.rod_item.power": "Power: ",
+	"createatomic.tooltip.rod_item.power": "Reactivity Power: ",
 	"createatomic.tooltip.rod_item.control_capacity": "Control Capacity: ",
 	"createatomic.tooltip.rod_item.adjacency": "Adjacency Bonus: ",
 	"createatomic.tooltip.rod_item.fuel_lifetime": "Adjacent Fuel Lifetime: ",
 	"createatomic.tooltip.rod_item.capacity_buff": "Hull Capacity: ",
 
 	"createatomic.tooltip.fuel_rod.depletion": "Depleted in %s",
-	"createatomic.tooltip.fuel_rod.consumption_bonus": "Consumption: +%s",
+	"createatomic.tooltip.fuel_rod.consumption_bonus": "Fuel Lifetime: -%s",
 
 	"createatomic.tooltip.rhg.heat_output": "Heat: %s",
 	"createatomic.tooltip.rhg.heat.kindled": "Kindled",
@@ -129,7 +129,7 @@
 	"createatomic.tooltip.reactor.health": "Hull Integrity",
 	"createatomic.tooltip.reactor.water": "Water",
 	"createatomic.tooltip.reactor.turbines": "Turbines",
-	"createatomic.tooltip.reactor.reactivity": "Reactivity Bonus",
+	"createatomic.tooltip.reactor.reactivity": "Reactivity Power",
 
 	"createatomic.tooltip.reactor.safety.safe": "Safe",
 	"createatomic.tooltip.reactor.safety.unsafe": "Unsafe",

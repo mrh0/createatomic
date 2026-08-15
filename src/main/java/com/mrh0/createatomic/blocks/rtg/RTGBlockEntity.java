@@ -135,13 +135,6 @@ public class RTGBlockEntity extends SmartBlockEntity implements IHaveGoggleInfor
                 .add(Utility.getTextComponent(perTick, "⚡/t").withStyle(ChatFormatting.GREEN))
                 .forGoggles(tooltip, 1);
 
-        Lang.builder("createatomic")
-                .add(Component.translatable("createatomic.tooltip.rtg.stored").withStyle(ChatFormatting.GRAY))
-                .forGoggles(tooltip);
-        Lang.builder("createatomic")
-                .add(Utility.getTextComponent(energyCapability))
-                .forGoggles(tooltip, 1);
-
         return true;
     }
 

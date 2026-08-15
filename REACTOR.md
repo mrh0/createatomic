@@ -9,7 +9,7 @@ casing block.
 - **Min size**: 2×2×2 (hull capacity = 0 - needs at least 4 blocks)
 - **Max size**: 6×6×5
 - **Hull capacity** = width² × height (one per casing block), reduced by low
-  water (see below)
+  water (see below), then modified by rod `capacityBuff` as a flat addition
 - **Water tank** = 1 bucket per casing block, filled via fluid pipe into any
   casing face
 
@@ -17,23 +17,42 @@ casing block.
 
 ## Rod Assemblies
 
-Placed on the **top face** of the reactor. Each slot accepts one rod item. Rods
-are **locked** while the reactor is hot (temperature > 25°C) - control rods are
-always swappable.
+Placed on the **top face** of the reactor. Each slot accepts one rod item.
 
-| Rod               | Effect                                                              |
-| ----------------- | ------------------------------------------------------------------- |
-| Uranium Fuel Rod  | +1 fuel unit per rod. Depletes over ~120 min → becomes Depleted Rod |
-| Depleted Fuel Rod | No effect, occupies slot                                            |
-| Small Control Rod | -2 control units                                                    |
-| Large Control Rod | -5 control units                                                    |
-| Neutron Reflector | Boosts reactivity of adjacent fuel rods                             |
+Rods are **locked** while the reactor is active — they cannot be inserted or
+removed. The lock behaviour varies by rod type:
 
-**Reactivity bonus**: each fuel rod gains +50% effective power per orthogonal
-neighbour (fuel rod or reflector). Example: 4 rods in a 2×2 = 8 effective power.
+| Behaviour | When locked                              | Examples                      |
+| --------- | ---------------------------------------- | ----------------------------- |
+| SCRAM     | Locked when reactor is **armed/active**  | Control Rods (inserted when armed) |
+| ACTIVE    | Locked when reactor is **active**        | Fuel Rods                     |
+| ARMED     | Locked when reactor is **armed/active**  | Neutron Reflector             |
+| ALWAYS    | Locked when reactor is **active** (always inserted) | Cooling Rod, Dense Alloy Plate |
+| NEVER     | Never locked (passive, not inserted)     | Depleted Rods                 |
 
-**Rod animation**: rods physically lower into the reactor when active/inserted,
-raise when lifted.
+### Rod Types
+
+| Rod                      | Power | Control | Adj. Bonus | Fuel Consumption | Hull Buff | Notes                              |
+| ------------------------ | ----- | ------- | ---------- | ---------------- | --------- | ---------------------------------- |
+| Uranium Fuel Rod         | +2    | —       | +50%       | +10%             | —         | Depletes after ~60 min → Depleted Uranium Rod   |
+| Depleted Uranium Rod     | —     | —       | —          | —                | —         | Occupies slot, no effect                        |
+| Plutonium Fuel Rod       | +1    | —       | +25%       | +50%             | —         | Depletes after ~240 min → Depleted Plutonium Rod |
+| Depleted Plutonium Rod   | —     | —       | —          | —                | —         | Occupies slot, no effect           |
+| Small Control Rod        | —     | −2      | —          | —                | —         | Inserted when reactor is armed     |
+| Large Control Rod        | —     | −5      | —          | —                | —         | Inserted when reactor is armed     |
+| Neutron Reflector        | —     | —       | +50%       | +25%             | —         | Boosts adjacent fuel rods          |
+| Cooling Rod              | —     | —       | —          | —                | +5        | Flat hull capacity addition        |
+| Dense Alloy (Plate)      | —     | —       | —          | —                | +3        | Flat hull capacity addition        |
+
+**Adj. Bonus** = the reactivity multiplier this rod gives to each orthogonal
+fuel rod neighbour. Example: 4 Uranium Fuel Rods in a 2×2 = 8 effective power.
+
+**Fuel Consumption** = how much faster adjacent fuel rods deplete per rod of
+this type placed next to them (+10% = depletes 10% faster). Stacks across all
+orthogonal neighbours.
+
+**Hull Buff** = flat addition to hull capacity after the water multiplier is
+applied. Multiple rods stack.
 
 ---
 
@@ -67,7 +86,8 @@ Every ~1 second the reactor calculates:
 
 ## Hull Capacity & Damage
 
-Hull capacity is reduced by low water level:
+Base hull capacity = number of casing blocks, reduced by low water level, then
+increased by any rod `capacityBuff` values as a flat addition:
 
 | Water level | Capacity multiplier |
 | ----------- | ------------------- |
@@ -76,14 +96,31 @@ Hull capacity is reduced by low water level:
 | 15–25%      | ×0.6 (−40%)         |
 | < 15%       | ×0.4 (−60%)         |
 
+Example: 3×3×3 reactor (27 blocks), full water, two Cooling Rods → capacity =
+27 + 10 = 37.
+
 Hull takes damage only when **net power > hull capacity** while active. At 0%
 hull integrity:
 
 - **Meltdowns enabled** (default): explosion + debris
 - **Meltdowns disabled**: reactor forces shutdown until hull self-repairs
 
-Hull **regenerates** at 0.5%/tick (~160 s full regen) only when temperature =
+Hull **regenerates** at 0.5%/tick (~200 s full regen) only when temperature =
 25°C (fully idle).
+
+---
+
+## Fuel Depletion
+
+Fuel rods deplete based on game ticks. Each adjacent rod that has an
+`adjacentFuelConsumptionBonus` accelerates depletion:
+
+```
+fuelTicks += gameTicks × (1 + sum of neighbours' adjacentFuelConsumptionBonus)
+```
+
+The goggle tooltip on a Rod Assembly shows the corrected remaining time
+accounting for the current consumption rate.
 
 ---
 

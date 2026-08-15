@@ -49,7 +49,7 @@ public class Utility {
         entity.addEffect(new MobEffectInstance(AtomicEffects.RADIOACTIVITY, duration, newAmplifier, false, true));
     }
 
-    private static int countHazmatPieces(Player player) {
+    public static int countHazmatPieces(Player player) {
         int count = 0;
         for (EquipmentSlot slot : ARMOR_SLOTS)
             if (player.getItemBySlot(slot).getItem() instanceof HazmatArmorItem) count++;

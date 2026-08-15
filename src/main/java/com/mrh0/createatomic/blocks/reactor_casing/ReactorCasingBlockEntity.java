@@ -624,6 +624,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         ReactorCasingBlockEntity con = getControllerBE();
         if (con == null) return false;
         String s = "    ";
+        String indent = "  ";
 
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.info").withStyle(ChatFormatting.WHITE)));
@@ -642,7 +643,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         ChatFormatting hpColour = hp > 75 ? ChatFormatting.GREEN : hp > 40 ? ChatFormatting.YELLOW : ChatFormatting.RED;
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.health").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
+        tooltip.add(Component.literal(s + indent).append(
                 Component.literal(hp + "%").withStyle(hpColour)));
 
         // Net power vs capacity
@@ -652,7 +653,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.capacity").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ")
+        tooltip.add(Component.literal(s + indent)
                         .append(Component.literal((String.valueOf(con.cachedHullCapacity)))
                         .withStyle(powerColour))
                         .append(con.cachedHullCapacityDebuff > 0
@@ -668,7 +669,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         int effective = Math.round(con.cachedInstalledFuelRods * con.cachedReactivityFactor);
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.reactivity").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
+        tooltip.add(Component.literal(s + indent).append(
                 Component.literal(effective + " [" + String.format("%.1f", con.cachedReactivityFactor) + "x]")
                         .withStyle(ChatFormatting.YELLOW)));
 
@@ -676,7 +677,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
 
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.control_rods").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
+        tooltip.add(Component.literal(s + indent).append(
                 Component.literal(String.valueOf(con.cachedControlRodLevel))
                         .withStyle(con.cachedControlRodLevel > 0 ? ChatFormatting.AQUA : ChatFormatting.DARK_GRAY)));
 
@@ -685,7 +686,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         // Temperature (display-only)
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.heat").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
+        tooltip.add(Component.literal(s + indent).append(
                 Component.literal(con.reactorHeat + "°C").withStyle(con.reactorHeat > 315 ? ChatFormatting.RED : ChatFormatting.AQUA)));
         safeUnsafeTooltip(tooltip, con.reactorHeat <= 315);
 
@@ -695,7 +696,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         boolean waterLow = con.isActive() && waterMb == 0;
         tooltip.add(Component.literal(s).append(
                 Component.translatable("createatomic.tooltip.reactor.water").withStyle(ChatFormatting.GRAY)));
-        tooltip.add(Component.literal(s + " ").append(
+        tooltip.add(Component.literal(s + indent).append(
                 Component.literal(waterMb + " / " + waterCap + " mB")
                         .withStyle(waterLow ? ChatFormatting.RED : ChatFormatting.AQUA)));
         safeUnsafeTooltip(tooltip, waterMb > 0);
@@ -704,7 +705,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         if (con.cachedTurbineCount > 0) {
             tooltip.add(Component.literal(s).append(
                     Component.translatable("createatomic.tooltip.reactor.turbines").withStyle(ChatFormatting.GRAY)));
-            tooltip.add(Component.literal(s + " ").append(
+            tooltip.add(Component.literal(s + indent).append(
                     Component.literal(con.cachedTurbineCount + "× @ " + String.format("%.0f", con.turbineTargetRpm) + " RPM")
                             .withStyle(ChatFormatting.AQUA)));
         }

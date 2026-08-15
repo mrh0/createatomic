@@ -38,6 +38,16 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
+    public static final ItemEntry<Item> PLUTONIUM_INGOT =
+            CreateAtomic.REGISTRATE.item("plutonium_ingot", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<Item> PLUTONIUM_NUGGET =
+            CreateAtomic.REGISTRATE.item("plutonium_nugget", Item::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
     public static final ItemEntry<RodItem> DENSE_ALLOY =
             CreateAtomic.REGISTRATE.item("dense_alloy", RodItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
@@ -91,16 +101,6 @@ public class AtomicItems {
     public static final ItemEntry<RodItem> COOLING_ROD =
             CreateAtomic.REGISTRATE.item("cooling_rod", RodItem::new)
                     .model((ctx, prov) -> {})
-                    .register();
-
-    public static final ItemEntry<Item> PLUTONIUM_INGOT =
-            CreateAtomic.REGISTRATE.item("plutonium_ingot", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
-                    .register();
-
-    public static final ItemEntry<Item> PLUTONIUM_NUGGET =
-            CreateAtomic.REGISTRATE.item("plutonium_nugget", Item::new)
-                    .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
     public static final ItemEntry<HazmatArmorItem> HAZMAT_HELMET =
