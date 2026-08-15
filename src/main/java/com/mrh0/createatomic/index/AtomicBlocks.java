@@ -29,7 +29,8 @@ public class AtomicBlocks {
     }
 
     // Reactor Blocks
-    public static final BlockEntry<ReactorCasingBlock> REACTOR_CASING = CreateAtomic.REGISTRATE.block("reactor_casing", ReactorCasingBlock::new)
+    public static final BlockEntry<ReactorCasingBlock> REACTOR_CASING =
+        CreateAtomic.REGISTRATE.block("reactor_casing", ReactorCasingBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY))
             .onRegister(connectedTextures(ReactorCasingCTBehaviour::new))
@@ -38,7 +39,8 @@ public class AtomicBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<RodAssemblyBlock> ROD_ASSEMBLY = CreateAtomic.REGISTRATE.block("rod_assembly", RodAssemblyBlock::new)
+    public static final BlockEntry<RodAssemblyBlock> ROD_ASSEMBLY =
+        CreateAtomic.REGISTRATE.block("rod_assembly", RodAssemblyBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks())
             .blockstate((ctx, prov) -> {})
@@ -47,15 +49,16 @@ public class AtomicBlocks {
             .register();
 
     public static final BlockEntry<ReactorRedstoneInterfaceBlock> REACTOR_REDSTONE_INTERFACE =
-                CreateAtomic.REGISTRATE.block("reactor_redstone_interface", ReactorRedstoneInterfaceBlock::new)
-                        .initialProperties(SharedProperties::softMetal)
-                        .properties(p -> p.mapColor(DyeColor.RED).strength(3.5f).requiresCorrectToolForDrops())
-                        .blockstate((ctx, prov) -> {})
-                        .item()
-                        .transform(customItemModel())
-                        .register();
+        CreateAtomic.REGISTRATE.block("reactor_redstone_interface", ReactorRedstoneInterfaceBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.RED).strength(3.5f).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
         
-    public static final BlockEntry<TurbineBlock> TURBINE = CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
+    public static final BlockEntry<TurbineBlock> TURBINE =
+        CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.GRAY).strength(3.5f).requiresCorrectToolForDrops())
             .blockstate((ctx, prov) -> {})
@@ -64,36 +67,36 @@ public class AtomicBlocks {
             .register();
 
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_INERT =
-            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_none",
-                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.NONE, null))
-                    .initialProperties(SharedProperties::softMetal)
-                    .properties(p -> p.mapColor(DyeColor.GRAY))
-                    .blockstate((ctx, prov) -> {})
-                    .item()
-                    .transform(customItemModel())
-                    .register();
+        CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_none",
+            p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.NONE, null))
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY))
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING =
-            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_smouldering",
-                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.SMOULDERING,
-                            () -> RADIOISOTOPE_HEAT_GENERATOR_INERT.get()))
-                    .initialProperties(SharedProperties::softMetal)
-                    .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 5))
-                    .blockstate((ctx, prov) -> {})
-                    .item()
-                    .transform(customItemModel())
-                    .register();
+        CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_smouldering",
+            p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.SMOULDERING,
+            () -> RADIOISOTOPE_HEAT_GENERATOR_INERT.get()))
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 5))
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<RadioisotopeHeatGeneratorBlock> RADIOISOTOPE_HEAT_GENERATOR_KINDLED =
-            CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_kindled",
-                    p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.KINDLED,
-                            () -> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get()))
-                    .initialProperties(SharedProperties::softMetal)
-                    .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 13))
-                    .blockstate((ctx, prov) -> {})
-                    .item()
-                    .transform(customItemModel())
-                    .register();
+        CreateAtomic.REGISTRATE.block("radioisotope_heat_generator_kindled",
+            p -> new RadioisotopeHeatGeneratorBlock(p, HeatLevel.KINDLED,
+            () -> RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get()))
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.GRAY).randomTicks().lightLevel(s -> 13))
+            .blockstate((ctx, prov) -> {})
+            .item()
+            .transform(customItemModel())
+            .register();
 
     /*public static final BlockEntry<CakeBlock> YELLOW_CAKE = CreateAtomic.REGISTRATE.block("yellow_cake", CakeBlock::new)
             .properties(p -> p.noOcclusion().strength(0.5f).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY))
