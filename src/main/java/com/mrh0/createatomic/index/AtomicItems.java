@@ -106,24 +106,28 @@ public class AtomicItems {
     public static final ItemEntry<HazmatArmorItem> HAZMAT_HELMET =
             CreateAtomic.REGISTRATE.item("hazmat_helmet",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.HELMET, props))
+                    .properties(p -> p.stacksTo(1))
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
     public static final ItemEntry<HazmatArmorItem> HAZMAT_CHESTPLATE =
             CreateAtomic.REGISTRATE.item("hazmat_chestplate",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.CHESTPLATE, props))
+                    .properties(p -> p.stacksTo(1))
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
     public static final ItemEntry<HazmatArmorItem> HAZMAT_LEGGINGS =
             CreateAtomic.REGISTRATE.item("hazmat_leggings",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.LEGGINGS, props))
+                    .properties(p -> p.stacksTo(1))
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
     public static final ItemEntry<HazmatArmorItem> HAZMAT_BOOTS =
             CreateAtomic.REGISTRATE.item("hazmat_boots",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.BOOTS, props))
+                    .properties(p -> p.stacksTo(1))
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
