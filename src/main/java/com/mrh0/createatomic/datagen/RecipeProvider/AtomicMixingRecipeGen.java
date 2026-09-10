@@ -8,6 +8,7 @@ import com.simibubi.create.content.processing.recipe.HeatCondition;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
@@ -34,6 +35,15 @@ public class AtomicMixingRecipeGen extends MixingRecipeGen {
             new TagEmptyCondition(CATagRegister.Items.INGOTS_LEAD)
         ))
         .requiresHeat(HeatCondition.SUPERHEATED)
+    );
+
+    GeneratedRecipe RAD_PASTE = create(CreateAtomic.asResource("mixing/rad_paste"), b -> b
+        .require(ItemTags.SMALL_FLOWERS)
+        .require(ItemTags.SMALL_FLOWERS)
+        .require(CATagRegister.Items.NUGGETS_URANIUM)
+        .require(Items.GLOW_BERRIES)
+        .require(Tags.Fluids.MILK, 500)
+        .output(AtomicItems.RAD_PASTE.get())
     );
 
     public AtomicMixingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

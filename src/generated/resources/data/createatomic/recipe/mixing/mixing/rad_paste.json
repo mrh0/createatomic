@@ -8,12 +8,15 @@
       "tag": "minecraft:small_flowers"
     },
     {
-      "tag": "minecraft:small_flowers"
+      "tag": "c:nuggets/uranium"
     },
     {
-      "type": "neoforge:single",
-      "amount": 125,
-      "fluid": "create:honey"
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "type": "neoforge:tag",
+      "amount": 500,
+      "tag": "c:milk"
     }
   ],
   "results": [

@@ -1,5 +1,34 @@
 # Changelog
 
+## Release 1.3.0
+
+### Added
+
+- Rad Pill
+
+### Changed
+
+- Generally reduced the effect of radiation
+
+### Fixed
+
+- Improved compatability with Sable
+
+## Release 1.2.0
+
+### Added
+
+- Radioisotope Thermoelectric Generator
+- New storage and decorative blocks
+- New Plutonium Fuel Rod
+- New Plate and Cooling Rod
+- New Crude Nuclear Bomb
+
+### Changed
+
+- Improved Textures
+- Major balance changes, buffed turbine
+
 ## Release 1.1.0
 
 ### Added

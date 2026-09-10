@@ -221,7 +221,7 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         return AtomicBlockEntities.ROD_ASSEMBLY.get();
     }
 
-    private static final int RADIUS = 16;
+    private static final int RADIUS = 10;
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {

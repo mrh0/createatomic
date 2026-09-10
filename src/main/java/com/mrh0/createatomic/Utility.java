@@ -46,7 +46,13 @@ public class Utility {
 
         MobEffectInstance existing = entity.getEffect(AtomicEffects.RADIOACTIVITY);
         if (existing != null && existing.getAmplifier() >= 2) return;
-        int newAmplifier = existing != null ? existing.getAmplifier() + 1 : amplifier;
+        int newAmplifier = amplifier;
+        if (existing != null) {
+            newAmplifier = existing.getAmplifier();
+            // Higher tiers escalate less readily - amplifier 0 always steps up, amplifier 1 only half the time.
+            if (entity.getRandom().nextFloat() < 0.5f / existing.getAmplifier())
+                newAmplifier++;
+        }
         entity.addEffect(new MobEffectInstance(AtomicEffects.RADIOACTIVITY, duration, newAmplifier, false, true));
     }
 
