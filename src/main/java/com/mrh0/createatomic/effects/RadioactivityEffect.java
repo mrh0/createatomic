@@ -15,13 +15,13 @@ public class RadioactivityEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, 1 + amplifier, false, false));
+        entity.forceAddEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, 1 + amplifier, false, false), null);
 
         RandomSource random = entity.getRandom();
         if (amplifier >= 1 && random.nextFloat() < 0.3f)
-            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 0, false, false));
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 0, false, false), null);
         if (amplifier >= 2 && random.nextFloat() < 0.1f)
-            entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 10, 0, false, false));
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 10, 0, false, false), null);
 
         return true;
     }

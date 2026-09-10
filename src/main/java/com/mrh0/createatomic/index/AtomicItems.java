@@ -2,6 +2,7 @@ package com.mrh0.createatomic.index;
 
 import com.mrh0.createatomic.items.FuelRodItem;
 import com.mrh0.createatomic.items.HazmatArmorItem;
+import com.mrh0.createatomic.items.RadPillItem;
 import com.mrh0.createatomic.items.RodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
@@ -128,6 +129,16 @@ public class AtomicItems {
             CreateAtomic.REGISTRATE.item("hazmat_boots",
                     props -> new HazmatArmorItem(AtomicArmorMaterials.HAZMAT_SUIT, ArmorItem.Type.BOOTS, props))
                     .properties(p -> p.stacksTo(1))
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<RadPillItem> RAD_PILL =
+            CreateAtomic.REGISTRATE.item("rad_pill", RadPillItem::new)
+                    .model((ctx, prov) -> prov.generated(ctx))
+                    .register();
+
+    public static final ItemEntry<Item> RAD_PASTE =
+            CreateAtomic.REGISTRATE.item("rad_paste", Item::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

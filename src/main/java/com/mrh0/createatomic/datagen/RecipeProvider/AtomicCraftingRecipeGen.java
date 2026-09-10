@@ -90,7 +90,7 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
             .save(output, CreateAtomic.asResource("crafting/raw_uranium_from_block"));
 
         
-        // Storage blocks - compress
+        // Storage blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.PLUTONIUM_BLOCK.get())
             .pattern("PPP")
             .pattern("PPP")

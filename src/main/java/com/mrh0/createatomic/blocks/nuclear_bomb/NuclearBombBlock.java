@@ -20,7 +20,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
-import java.util.function.BiConsumer;
 
 public class NuclearBombBlock extends Block {
 
@@ -60,8 +59,7 @@ public class NuclearBombBlock extends Block {
     }
 
     @Override
-    public void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion,
-                               BiConsumer<ItemStack, BlockPos> dropConsumer) {
+    public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
         if (!level.isClientSide) {
             NuclearBombEntity entity = new NuclearBombEntity(
                     AtomicEntities.NUCLEAR_BOMB.get(), level,
@@ -71,6 +69,11 @@ public class NuclearBombBlock extends Block {
             entity.setFuse(level.random.nextInt(fuse / 4) + fuse / 8);
             level.addFreshEntity(entity);
         }
+    }
+
+    @Override
+    public boolean dropFromExplosion(Explosion explosion) {
+        return false;
     }
 
     @Override

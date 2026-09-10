@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "createatomic:rad_paste"
+    }
+  ],
+  "results": [
+    {
+      "id": "createatomic:rad_pill"
+    }
+  ]
+}

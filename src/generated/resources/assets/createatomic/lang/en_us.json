@@ -31,6 +31,8 @@
   "item.createatomic.plutonium_ingot": "Plutonium Ingot",
   "item.createatomic.plutonium_nugget": "Plutonium Nugget",
   "item.createatomic.plutonium_rod": "Plutonium Rod",
+  "item.createatomic.rad_paste": "Rad Paste",
+  "item.createatomic.rad_pill": "Rad Pill",
   "item.createatomic.raw_uranium": "Raw Uranium",
   "item.createatomic.refined_uranium_ingot": "Refined Uranium Ingot",
   "item.createatomic.refined_uranium_nugget": "Refined Uranium Nugget",

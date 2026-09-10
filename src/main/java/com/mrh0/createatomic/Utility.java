@@ -35,6 +35,7 @@ public class Utility {
     public static void applyRadiationToEntity(LivingEntity entity, int amplifier) {
         if (!AtomicConfigs.server().radiationEffectEnabled.get()) return;
         if (entity instanceof Player player && player.isCreative()) return;
+        if (entity.hasEffect(AtomicEffects.RAD_AWAY)) return;
 
         int duration = 20 * 30;
         if (entity instanceof Player player) {

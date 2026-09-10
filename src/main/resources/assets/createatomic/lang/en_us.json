@@ -53,6 +53,12 @@
 	"block.createatomic.reactor_debris": "Reactor Debris",
 
 	"effect.createatomic.radioactivity": "Radioactivity",
+	"effect.createatomic.rad_away": "Rad-a-way",
+
+	"item.createatomic.rad_pill": "Rad Pill",
+	"item.createatomic.rad_pill.tooltip": "RAD PILL",
+	"item.createatomic.rad_pill.tooltip.summary": "Clears _Radioactivity_ and grants immunity to it for _10 minutes_.",
+	"item.createatomic.rad_paste": "Rad Paste",
 
 	"item.createatomic.hazmat_helmet": "Hazmat Helmet",
 	"item.createatomic.hazmat_helmet.tooltip": "HAZMAT HELMET",

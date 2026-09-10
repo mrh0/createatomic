@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -36,6 +37,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.function.BiConsumer;
 
 public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssemblyBlockEntity>, SimpleWaterloggedBlock {
 
@@ -164,25 +167,32 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof RodAssemblyBlockEntity rabe && !level.isClientSide()) {
-                var controller = rabe.findReactor();
-                boolean inMeltdown = controller != null && controller.hasMeltdown;
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof RodAssemblyBlockEntity rabe)
+            dropRodAndCheckMeltdown(level, pos, rabe);
+        return super.playerWillDestroy(level, pos, state, player);
+    }
 
-                // Drop the rod only when broken normally - rods are destroyed in a meltdown.
-                if (!inMeltdown) {
-                    ItemStack rod = rabe.getRodWithDepletion();
-                    if (!rod.isEmpty())
-                        popResource(level, pos, rod);
-                }
+    @Override
+    public void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion,
+                               BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof RodAssemblyBlockEntity rabe)
+            dropRodAndCheckMeltdown(level, pos, rabe);
+        super.onExplosionHit(state, level, pos, explosion, dropConsumer);
+    }
 
-                if (!inMeltdown && controller != null && controller.shouldMeltdownOnBreak())
-                    controller.onMeltdown();
-            }
+    private static void dropRodAndCheckMeltdown(Level level, BlockPos pos, RodAssemblyBlockEntity rabe) {
+        var controller = rabe.findReactor();
+        boolean inMeltdown = controller != null && controller.hasMeltdown;
+
+        if (!inMeltdown) {
+            ItemStack rod = rabe.getRodWithDepletion();
+            if (!rod.isEmpty())
+                popResource(level, pos, rod);
         }
-        super.onRemove(state, level, pos, newState, isMoving);
+
+        if (!inMeltdown && controller != null && controller.shouldMeltdownOnBreak())
+            controller.onMeltdown();
     }
 
     @Override

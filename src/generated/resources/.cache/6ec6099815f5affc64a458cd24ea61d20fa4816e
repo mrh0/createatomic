@@ -1,6 +1,6 @@
-// 1.21.1	2026-08-15T01:37:28.813009748	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-35a3cab96c654530cc3ec91a01a32d68e24f4682 assets/createatomic/lang/en_ud.json
-8caac04735604109ba7d70402e3bb1aa6de43933 assets/createatomic/lang/en_us.json
+// 1.21.1	2026-09-10T21:53:24.677200529	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+f3fe15eaf23efae16a577d57e000c2137cfcb8b7 assets/createatomic/lang/en_ud.json
+7566eae66ca4b08a714b723abad9a49852657c36 assets/createatomic/lang/en_us.json
 4e2ba19042b703eafd590e592062ffa1fd29507f assets/createatomic/models/item/crude_nuclear_bomb.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
@@ -19,6 +19,8 @@ bf064ab5567c9d4e43487acd98ab004f75753161 assets/createatomic/models/item/plutoni
 c979bd22e3afece46f0bee75668abb7c99a92cd0 assets/createatomic/models/item/plutonium_ingot.json
 b53e109017e3cbafb9b4c6358c106236f1690098 assets/createatomic/models/item/plutonium_nugget.json
 3b7b09bf40b83645e8eda4b6b43307959957c999 assets/createatomic/models/item/plutonium_rod.json
+38ceb65ee39564164a0feb878f5288579f5bbbbd assets/createatomic/models/item/rad_paste.json
+e79dab2485f5b5049c86a0949f69943e09a406c0 assets/createatomic/models/item/rad_pill.json
 104b6c4cded2628b8b11ba16c58854537e1920d1 assets/createatomic/models/item/radioisotope_heat_generator_kindled.json
 4de4b676b5b1b430c52ed3826f49d37632cb2e79 assets/createatomic/models/item/radioisotope_heat_generator_none.json
 e8fe5c233ab0ee73279e9904847eec4a7776526b assets/createatomic/models/item/radioisotope_heat_generator_smouldering.json
