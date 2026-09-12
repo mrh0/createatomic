@@ -1,8 +1,8 @@
 package com.mrh0.createatomic;
 
 import com.mrh0.createatomic.config.AtomicConfigs;
+import com.mrh0.createatomic.datagen.TagProvider.CATagRegister;
 import com.mrh0.createatomic.index.AtomicEffects;
-import com.mrh0.createatomic.items.HazmatArmorItem;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -49,7 +49,7 @@ public class Utility {
         int newAmplifier = amplifier;
         if (existing != null) {
             newAmplifier = existing.getAmplifier();
-            // Higher tiers escalate less readily - amplifier 0 always steps up, amplifier 1 only half the time.
+            // Higher tiers escalate less readily, amplifier 0 always steps up, amplifier 1 only half the time.
             if (entity.getRandom().nextFloat() < 0.5f / existing.getAmplifier())
                 newAmplifier++;
         }
@@ -59,7 +59,7 @@ public class Utility {
     public static int countHazmatPieces(Player player) {
         int count = 0;
         for (EquipmentSlot slot : ARMOR_SLOTS)
-            if (player.getItemBySlot(slot).getItem() instanceof HazmatArmorItem) count++;
+            if (player.getItemBySlot(slot).is(CATagRegister.Items.HAZMAT_PROTECTION)) count++;
         return count;
     }
 

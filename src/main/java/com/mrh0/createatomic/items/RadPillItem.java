@@ -45,7 +45,7 @@ public class RadPillItem extends Item {
 
         if (!level.isClientSide()) {
             entityLiving.removeEffect(AtomicEffects.RADIOACTIVITY);
-            entityLiving.addEffect(new MobEffectInstance(AtomicEffects.RAD_AWAY, IMMUNITY_DURATION, 0, false, true));
+            entityLiving.addEffect(new MobEffectInstance(AtomicEffects.RAD_AWAY, IMMUNITY_DURATION, 0, false, false, true));
         }
 
         stack.consume(1, entityLiving);

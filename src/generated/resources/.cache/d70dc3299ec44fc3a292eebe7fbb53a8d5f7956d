@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-04T02:03:15.308646892	Tags for minecraft:item mod id createatomic
+// 1.21.1	2026-09-11T14:31:29.501417072	Tags for minecraft:item mod id createatomic
 b273a7735b0bd8ef09f17b8e7db3365d17ab7139 data/c/tags/item/ingots.json
 16c2c7aa4161390443b65c3bd013d4997cf84eb4 data/c/tags/item/ingots/plutonium.json
 7f1464a8772f5154007d82c8fee75cc91031cde9 data/c/tags/item/ingots/refined_uranium.json
@@ -24,4 +24,5 @@ cfbaf2bf716169a7802a6138b83c7a02ce6e64ec data/c/tags/item/storage_blocks/plutoni
 7bc3602d5a73147fe36db4a3c520145a714d5392 data/c/tags/item/storage_blocks/uranium.json
 87224ccba7555ad7962119f77f09769f7c4074d3 data/createatomic/tags/item/control_rods.json
 0de2138154bf9ea3d0b39552a1b360451d0d94f5 data/createatomic/tags/item/fuel_rods.json
+8095cc5a9f0ad94fbcc33800b6b25249057d086c data/createatomic/tags/item/hazmat_protection.json
 1e26bee5370341efd48488c3df1e93bb901ecb38 data/createatomic/tags/item/reactor_components.json

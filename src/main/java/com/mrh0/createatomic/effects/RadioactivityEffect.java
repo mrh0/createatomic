@@ -1,5 +1,6 @@
 package com.mrh0.createatomic.effects;
 
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -15,7 +16,14 @@ public class RadioactivityEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        entity.forceAddEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, 1 + amplifier, false, false), null);
+        if (entity.getType().is(EntityTypeTags.UNDEAD)) {
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, amplifier, false, false), null);
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 20, amplifier, false, false), null);
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 20, amplifier, false, false), null);
+            return true;
+        }
+
+        entity.forceAddEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, amplifier + 1, false, false), null);
 
         RandomSource random = entity.getRandom();
         if (amplifier >= 1 && random.nextFloat() < 0.3f)

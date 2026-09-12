@@ -92,5 +92,11 @@ public class CAItemTagProvider extends ItemTagsProvider {
                 .add(AtomicItems.NEUTRON_REFLECTOR.get())
                 .add(AtomicItems.FUEL_ROD.get())
                 .add(AtomicItems.DEPLETED_FUEL_ROD.get());
+
+        tag(CATagRegister.Items.HAZMAT_PROTECTION)
+                .add(AtomicItems.HAZMAT_HELMET.get())
+                .add(AtomicItems.HAZMAT_CHESTPLATE.get())
+                .add(AtomicItems.HAZMAT_LEGGINGS.get())
+                .add(AtomicItems.HAZMAT_BOOTS.get());
     }
 }

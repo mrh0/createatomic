@@ -32,7 +32,11 @@ public class CABlockTagProvider extends BlockTagsProvider {
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
                 .add(AtomicBlocks.REACTOR_DEBRIS.get())
                 .add(AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
-                .add(AtomicBlocks.TURBINE.get());
+                .add(AtomicBlocks.TURBINE.get())
+                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_INERT.get())
+                .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get())
+                .add(AtomicBlocks.CRUDE_NUCLEAR_BOMB.get())
+                .add(AtomicBlocks.RTG.get());
 
         // Uranium ores and raw block require iron-tier tool to drop
         tag(BlockTags.NEEDS_IRON_TOOL)
