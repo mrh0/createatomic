@@ -17,18 +17,22 @@ public class RadioactivityEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         if (entity.getType().is(EntityTypeTags.UNDEAD)) {
-            entity.forceAddEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, amplifier, false, false), null);
-            entity.forceAddEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 20, amplifier, false, false), null);
-            entity.forceAddEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 20, amplifier, false, false), null);
+            if (!entity.hasEffect(MobEffects.REGENERATION))
+                entity.forceAddEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, amplifier, false, false), null);
+            if (!entity.hasEffect(MobEffects.DAMAGE_BOOST))
+                entity.forceAddEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 20, amplifier, false, false), null);
+            if (!entity.hasEffect(MobEffects.MOVEMENT_SPEED))
+                entity.forceAddEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 20, amplifier, false, false), null);
             return true;
         }
 
-        entity.forceAddEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, amplifier + 1, false, false), null);
+        if (!entity.hasEffect(MobEffects.HUNGER))
+            entity.forceAddEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, amplifier + 1, false, false), null);
 
         RandomSource random = entity.getRandom();
-        if (amplifier >= 1 && random.nextFloat() < 0.3f)
+        if (amplifier >= 1 && !entity.hasEffect(MobEffects.CONFUSION) && random.nextFloat() < 0.3f)
             entity.forceAddEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 0, false, false), null);
-        if (amplifier >= 2 && random.nextFloat() < 0.1f)
+        if (amplifier >= 2 && !entity.hasEffect(MobEffects.BLINDNESS) && random.nextFloat() < 0.1f)
             entity.forceAddEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 10, 0, false, false), null);
 
         return true;

@@ -1,5 +1,17 @@
 # Changelog
 
+## Release 1.3.1
+
+### Changes
+
+- Removed particles on Rad Pil effect
+- Updated ore textures
+- Rebalanced crushing recipes
+
+### Fixes
+
+- Fixed missing mineable tags
+
 ## Release 1.3.0
 
 ### Added
