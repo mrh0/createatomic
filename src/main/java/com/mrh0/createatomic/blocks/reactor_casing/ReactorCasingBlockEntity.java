@@ -764,7 +764,7 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
                         if (nx >= 0 && nx < w && nz >= 0 && nz < w && grid[nx][nz] != null) {
                             RodConfiguration nc = grid[nx][nz].getConfig();
                             if (nc.adjacencyBonus > 0) neighbours++;
-                            consumptionBonus += nc.adjacentFuelConsumptionBonus;
+                            consumptionBonus += nc.adjacentFuelConsumptionBonus - 1f;
                         }
                     }
                     effectiveFuel += config.effectivePower * (1f + config.adjacencyBonus * neighbours);

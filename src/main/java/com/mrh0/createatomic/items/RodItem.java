@@ -30,9 +30,12 @@ public class RodItem extends Item {
         if (config.adjacencyBonus > 0)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.adjacency").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(String.format("+%.0f%%", config.adjacencyBonus * 100)).withStyle(ChatFormatting.YELLOW)));
-        if (config.adjacentFuelConsumptionBonus > 0)
+        if (config.adjacentFuelConsumptionBonus > 1f)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.fuel_lifetime").withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal(String.format("-%.0f%%", config.adjacentFuelConsumptionBonus * 100)).withStyle(ChatFormatting.GOLD)));
+                    .append(Component.literal(String.format("-%.0f%%", (config.adjacentFuelConsumptionBonus - 1f) * 100)).withStyle(ChatFormatting.GOLD)));
+        if (config.adjacentFuelConsumptionBonus < 1f)
+            tooltip.add(Component.translatable("createatomic.tooltip.rod_item.fuel_lifetime").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal(String.format("+%.0f%%", (1f - config.adjacentFuelConsumptionBonus) * 100)).withStyle(ChatFormatting.AQUA)));
         if (config.capacityBuff > 0)
             tooltip.add(Component.translatable("createatomic.tooltip.rod_item.capacity_buff").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal("+" + config.capacityBuff).withStyle(ChatFormatting.AQUA)));

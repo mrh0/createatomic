@@ -165,7 +165,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
             net.minecraft.world.level.block.entity.BlockEntity neighbor =
                     level.getBlockEntity(worldPosition.offset(dx[d], 0, dz[d]));
             if (neighbor instanceof RodAssemblyBlockEntity neighbourRod)
-                bonus += neighbourRod.getConfig().adjacentFuelConsumptionBonus;
+                bonus += neighbourRod.getConfig().adjacentFuelConsumptionBonus - 1f;
         }
         return bonus;
     }
