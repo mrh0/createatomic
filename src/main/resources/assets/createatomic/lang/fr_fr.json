@@ -9,9 +9,9 @@
 	"item.createatomic.small_control_rod": "Petite barre de contrôle",
 	"item.createatomic.large_control_rod": "Grande barre de contrôle",
 	"item.createatomic.refined_uranium_rod": "Barre d'uranium",
-	"item.createatomic.depleted_uranium_rod": "Barre d'uranium usée",
+	"item.createatomic.depleted_uranium_rod": "Barre d'uranium usagée",
 	"item.createatomic.plutonium_rod": "Barre de plutonium",
-	"item.createatomic.depleted_plutonium_rod": "Barre de plutonium usée",
+	"item.createatomic.depleted_plutonium_rod": "Barre de plutonium usagée",
 	"item.createatomic.dense_alloy": "Alliage dense",
 	"item.createatomic.dense_alloy_nugget": "Pépite d'alliage dense",
 	"item.createatomic.neutron_reflector": "Réflecteur de neutrons",
@@ -19,9 +19,9 @@
 	"item.createatomic.plutonium_ingot": "Lingot de plutonium",
 	"item.createatomic.plutonium_nugget": "Pépite de plutonium",
 
-	"block.createatomic.crude_nuclear_bomb": "Bombe nucléaire improvisé",
+	"block.createatomic.crude_nuclear_bomb": "Bombe nucléaire improvisée",
 	"block.createatomic.crude_nuclear_bomb.tooltip": "BOMBE NUCLÉAIRE BRUTE",
-	"block.createatomic.crude_nuclear_bomb.tooltip.summary": "Un dispositif nucléaire improvisé. Faites un _clic-droit_ avec un briquet pour l'armer. Détone après _dix seconds_, déchaînant une explosion massive, avec un _champignon nucléaire_ en prime.",
+	"block.createatomic.crude_nuclear_bomb.tooltip.summary": "Un dispositif nucléaire improvisé. Faite un _clic-droit_ avec un briquet pour l'armer. Détone après _dix seconds_, déchaînant une explosion massive, avec un _champignon nucléaire_ en prime.",
 
 	"block.createatomic.yellow_cake": "Gâteau jaune",
 	"block.createatomic.uranium_ore": "Minerai d'uranium",
@@ -61,8 +61,14 @@
 	"block.createatomic.reactor_redstone_interface.tooltip.summary": "Utilisée pour _activer_ et _désactiver_ un réacteur avec un signal de redstone. Placé sur le côté d'un assemblage de _boitiers de réacteur_.",
 
 	"effect.createatomic.radioactivity": "Radioactivité",
-	"effect.createatomic.radiation_poisoning.description": "Va de I à III et inflige les effets Faim, Nausée et Cécité à intervalles réguliers.",
+	"effect.createatomic.radioactivity.description": "Inflige les effets Faim, Nausée et Cécité à intervalles réguliers.",
+	"effect.createatomic.rad_away": "Rad-a-way",
+	"effect.createatomic.rad_away.description": "Protège l'entité ciblée de l'effet Radioactivité et des effets nocifs engendrés par celui-ci.",
 
+	"item.createatomic.rad_pill": "Pillule anti-radiation",
+	"item.createatomic.rad_pill.tooltip": "RAD PILL",
+	"item.createatomic.rad_pill.tooltip.summary": "Supprime l'effet _Radioactivité_ et accorde une immunité contre celui-ci pendant _dix minutes_.",
+	"item.createatomic.rad_paste": "Pâte radioactive",
 
 	"item.createatomic.hazmat_helmet": "Casque Hazmat",
 	"item.createatomic.hazmat_helmet.tooltip": "HAZMAT HELMET",
@@ -77,6 +83,10 @@
 	"item.createatomic.hazmat_boots.tooltip": "HAZMAT BOOTS",
 	"item.createatomic.hazmat_boots.tooltip.summary": "Protège contre la _radioactivité_. Une combinaison complète est requise pour une protection totale.",
 
+	"createatomic.tooltip.turbine.no_reactor": "Pas de réacteur connecté à la turbine",
+	"createatomic.tooltip.turbine.no_output": "Le réacteur est au repos",
+	"createatomic.tooltip.turbine.rpm": "%s tr/min",
+
 	"createatomic.display_source.reactor_status": "Statut du réacteur",
 	"createatomic.display_source.reactor_temperature": "Température du réacteur",
 	"createatomic.display_source.reactor_health": "Intégrité de la coque du réacteur",
@@ -86,10 +96,13 @@
 	"createatomic.display_source.reactor.scrammed": "Désactivation",
 
 	"createatomic.tooltip.rod_item.power": "Énergie de réaction: ",
-	"createatomic.tooltip.rod_item.capacity": "Contrôle de réaction: ",
+	"createatomic.tooltip.rod_item.control_capacity": "Capacité de contrôle de réaction: ",
 	"createatomic.tooltip.rod_item.adjacency": "Bonus d'adjacence: ",
+	"createatomic.tooltip.rod_item.fuel_lifetime": "Durée de vie du combustible adjacent: ",
+	"createatomic.tooltip.rod_item.capacity_buff": "Bonus de capacité de la coque du réacteur: ",
 
-	"createatomic.tooltip.fuel_rod.depletion": "Complètement usée dans %s",
+	"createatomic.tooltip.fuel_rod.depletion": "Durée de réaction restante: %s",
+	"createatomic.tooltip.fuel_rod.consumption_bonus": "Malus de durée de vie (Barres adjacentes): -%s",
 
 	"createatomic.tooltip.rhg.heat_output": "Chaleur: %s",
 	"createatomic.tooltip.rhg.heat.kindled": "Chaud",
@@ -100,10 +113,15 @@
 	"createatomic.tooltip.rod_assembly.small_control_rod": "Petite barre de contrôle",
 	"createatomic.tooltip.rod_assembly.large_control_rod": "Grande barre de contrôle",
 	"createatomic.tooltip.rod_assembly.fuel_rod": "Barre d'uranium",
-	"createatomic.tooltip.rod_assembly.depleted_fuel_rod": "Barre d'uranium usée",
+	"createatomic.tooltip.rod_assembly.depleted_fuel_rod": "Barre d'uranium usagée",
+	"createatomic.tooltip.rod_assembly.plutonium_fuel_rod": "Barre de plutonium",
+	"createatomic.tooltip.rod_assembly.depleted_plutonium_fuel_rod": "Barre de plutonium usagée",
 	"createatomic.tooltip.rod_assembly.neutron_reflector": "Réflecteur à neutrons",
+	"createatomic.tooltip.rod_assembly.cooling_rod": "Barre de refroidissement",
+	"createatomic.tooltip.rod_assembly.plate": "Plaque d'alliage dense",
 	"createatomic.tooltip.rod_assembly.locked": "Emplacement verrouillé - le réacteur est actif",
 	"createatomic.message.rod_locked": "Changement de barre impossible lorsque le réacteur est actif",
+	"createatomic.message.wrench_active_reactor": "Ce block ne peut-pas être récupéré tant que le réacteur est actif",
 
 	"createatomic.tooltip.reactor.scrammed": " (Barres de contrôle enclenchées)",
 	"createatomic.tooltip.reactor.info": "Statut du réacteur",
