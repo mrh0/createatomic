@@ -144,7 +144,6 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
             return ItemInteractionResult.SUCCESS;
         }
 
-        // Holding a rod item: empty rod assemblies always accept a new rod, regardless of reactor state.
         if (RodConfiguration.isAcceptedStack(stack)) {
             if (currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
