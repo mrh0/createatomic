@@ -89,11 +89,8 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
         if (!(be instanceof RodAssemblyBlockEntity rabe))
             return InteractionResultHolder.pass(stack);
 
+        // Empty rod assemblies can always accept a new rod, regardless of reactor state.
         if (rabe.getConfig().isPopulated())
-            return InteractionResultHolder.pass(stack);
-
-        RodConfiguration incoming = RodConfiguration.fromStack(stack);
-        if (rabe.isLockedWith(incoming))
             return InteractionResultHolder.pass(stack);
 
         ItemStack remainder = stack.copy();
@@ -147,16 +144,10 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
             return ItemInteractionResult.SUCCESS;
         }
 
-        // Holding a rod item: insert if slot is empty
+        // Holding a rod item: empty rod assemblies always accept a new rod, regardless of reactor state.
         if (RodConfiguration.isAcceptedStack(stack)) {
             if (currentConfig.isPopulated())
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            RodConfiguration incoming = RodConfiguration.fromStack(stack);
-            if (rabe.isLockedWith(incoming)) {
-                player.displayClientMessage(
-                        Component.translatable("createatomic.message.rod_locked").withStyle(ChatFormatting.RED), true);
-                return ItemInteractionResult.FAIL;
-            }
             ItemStack toInsert = stack.copyWithCount(1);
             if (!player.isCreative()) stack.shrink(1);
             rabe.updateRod(toInsert);
