@@ -1,5 +1,18 @@
 # Changelog
 
+## Release 1.3.2
+
+### Added
+
+- Reactor Sensor block
+- Tooltip indicating what items produce radioactivity
+
+### Changes
+
+- New model and texture for Reactor Redstone Interface
+- Rods can now always be inserted into empty slots in the reactor even when active
+- Various balance changes
+
 ## Release 1.3.1
 
 ### Changes
