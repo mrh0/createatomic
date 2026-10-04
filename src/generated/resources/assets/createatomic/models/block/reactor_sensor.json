@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "createatomic:block/reactor_sensor/front",
+    "side": "createatomic:block/reactor_sensor/side",
+    "top": "createatomic:block/reactor_sensor/back"
+  }
+}

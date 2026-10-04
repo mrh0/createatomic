@@ -22,6 +22,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
 
     public static final int FUSE_TIME = 200;
     public static final float EXPLOSION_RADIUS = 40.0f;
+    public static final int RADIATION_RADIUS = 64;
 
     private static final EntityDataAccessor<Integer> DATA_FUSE =
             SynchedEntityData.defineId(NuclearBombEntity.class, EntityDataSerializers.INT);
@@ -86,7 +87,7 @@ public class NuclearBombEntity extends Entity implements TraceableEntity {
         Level level = this.level();
         level.explode(this, this.getX(), this.getY(), this.getZ(),
                 EXPLOSION_RADIUS, true, ExplosionInteraction.TNT);
-        Utility.applyRadiationInRadius(level, this.blockPosition(), (int) (EXPLOSION_RADIUS * 3), 2);
+        Utility.applyRadiationInRadius(level, this.blockPosition(), RADIATION_RADIUS, 2);
         if (level instanceof ServerLevel serverLevel) {
             spawnMushroomCloud(serverLevel);
         }

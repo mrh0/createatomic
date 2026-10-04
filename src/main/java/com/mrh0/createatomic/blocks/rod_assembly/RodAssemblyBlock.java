@@ -202,6 +202,16 @@ public class RodAssemblyBlock extends Block implements IWrenchable, IBE<RodAssem
     }
 
     @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return getBlockEntityOptional(level, pos).map(RodAssemblyBlockEntity::getComparatorOutput).orElse(0);
+    }
+
+    @Override
     public Class<RodAssemblyBlockEntity> getBlockEntityClass() {
         return RodAssemblyBlockEntity.class;
     }

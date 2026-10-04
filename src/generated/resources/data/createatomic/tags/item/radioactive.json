@@ -1,0 +1,10 @@
+{
+  "values": [
+    "createatomic:refined_uranium_rod",
+    "createatomic:plutonium_rod",
+    "createatomic:depleted_uranium_rod",
+    "createatomic:depleted_plutonium_rod",
+    "createatomic:reactor_debris",
+    "createatomic:rtg"
+  ]
+}

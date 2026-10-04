@@ -36,6 +36,7 @@ Craftable from 9 ingots/items and decompress back:
 - **Reactor Casing** - multi-block structure that forms the reactor body
 - **Rod Assembly** - placed on top of the casing; accepts one rod at a time
 - **Reactor Redstone Interface** - attaches to the casing side; arms/SCRAMs the reactor via redstone
+- **Reactor Sensor** - attaches to the casing side; outputs a comparator signal for the selected reading (temperature, hull integrity, water level or lowest fuel rod) and can be read by Create's Threshold Switch
 - **Steam Turbine** - bolts to the reactor face; converts reactor heat into Rotational Force (16 SU/RPM by default)
 
 ### Reactor Rods
@@ -76,6 +77,14 @@ Left behind after a meltdown. Emits radiation. Requires a diamond pickaxe to min
 6. Pump water into the casing to keep it cooled - the reactor consumes water while running.
 7. Bolt **Steam Turbines** to the reactor face to generate rotational force.
 8. Use a **Mechanical Arm** to automate swapping depleted rods for fresh ones.
+
+**Comparator Outputs:**
+
+| Block | Signal |
+|---|---|
+| Rod Assembly | 0 = empty, 15 = non-fuel rod, 1-15 = fuel remaining (1 = depleted, 15 = fresh) |
+| Reactor Casing | Water level |
+| Reactor Sensor | Selected reading: Temperature (0 idle, 15 at 315°C+), Hull Integrity, Water Level, or Lowest Fuel Rod (same scale as the Rod Assembly, 0 = no fuel rods) |
 
 **Adjacency:** Fuel rods and Neutron Reflectors boost neighboring fuel rods. Each adjacent rod with an adjacency bonus increases a fuel rod's effective power by that bonus (+50% per neighbor by default).
 

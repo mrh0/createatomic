@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "createatomic:block/reactor_redstone_interface/front_powered",
+    "side": "createatomic:block/reactor_redstone_interface/side_powered",
+    "top": "createatomic:block/reactor_redstone_interface/back"
+  }
+}

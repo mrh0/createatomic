@@ -198,10 +198,22 @@ public class AtomicCraftingRecipeGen extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
             .pattern("E")
             .pattern("D")
+            .pattern("R")
             .define('E', AllItems.ELECTRON_TUBE.get())
             .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('R', Items.REDSTONE)
             .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
             .save(output, CreateAtomic.asResource("crafting/reactor_redstone_interface"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.REACTOR_SENSOR.get())
+            .pattern("E")
+            .pattern("D")
+            .pattern("C")
+            .define('E', AllItems.ELECTRON_TUBE.get())
+            .define('D', AtomicItems.DENSE_ALLOY.get())
+            .define('C', Items.COMPARATOR)
+            .unlockedBy("has_dense_alloy_plate", has(AtomicItems.DENSE_ALLOY.get()))
+            .save(output, CreateAtomic.asResource("crafting/reactor_sensor"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AtomicBlocks.ROD_ASSEMBLY.get())
             .pattern("I I")

@@ -52,6 +52,8 @@ public class CATagRegister {
         public static final TagKey<Item> FUEL_RODS = atomicTags("fuel_rods");
         public static final TagKey<Item> REACTOR_COMPONENTS = atomicTags("reactor_components");
         public static final TagKey<Item> HAZMAT_PROTECTION = atomicTags("hazmat_protection");
+        // Shows the [Radioactive] tooltip line. Does not cause radiation by itself.
+        public static final TagKey<Item> RADIOACTIVE = atomicTags("radioactive");
 
         public static TagKey<Item> commonTags(String folder, String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", String.format("%s/%s", folder, name)));

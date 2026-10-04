@@ -1,6 +1,7 @@
 package com.mrh0.createatomic.datagen.TagProvider;
 
 import com.mrh0.createatomic.CreateAtomic;
+import com.mrh0.createatomic.index.AtomicBlocks;
 import com.mrh0.createatomic.index.AtomicItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -98,5 +99,14 @@ public class CAItemTagProvider extends ItemTagsProvider {
                 .add(AtomicItems.HAZMAT_CHESTPLATE.get())
                 .add(AtomicItems.HAZMAT_LEGGINGS.get())
                 .add(AtomicItems.HAZMAT_BOOTS.get());
+
+        // Items that irradiate while carried, and blocks that irradiate while placed.
+        tag(CATagRegister.Items.RADIOACTIVE)
+                .add(AtomicItems.FUEL_ROD.get())
+                .add(AtomicItems.PLUTONIUM_FUEL_ROD.get())
+                .add(AtomicItems.DEPLETED_FUEL_ROD.get())
+                .add(AtomicItems.DEPLETED_PLUTONIUM_FUEL_ROD.get())
+                .add(AtomicBlocks.REACTOR_DEBRIS.asItem())
+                .add(AtomicBlocks.RTG.asItem());
     }
 }

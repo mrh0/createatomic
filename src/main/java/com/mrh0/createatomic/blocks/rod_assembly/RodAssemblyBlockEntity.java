@@ -18,6 +18,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,6 +37,7 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
 
     private ItemStack currentRod = ItemStack.EMPTY;
     private int fuelTicks = 0;
+    private int lastComparatorOutput = -1;
 
     // Client-only: smoothly animates the rod 4px down when the reactor is running.
     public LerpedFloat insertAnimation;
@@ -123,7 +125,36 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         if (hasLevel() && !level.isClientSide()) {
             setChanged();
             sendData();
+            notifyComparatorIfChanged();
         }
+    }
+
+    // Remaining fuel from 0 (depleted rod) to 1 (fresh), or -1 when not holding a fuel or depleted rod.
+    public float getRemainingFuelFraction() {
+        RodConfiguration config = getConfig();
+        if (config.isDepletedFuelRod()) return 0f;
+        if (!config.isFuelRod()) return -1f;
+        int duration = fuelDuration(config);
+        return (float) Math.max(0, duration - fuelTicks) / duration;
+    }
+
+    // 1 = fully depleted, 15 = fresh. Rounds up so that only a depleted rod reads 1.
+    public static int fuelFractionToRedstone(float fraction) {
+        return 1 + Mth.ceil(14f * fraction);
+    }
+
+    // 0 = empty, 15 = non-fuel rod, 1-15 = remaining fuel (1 = fully depleted, 15 = fresh).
+    public int getComparatorOutput() {
+        if (!getConfig().isPopulated()) return 0;
+        float fuel = getRemainingFuelFraction();
+        return fuel < 0 ? 15 : fuelFractionToRedstone(fuel);
+    }
+
+    private void notifyComparatorIfChanged() {
+        int output = getComparatorOutput();
+        if (output == lastComparatorOutput) return;
+        lastComparatorOutput = output;
+        level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
     }
 
     // Returns the rod item with fuelTicks embedded so that re-inserting it later resumes depletion.
@@ -153,7 +184,9 @@ public class RodAssemblyBlockEntity extends SmartBlockEntity implements IHaveGog
         if (fuelTicks >= fuelDuration(config)) {
             fuelTicks = 0;
             updateRod(config.depleteInto().asStack());
+            return;
         }
+        notifyComparatorIfChanged();
     }
 
     private float computeAdjacentConsumptionBonus() {

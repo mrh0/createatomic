@@ -3,6 +3,7 @@ package com.mrh0.createatomic.index;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.mrh0.createatomic.CreateAtomic;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
+import com.mrh0.createatomic.blocks.reactor_sensor.ReactorSensorBlockEntity;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockEntity;
 import com.mrh0.createatomic.blocks.rtg.RTGBlockEntity;
 import com.mrh0.createatomic.blocks.turbine.TurbineBlockEntity;
@@ -18,6 +19,11 @@ public class AtomicBlockEntities {
             .blockEntity("rod_assembly", RodAssemblyBlockEntity::new)
             .validBlocks(AtomicBlocks.ROD_ASSEMBLY)
             //.renderer(() -> ModularAccumulatorRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<ReactorSensorBlockEntity> REACTOR_SENSOR = CreateAtomic.REGISTRATE
+            .blockEntity("reactor_sensor", ReactorSensorBlockEntity::new)
+            .validBlocks(AtomicBlocks.REACTOR_SENSOR)
             .register();
 
     public static final BlockEntityEntry<TurbineBlockEntity> TURBINE = CreateAtomic.REGISTRATE

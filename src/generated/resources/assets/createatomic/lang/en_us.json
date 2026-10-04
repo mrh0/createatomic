@@ -10,6 +10,7 @@
   "block.createatomic.reactor_casing": "Reactor Casing",
   "block.createatomic.reactor_debris": "Reactor Debris",
   "block.createatomic.reactor_redstone_interface": "Reactor Redstone Interface",
+  "block.createatomic.reactor_sensor": "Reactor Sensor",
   "block.createatomic.refined_uranium_block": "Refined Uranium Block",
   "block.createatomic.rod_assembly": "Rod Assembly",
   "block.createatomic.rtg": "Rtg",

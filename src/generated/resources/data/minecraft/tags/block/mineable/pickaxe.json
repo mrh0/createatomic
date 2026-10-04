@@ -12,6 +12,7 @@
     "createatomic:rod_assembly",
     "createatomic:reactor_debris",
     "createatomic:reactor_redstone_interface",
+    "createatomic:reactor_sensor",
     "createatomic:steam_turbine",
     "createatomic:radioisotope_heat_generator_none",
     "createatomic:radioisotope_heat_generator_smouldering",

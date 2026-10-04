@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "createatomic:block/reactor_sensor",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "createatomic:block/reactor_sensor",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "createatomic:block/reactor_sensor",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "createatomic:block/reactor_sensor",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "createatomic:block/reactor_sensor"
+    },
+    "facing=west": {
+      "model": "createatomic:block/reactor_sensor",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

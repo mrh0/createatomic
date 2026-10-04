@@ -1,6 +1,11 @@
-// 1.21.1	2026-09-10T21:53:24.677200529	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-f3fe15eaf23efae16a577d57e000c2137cfcb8b7 assets/createatomic/lang/en_ud.json
-7566eae66ca4b08a714b723abad9a49852657c36 assets/createatomic/lang/en_us.json
+// 1.21.1	2026-10-04T20:45:28.702648099	Registrate Provider for createatomic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+4d0e6dd31357264b75df9228de1f3a3de1fb9e43 assets/createatomic/blockstates/reactor_redstone_interface.json
+af349dccff832beb60d93234567e4b2653b333f0 assets/createatomic/blockstates/reactor_sensor.json
+88936b98081f0cdcc01a34501acba7ee4b48ccb2 assets/createatomic/lang/en_ud.json
+dfd33ac6ae3a0a36622943da90485c429d5629a7 assets/createatomic/lang/en_us.json
+9c9d1ec948ebf0495440f4ee37f0921d62c11040 assets/createatomic/models/block/reactor_redstone_interface.json
+585f03874fa6d623174950e67d8a7eec7fddb4ee assets/createatomic/models/block/reactor_redstone_interface_powered.json
+83ed5297d4434879e968497fda8084ee6aec61c5 assets/createatomic/models/block/reactor_sensor.json
 4e2ba19042b703eafd590e592062ffa1fd29507f assets/createatomic/models/item/crude_nuclear_bomb.json
 18a4c0b8e35a5180f7af20d6c2c8f70adbcccc91 assets/createatomic/models/item/deepslate_uranium_ore.json
 740f9f0512151adc1dbfec17a406e7025b7100d8 assets/createatomic/models/item/dense_alloy.json
@@ -28,7 +33,8 @@ e8fe5c233ab0ee73279e9904847eec4a7776526b assets/createatomic/models/item/radiois
 805f8f4544df4bf5086cbcb6d4703424b1565ba6 assets/createatomic/models/item/raw_uranium_block.json
 be0414b02be53550b4ab363e28228cb41f261e4b assets/createatomic/models/item/reactor_casing.json
 f97b13aca420cdf75c2f30ae0f02a5663ddb01d0 assets/createatomic/models/item/reactor_debris.json
-5f8d8453124daddd1911a9fe85adac40c941f39a assets/createatomic/models/item/reactor_redstone_interface.json
+2d5a13cb2fb81b932279aed84d7b8f897c095e38 assets/createatomic/models/item/reactor_redstone_interface.json
+33997bcaa9a013945f1e352cbbde2dc29255bdcc assets/createatomic/models/item/reactor_sensor.json
 a7cb350465cee447e3652cd6f04ae4a9d4123105 assets/createatomic/models/item/refined_uranium_block.json
 edd02c5f2ffe21d11cfded0ac1df98bbb11da7ca assets/createatomic/models/item/refined_uranium_ingot.json
 7be5c5255265bbf42f681c88f430cff6b271182b assets/createatomic/models/item/refined_uranium_nugget.json
@@ -52,6 +58,7 @@ cf9063bbad18a31161c3426f393e4d142512db74 data/createatomic/loot_table/blocks/rad
 8a896e8f024c45acec1229eaecbc04cb6c3e89aa data/createatomic/loot_table/blocks/reactor_casing.json
 94f168a8883f20a0b2bee398e13690aa36207afc data/createatomic/loot_table/blocks/reactor_debris.json
 0766f5a2f5815eba8ac0467f00bd552b355143f8 data/createatomic/loot_table/blocks/reactor_redstone_interface.json
+14fc0865dcde94e0389e6d8617f49a8a70966324 data/createatomic/loot_table/blocks/reactor_sensor.json
 d18eba6ad6e61cffc7d83b2682e1f52010dc1c2a data/createatomic/loot_table/blocks/refined_uranium_block.json
 4e06392e57c00a2686320a1a1ddbb4de32a0c1b7 data/createatomic/loot_table/blocks/rod_assembly.json
 267c9fbefaeb07fb17b2160b336d2133462521e8 data/createatomic/loot_table/blocks/rtg.json

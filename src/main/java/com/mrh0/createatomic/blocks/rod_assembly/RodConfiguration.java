@@ -90,6 +90,10 @@ public enum RodConfiguration implements StringRepresentable {
         return this == FuelRod || this == PlutoniumFuelRod;
     }
 
+    public boolean isDepletedFuelRod() {
+        return this == DepletedFuelRod || this == DepletedPlutoniumFuelRod;
+    }
+
     public RodConfiguration depleteInto() {
         return switch (this) {
             case FuelRod         -> DepletedFuelRod;

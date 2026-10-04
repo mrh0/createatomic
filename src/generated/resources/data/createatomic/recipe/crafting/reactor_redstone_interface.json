@@ -7,11 +7,15 @@
     },
     "E": {
       "item": "create:electron_tube"
+    },
+    "R": {
+      "item": "minecraft:redstone"
     }
   },
   "pattern": [
     "E",
-    "D"
+    "D",
+    "R"
   ],
   "result": {
     "count": 1,

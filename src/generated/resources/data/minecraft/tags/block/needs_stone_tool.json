@@ -4,6 +4,7 @@
     "createatomic:reactor_casing",
     "createatomic:rod_assembly",
     "createatomic:reactor_redstone_interface",
+    "createatomic:reactor_sensor",
     "createatomic:steam_turbine"
   ]
 }

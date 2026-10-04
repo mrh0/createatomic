@@ -15,6 +15,8 @@ import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingCTBehaviour;
 import com.mrh0.createatomic.blocks.reactor_debris.ReactorDebrisBlock;
 import com.mrh0.createatomic.blocks.rod_assembly.RodAssemblyBlockItem;
 import com.mrh0.createatomic.blocks.reactor_redstone_interface.ReactorRedstoneInterfaceBlock;
+import com.mrh0.createatomic.blocks.reactor_sensor.ReactorSensorBlock;
+import com.mrh0.createatomic.datagen.AtomicBlockStateGen;
 import com.mrh0.createatomic.blocks.turbine.TurbineBlock;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -52,11 +54,21 @@ public class AtomicBlocks {
         CreateAtomic.REGISTRATE.block("reactor_redstone_interface", ReactorRedstoneInterfaceBlock::new)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.mapColor(DyeColor.RED).strength(3.5f).requiresCorrectToolForDrops())
-            .blockstate((ctx, prov) -> {})
+            .blockstate((ctx, prov) -> AtomicBlockStateGen.reactorAttachment(ctx, prov,
+                state -> state.getValue(ReactorRedstoneInterfaceBlock.POWERED) ? "_powered" : ""))
             .item()
-            .transform(customItemModel())
+            .build()
             .register();
-        
+
+    public static final BlockEntry<ReactorSensorBlock> REACTOR_SENSOR =
+        CreateAtomic.REGISTRATE.block("reactor_sensor", ReactorSensorBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(DyeColor.RED).strength(3.5f).requiresCorrectToolForDrops())
+            .blockstate((ctx, prov) -> AtomicBlockStateGen.reactorAttachment(ctx, prov, state -> ""))
+            .item()
+            .build()
+            .register();
+
     public static final BlockEntry<TurbineBlock> TURBINE =
         CreateAtomic.REGISTRATE.block("steam_turbine", TurbineBlock::new)
             .initialProperties(SharedProperties::softMetal)

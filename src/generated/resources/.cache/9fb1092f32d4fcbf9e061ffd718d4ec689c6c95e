@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-15T01:39:23.53906474	Recipes
+// 1.21.1	2026-10-04T20:45:28.703753439	Recipes
 d705d4ca72f4180d7b308819c01b6b1f023ffdfb data/createatomic/advancement/recipes/combat/crafting/hazmat_boots.json
 56315b05b726b473cc7a31bbffed3f64a8698bbd data/createatomic/advancement/recipes/combat/crafting/hazmat_chestplate.json
 598fa18294dd3a1f2f984d6fff9e26aeb1f39670 data/createatomic/advancement/recipes/combat/crafting/hazmat_helmet.json
@@ -25,6 +25,7 @@ d1333fac7c12091309597bc089940e73b1cbb0d7 data/createatomic/advancement/recipes/m
 ba2dd324a5a8e7523e832b0bca33760e6830b111 data/createatomic/advancement/recipes/misc/crafting/raw_uranium_block.json
 82f263c7d5723bc049b92332717fae99810a74b8 data/createatomic/advancement/recipes/misc/crafting/raw_uranium_from_block.json
 6a37274c5f0715c4d5f3f46766388d73d8826740 data/createatomic/advancement/recipes/misc/crafting/reactor_redstone_interface.json
+0c97937ec5bfbace313d736554cd96fd82fb73ff data/createatomic/advancement/recipes/misc/crafting/reactor_sensor.json
 009e434af12b2d7d51f0e2c56068f4db2b8d3ec1 data/createatomic/advancement/recipes/misc/crafting/refined_uranium_block.json
 1df3a64a176d4312d1fa626a56b2de7237b96ea1 data/createatomic/advancement/recipes/misc/crafting/refined_uranium_ingot.json
 1d742d88ec6322458f0729ad334768e381130398 data/createatomic/advancement/recipes/misc/crafting/refined_uranium_ingots_from_block.json
@@ -68,7 +69,8 @@ ca6f64089b708cb3ddc65ce7b46c3e55f4204c67 data/createatomic/recipe/crafting/pluto
 ad5df821b0898ace81ce3732f7698532e5ccd61c data/createatomic/recipe/crafting/radioisotope_heat_generator.json
 e955560820725939a4161217faacd41e2af1dc31 data/createatomic/recipe/crafting/raw_uranium_block.json
 b3e67ba7debffb6a0aee583edd6459d7a7e28ba5 data/createatomic/recipe/crafting/raw_uranium_from_block.json
-bc7390201e9ed742f58b5b0755b1cd97137a573d data/createatomic/recipe/crafting/reactor_redstone_interface.json
+4d509154ff95024574179318e6c28c33fe65f788 data/createatomic/recipe/crafting/reactor_redstone_interface.json
+ea755c7b85ee0c8b2ec44665ea509a1668f5960e data/createatomic/recipe/crafting/reactor_sensor.json
 b7cb8b6f54937cae48e6f8c4243a15a733b6553d data/createatomic/recipe/crafting/refined_uranium_block.json
 05b3911bd7198ddf02193905af60f97a59d15384 data/createatomic/recipe/crafting/refined_uranium_ingot.json
 233ecc158fbeca63417fb8d34165d4c942f32e60 data/createatomic/recipe/crafting/refined_uranium_ingots_from_block.json

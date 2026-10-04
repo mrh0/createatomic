@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "D": {
+      "item": "createatomic:dense_alloy"
+    },
+    "E": {
+      "item": "create:electron_tube"
+    }
+  },
+  "pattern": [
+    "E",
+    "D",
+    "C"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createatomic:reactor_sensor"
+  }
+}

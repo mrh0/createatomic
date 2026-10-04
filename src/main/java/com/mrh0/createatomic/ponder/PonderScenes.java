@@ -56,13 +56,9 @@ public class PonderScenes {
                 .pointAt(util.vector().topOf(rod00));
         scene.idle(70);
 
-        // Insert 3 fuel rods
+        // Insert 2 fuel rods, placed diagonally so each one borders two control rods
         ItemStack fuelRod     = AtomicItems.FUEL_ROD.asStack();
         ItemStack largeCtrlRod = AtomicItems.LARGE_CONTROL_ROD.asStack();
-
-        scene.overlay().showControls(util.vector().topOf(rod00), Pointing.DOWN, 25).rightClick().withItem(fuelRod);
-        scene.idle(6);
-        scene.world().modifyBlockEntity(rod00, RodAssemblyBlockEntity.class, be -> be.updateRod(fuelRod.copy()));
 
         scene.overlay().showControls(util.vector().topOf(rod10), Pointing.DOWN, 25).rightClick().withItem(fuelRod);
         scene.idle(6);
@@ -72,7 +68,11 @@ public class PonderScenes {
         scene.idle(6);
         scene.world().modifyBlockEntity(rod01, RodAssemblyBlockEntity.class, be -> be.updateRod(fuelRod.copy()));
 
-        // Insert 1 large control rod
+        // Insert 2 large control rods, taking the other diagonal
+        scene.overlay().showControls(util.vector().topOf(rod00), Pointing.DOWN, 25).rightClick().withItem(largeCtrlRod);
+        scene.idle(6);
+        scene.world().modifyBlockEntity(rod00, RodAssemblyBlockEntity.class, be -> be.updateRod(largeCtrlRod.copy()));
+
         scene.overlay().showControls(util.vector().topOf(rod11), Pointing.DOWN, 25).rightClick().withItem(largeCtrlRod);
         scene.idle(6);
         scene.world().modifyBlockEntity(rod11, RodAssemblyBlockEntity.class, be -> be.updateRod(largeCtrlRod.copy()));
@@ -81,17 +81,18 @@ public class PonderScenes {
         // Highlight fuel rods
         Object fuelSlot = new Object();
         scene.overlay().showOutline(PonderPalette.GREEN, fuelSlot,
-                util.select().position(rod00).add(util.select().position(rod10)).add(util.select().position(rod01)), 65);
+                util.select().position(rod10).add(util.select().position(rod01)), 65);
         scene.overlay().showText(60)
                 .colored(PonderPalette.GREEN)
                 .text("createatomic.ponder.reactor.text_3")
                 .placeNearTarget()
-                .pointAt(util.vector().topOf(rod00));
+                .pointAt(util.vector().topOf(rod10));
         scene.idle(70);
 
-        // Highlight control rod
+        // Highlight control rods
         Object ctrlSlot = new Object();
-        scene.overlay().showOutline(PonderPalette.RED, ctrlSlot, util.select().position(rod11), 65);
+        scene.overlay().showOutline(PonderPalette.RED, ctrlSlot,
+                util.select().position(rod00).add(util.select().position(rod11)), 65);
         scene.overlay().showText(60)
                 .colored(PonderPalette.RED)
                 .text("createatomic.ponder.reactor.text_4")
@@ -177,16 +178,16 @@ public class PonderScenes {
 		scene.world().showSection(util.select().position(new BlockPos(3, 4, 4)), Direction.NORTH);
         scene.idle(5);
 
-        // Switch two rod assemblies to depleted to illustrate the need for replacement
+        // Switch both fuel rod assemblies to depleted to illustrate the need for replacement
         ItemStack depletedRod = AtomicItems.DEPLETED_FUEL_ROD.asStack();
-        scene.world().modifyBlockEntity(rod00, RodAssemblyBlockEntity.class, be -> be.updateRod(depletedRod.copy()));
         scene.world().modifyBlockEntity(rod10, RodAssemblyBlockEntity.class, be -> be.updateRod(depletedRod.copy()));
+        scene.world().modifyBlockEntity(rod01, RodAssemblyBlockEntity.class, be -> be.updateRod(depletedRod.copy()));
 
         scene.overlay().showText(65)
                 .attachKeyFrame()
                 .text("createatomic.ponder.reactor.text_10")
                 .placeNearTarget()
-                .pointAt(util.vector().topOf(rod00));
+                .pointAt(util.vector().topOf(rod10));
         scene.idle(75);
 
 

@@ -1,44 +1,20 @@
 package com.mrh0.createatomic.blocks.reactor_redstone_interface;
 
-import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlock;
+import com.mrh0.createatomic.blocks.reactor_casing.ReactorAttachmentBlock;
 import com.mrh0.createatomic.blocks.reactor_casing.ReactorCasingBlockEntity;
-import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Map;
+public class ReactorRedstoneInterfaceBlock extends ReactorAttachmentBlock {
 
-public class ReactorRedstoneInterfaceBlock extends Block implements IWrenchable {
-
-    public static final EnumProperty<Direction> FACING  = DirectionalBlock.FACING;
-    public static final BooleanProperty         POWERED = BlockStateProperties.POWERED;
-
-    private static final Map<Direction, VoxelShape> SHAPES = Map.of(
-        Direction.DOWN,  Block.box( 3,  0,  3, 13,  4, 13),
-        Direction.UP,    Block.box( 3, 12,  3, 13, 16, 13),
-        Direction.NORTH, Block.box( 3,  3,  0, 13, 13,  4),
-        Direction.SOUTH, Block.box( 3,  3, 12, 13, 13, 16),
-        Direction.EAST,  Block.box(12,  3,  3, 16, 13, 13),
-        Direction.WEST,  Block.box( 0,  3,  3,  4, 13, 13)
-    );
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public ReactorRedstoneInterfaceBlock(Properties props) {
         super(props);
@@ -49,44 +25,15 @@ public class ReactorRedstoneInterfaceBlock extends Block implements IWrenchable 
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, POWERED);
+        super.createBlockStateDefinition(builder);
+        builder.add(POWERED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos attachPos = context.getClickedPos().relative(context.getClickedFace().getOpposite());
-        if (!(context.getLevel().getBlockState(attachPos).getBlock() instanceof ReactorCasingBlock))
-            return null;
-        boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
-        return defaultBlockState()
-                .setValue(FACING, context.getClickedFace().getOpposite())
-                .setValue(POWERED, powered);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
-    }
-
-    @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        BlockPos attachPos = pos.relative(state.getValue(FACING));
-        return level.getBlockState(attachPos).getBlock() instanceof ReactorCasingBlock;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state.setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     @Override
@@ -117,16 +64,8 @@ public class ReactorRedstoneInterfaceBlock extends Block implements IWrenchable 
         notifyReactor(level, pos, state.setValue(POWERED, nowPowered));
     }
 
-    @Override
-    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        return InteractionResult.PASS;
-    }
-
     private static void notifyReactor(Level level, BlockPos pos, BlockState state) {
-        BlockPos reactorPos = pos.relative(state.getValue(FACING));
-        BlockEntity be = level.getBlockEntity(reactorPos);
-        if (!(be instanceof ReactorCasingBlockEntity rce)) return;
-        ReactorCasingBlockEntity controller = rce.getControllerBE();
+        ReactorCasingBlockEntity controller = findReactor(level, pos, state);
         if (controller != null)
             controller.rescanInterfaces();
     }

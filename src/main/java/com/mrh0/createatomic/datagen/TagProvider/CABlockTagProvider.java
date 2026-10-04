@@ -32,6 +32,7 @@ public class CABlockTagProvider extends BlockTagsProvider {
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
                 .add(AtomicBlocks.REACTOR_DEBRIS.get())
                 .add(AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
+                .add(AtomicBlocks.REACTOR_SENSOR.get())
                 .add(AtomicBlocks.TURBINE.get())
                 .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_INERT.get())
                 .add(AtomicBlocks.RADIOISOTOPE_HEAT_GENERATOR_SMOULDERING.get())
@@ -54,6 +55,7 @@ public class CABlockTagProvider extends BlockTagsProvider {
                 .add(AtomicBlocks.REACTOR_CASING.get())
                 .add(AtomicBlocks.ROD_ASSEMBLY.get())
                 .add(AtomicBlocks.REACTOR_REDSTONE_INTERFACE.get())
+                .add(AtomicBlocks.REACTOR_SENSOR.get())
                 .add(AtomicBlocks.TURBINE.get());
 
         // Reactor debris requires diamond-tier tool

@@ -3,6 +3,7 @@ package com.mrh0.createatomic.index;
 import com.mrh0.createatomic.items.FuelRodItem;
 import com.mrh0.createatomic.items.HazmatArmorItem;
 import com.mrh0.createatomic.items.RadPillItem;
+import com.mrh0.createatomic.items.RadioactiveItem;
 import com.mrh0.createatomic.items.RodItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.mrh0.createatomic.CreateAtomic;
@@ -69,8 +70,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> DEPLETED_FUEL_ROD =
-            CreateAtomic.REGISTRATE.item("depleted_uranium_rod", Item::new)
+    public static final ItemEntry<RadioactiveItem> DEPLETED_FUEL_ROD =
+            CreateAtomic.REGISTRATE.item("depleted_uranium_rod", RadioactiveItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
@@ -79,8 +80,8 @@ public class AtomicItems {
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 
-    public static final ItemEntry<Item> DEPLETED_PLUTONIUM_FUEL_ROD =
-            CreateAtomic.REGISTRATE.item("depleted_plutonium_rod", Item::new)
+    public static final ItemEntry<RadioactiveItem> DEPLETED_PLUTONIUM_FUEL_ROD =
+            CreateAtomic.REGISTRATE.item("depleted_plutonium_rod", RadioactiveItem::new)
                     .model((ctx, prov) -> prov.generated(ctx))
                     .register();
 

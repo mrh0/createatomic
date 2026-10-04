@@ -781,6 +781,22 @@ public class ReactorCasingBlockEntity extends SmartBlockEntity implements IHaveG
         return Pair.of(Math.round(effectiveFuel), controlLevel);
     }
 
+    // Lowest remaining fuel (0-1) among the rods on top of the reactor, or -1 when no fuel rods are installed.
+    public float getLowestFuelRemaining() {
+        if (level == null) return -1f;
+        int w = getWidth();
+        float lowest = -1f;
+        for (int x = 0; x < w; x++)
+            for (int z = 0; z < w; z++) {
+                BlockEntity be = level.getBlockEntity(getController().offset(x, getHeight(), z));
+                if (!(be instanceof RodAssemblyBlockEntity rabe)) continue;
+                float fuel = rabe.getRemainingFuelFraction();
+                if (fuel >= 0 && (lowest < 0 || fuel < lowest))
+                    lowest = fuel;
+            }
+        return lowest;
+    }
+
     @Override
     public void lazyTick() {
         super.lazyTick();
